@@ -1,0 +1,1156 @@
+[
+  {
+    "id": "KB001",
+    "category": "基本介绍",
+    "title": "南京云锦与非物质文化遗产",
+    "claims": [
+      {
+        "text": "南京云锦织造技艺主要传承于中国江苏省；2009年列入联合国教科文组织人类非物质文化遗产代表作名录。",
+        "source_ids": [
+          "S01",
+          "S02"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "南京云锦",
+      "云锦",
+      "非遗",
+      "江苏",
+      "2009"
+    ],
+    "evidence_level": "A",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "南京云锦",
+        "什么"
+      ],
+      [
+        "南京云锦",
+        "非物质文化遗产"
+      ],
+      [
+        "南京云锦",
+        "非遗"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB002",
+    "category": "基本介绍",
+    "title": "名称与视觉印象",
+    "claims": [
+      {
+        "text": "联合国教科文组织项目页将“云锦”的名称解释为与织物如云霞般的绚丽外观相关。这个描述是文化介绍，不是判断任意图片属于南京云锦的视觉标准。",
+        "source_ids": [
+          "S01"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "名称",
+      "云霞",
+      "绚丽",
+      "色彩",
+      "外观"
+    ],
+    "evidence_level": "A",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "云锦",
+        "名称"
+      ],
+      [
+        "云霞",
+        "外观"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB003",
+    "category": "制作流程",
+    "title": "从纹样到织物的主要流程",
+    "claims": [
+      {
+        "text": "南京云锦织造技艺由材料准备、纹样设计、挑花结本、造机、织造等百余道工序构成。",
+        "source_ids": [
+          "S02"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "新华网的流程概述列出纹样设计、意匠、挑花结本、造机和织造五部分；这是教学层面的主要环节，不是百余道工序的完整编号操作规程。",
+        "source_ids": [
+          "S11"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "南京云锦",
+      "制作",
+      "流程",
+      "工序",
+      "材料准备",
+      "纹样设计",
+      "意匠",
+      "挑花结本",
+      "造机",
+      "织造"
+    ],
+    "evidence_level": "A",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "南京云锦",
+        "制作",
+        "流程"
+      ],
+      [
+        "制作",
+        "主要",
+        "环节"
+      ],
+      [
+        "图案",
+        "织物"
+      ],
+      [
+        "百余道",
+        "工序"
+      ],
+      [
+        "南京云锦",
+        "织造",
+        "工艺"
+      ],
+      [
+        "传统",
+        "织造",
+        "工艺"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB004",
+    "category": "制作流程",
+    "title": "花本装机与双人织造",
+    "claims": [
+      {
+        "text": "传统织造使用结构复杂的大花楼木织机，由上下两名工匠配合操作。",
+        "source_ids": [
+          "S01",
+          "S03"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "花本装到织机后，上方拽花工按花本提升相应经线，下方织手穿纬并完成妆金敷彩等操作。",
+        "source_ids": [
+          "S10"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "大花楼",
+      "木织机",
+      "花本",
+      "装机",
+      "拽花工",
+      "织手",
+      "双人",
+      "提经",
+      "穿纬"
+    ],
+    "evidence_level": "A",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "大花楼",
+        "织机"
+      ],
+      [
+        "拽花工",
+        "织手"
+      ],
+      [
+        "为什么",
+        "两个人",
+        "织"
+      ],
+      [
+        "云锦",
+        "手工",
+        "织造"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB005",
+    "category": "材料与特征",
+    "title": "织造材料",
+    "claims": [
+      {
+        "text": "官方非遗资料记载，南京云锦织造可使用蚕丝线、金线和孔雀羽线等材料。材料记载不能仅凭成品照片得到确认。",
+        "source_ids": [
+          "S01",
+          "S02"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "材料",
+      "蚕丝",
+      "丝线",
+      "金线",
+      "孔雀羽",
+      "织物特征"
+    ],
+    "evidence_level": "A",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "织造",
+        "材料"
+      ],
+      [
+        "材料"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB006",
+    "category": "历史与文化",
+    "title": "历史用途与当代传承",
+    "claims": [
+      {
+        "text": "相关技艺曾用于制作皇家服饰；当代也用于高端织物、纪念品及古代丝织物复制研究。具体对象的年代和用途仍须对象级证据支持。",
+        "source_ids": [
+          "S01",
+          "S02"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "历史",
+      "皇家",
+      "龙袍",
+      "用途",
+      "传承",
+      "复制",
+      "研究"
+    ],
+    "evidence_level": "A",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "历史",
+        "用途"
+      ],
+      [
+        "当代",
+        "传承"
+      ],
+      [
+        "皇家",
+        "服饰"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB007",
+    "category": "品种",
+    "title": "南京云锦品种的多种资料口径",
+    "claims": [
+      {
+        "text": "中国非物质文化遗产网项目资料将云锦主要品种概括为织金、库锦、库缎和妆花四大类。",
+        "source_ids": [
+          "S03"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "南京市承创云锦研究中心页面采用库缎、库锦、妆花三大类的组织方式；江西服装学院古丝绸研究院页面还另列金宝地。不同来源的分类粒度与术语口径不同，本知识库保留差异，不把任一口径包装成唯一标准。",
+        "source_ids": [
+          "S08",
+          "S09"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "南京云锦",
+      "品种",
+      "分类",
+      "织金",
+      "库锦",
+      "库缎",
+      "妆花",
+      "金宝地",
+      "口径"
+    ],
+    "evidence_level": "A/B",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "南京云锦",
+        "主要",
+        "品种"
+      ],
+      [
+        "南京云锦",
+        "分类"
+      ],
+      [
+        "四大",
+        "品种"
+      ],
+      [
+        "品种",
+        "口径"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB008",
+    "category": "品种与工艺",
+    "title": "妆花：局部挖花与逐花异色",
+    "claims": [
+      {
+        "text": "妆花是以局部挖花盘织进行妆彩的提花丝织工艺；不同花纹可分别配色，形成逐花异色。",
+        "source_ids": [
+          "S03",
+          "S04"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "妆花可用于缎、纱、罗等不同地组织，妆花缎只是其中一种，不能把妆花全部等同于缎。",
+        "source_ids": [
+          "S09"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "中国非遗网项目资料指出，妆花的挖花盘织、逐花异色至今仍须手工完成。",
+        "source_ids": [
+          "S03"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "妆花",
+      "挖花盘织",
+      "逐花异色",
+      "局部妆彩",
+      "妆花缎",
+      "妆花纱",
+      "妆花罗",
+      "手工"
+    ],
+    "evidence_level": "A/B",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "妆花",
+        "什么"
+      ],
+      [
+        "逐花异色",
+        "什么"
+      ],
+      [
+        "妆花",
+        "手工"
+      ],
+      [
+        "妆花",
+        "都是",
+        "缎"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB009",
+    "category": "品种与工艺",
+    "title": "织金：以金线显花的品种口径",
+    "claims": [
+      {
+        "text": "在所引南京云锦品种说明中，织金又称库金，以金线织花；同类以银线织花者称库银。",
+        "source_ids": [
+          "S09"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "中国非遗网文章以大量使用金、银线概括库金（织金）的用料特征。金色外观不能证明材料是真金，也不能据照片确定织金工艺。",
+        "source_ids": [
+          "S04"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "织金",
+      "库金",
+      "库银",
+      "金线",
+      "银线",
+      "品种"
+    ],
+    "evidence_level": "B",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "织金",
+        "什么"
+      ],
+      [
+        "库金",
+        "织金"
+      ],
+      [
+        "织金",
+        "金线"
+      ],
+      [
+        "金色",
+        "织金"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB010",
+    "category": "纹样",
+    "title": "纹样题材与构图",
+    "claims": [
+      {
+        "text": "官方非遗平台文章将云锦图案题材概括为植物、动物、人物、器物和抽象纹样，并列出独立式、自由式、连续式、组合式等构图形式。上传图像中的重复或对称只能作为视觉观察，不能据此完成工艺鉴定。",
+        "source_ids": [
+          "S04"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "纹样",
+      "动物",
+      "植物",
+      "人物",
+      "器物",
+      "抽象",
+      "连续",
+      "重复",
+      "对称",
+      "构图"
+    ],
+    "evidence_level": "B",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "纹样",
+        "题材"
+      ],
+      [
+        "构图",
+        "形式"
+      ],
+      [
+        "传统",
+        "纹样"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB011",
+    "category": "纹样与文化",
+    "title": "龙纹：云锦文献语境与对象边界",
+    "claims": [
+      {
+        "text": "中国非物质文化遗产网文章在云锦纹样论述中将龙纹与权威、尊贵联系起来；具体作品含义仍取决于纹样组合、用途和时代。",
+        "source_ids": [
+          "S04"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "南京云锦博物馆清册中有正式名称含“龙”的对象。对象名称只证明目录中出现该题材信息，不证明上传图片含龙纹。",
+        "source_ids": [
+          "S12"
+        ],
+        "evidence_scope": "official_object_name"
+      }
+    ],
+    "keywords": [
+      "龙",
+      "龙纹",
+      "权威",
+      "尊贵",
+      "官方对象",
+      "名称证据"
+    ],
+    "evidence_level": "A/B",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "龙纹",
+        "寓意"
+      ],
+      [
+        "南京云锦",
+        "龙",
+        "对象"
+      ],
+      [
+        "官方对象",
+        "龙"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB012",
+    "category": "纹样与文化",
+    "title": "牡丹：云锦文献语境与对象边界",
+    "claims": [
+      {
+        "text": "中国非物质文化遗产网文章在云锦纹样论述中将牡丹与富贵的传统吉祥寓意联系起来。",
+        "source_ids": [
+          "S04"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "南京云锦博物馆清册中有正式名称含“牡丹”的对象；这不能直接证明该对象的创作意图或上传图片内容。",
+        "source_ids": [
+          "S12"
+        ],
+        "evidence_scope": "official_object_name"
+      }
+    ],
+    "keywords": [
+      "牡丹",
+      "牡丹纹",
+      "富贵",
+      "官方对象",
+      "名称证据"
+    ],
+    "evidence_level": "A/B",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "牡丹",
+        "寓意"
+      ],
+      [
+        "南京云锦",
+        "牡丹",
+        "对象"
+      ],
+      [
+        "官方对象",
+        "牡丹"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB013",
+    "category": "纹样与寓意",
+    "title": "莲与八宝的一般文化语境",
+    "claims": [
+      {
+        "text": "中国国家博物馆研究文章指出，莲花、八宝属于受佛教影响的吉祥纹饰，并与平安、祥和的意涵相关。该来源讨论的是清代瓷器纹饰，可用于跨媒介文化背景参考，但不能直接证明某件云锦对象的寓意。",
+        "source_ids": [
+          "S05"
+        ],
+        "evidence_scope": "general_cultural_background"
+      }
+    ],
+    "keywords": [
+      "莲",
+      "莲花",
+      "八宝",
+      "佛教",
+      "平安",
+      "祥和",
+      "寓意"
+    ],
+    "evidence_level": "B",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "八宝",
+        "寓意"
+      ],
+      [
+        "莲",
+        "寓意"
+      ],
+      [
+        "八宝纹"
+      ],
+      [
+        "莲纹"
+      ]
+    ],
+    "visual_retrieval": "disabled"
+  },
+  {
+    "id": "KB014",
+    "category": "数据治理",
+    "title": "候选知识标签的证据边界",
+    "claims": [
+      {
+        "text": "鹤、寿、宝灯、灵芝等名称在项目中曾作为候选知识标签保存。候选标签只能用于组织、检索和人工研究，不能证明具体对象的文化寓意，也不能作为视觉分类训练标签。",
+        "source_ids": [
+          "S06"
+        ],
+        "evidence_scope": "governance_methodology"
+      }
+    ],
+    "keywords": [
+      "候选知识标签",
+      "候选",
+      "鹤",
+      "寿",
+      "宝灯",
+      "灵芝",
+      "证据边界"
+    ],
+    "evidence_level": "C",
+    "knowledge_use": "governance/methodology",
+    "answer_terms": [
+      [
+        "候选知识标签",
+        "证据"
+      ],
+      [
+        "候选标签",
+        "文化事实"
+      ]
+    ],
+    "visual_retrieval": "disabled"
+  },
+  {
+    "id": "KB015",
+    "category": "可信AI",
+    "title": "候选标签不是视觉分类标签",
+    "claims": [
+      {
+        "text": "织金、妆花、库缎、龙、寿、鹤、凤、莲、八宝、宝灯、灵芝、牡丹均为 Candidate Knowledge Labels，不用于本阶段监督训练，也不能由视觉外观直接确证。",
+        "source_ids": [
+          "S06"
+        ],
+        "evidence_scope": "governance_methodology"
+      }
+    ],
+    "keywords": [
+      "候选标签",
+      "可信AI",
+      "视觉",
+      "分类",
+      "训练",
+      "证据"
+    ],
+    "evidence_level": "C",
+    "knowledge_use": "governance/methodology",
+    "answer_terms": [
+      [
+        "候选标签"
+      ],
+      [
+        "监督",
+        "训练",
+        "候选"
+      ]
+    ],
+    "visual_retrieval": "disabled"
+  },
+  {
+    "id": "KB016",
+    "category": "品种与工艺",
+    "title": "库锦：通梭织彩",
+    "claims": [
+      {
+        "text": "库锦以不同颜色的彩梭通梭织彩；不在正面显花的彩纬织入背面，使织物整体厚薄较为均匀。",
+        "source_ids": [
+          "S09"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "南京市承创云锦研究中心将库锦描述为用彩绒、金线通梭织成的重组织锦缎。现有47条对象正式名称没有直接写“库锦”，因此本条不强配官方对象。",
+        "source_ids": [
+          "S08"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "库锦",
+      "通梭织彩",
+      "彩梭",
+      "彩纬",
+      "厚薄均匀"
+    ],
+    "evidence_level": "B",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "库锦",
+        "什么"
+      ],
+      [
+        "库锦",
+        "妆花",
+        "区别"
+      ],
+      [
+        "库锦",
+        "通梭"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB017",
+    "category": "品种与工艺",
+    "title": "库缎：本色提花及其变化",
+    "claims": [
+      {
+        "text": "库缎又称摹本缎，基本形态是在缎底上起本色花或其他单色花纹的提花缎，并有亮花、暗花之分。",
+        "source_ids": [
+          "S08"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "库缎还包括局部使用金线的妆金库缎等变化，因此不能把库缎概括为一律不用金线。",
+        "source_ids": [
+          "S08"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "库缎",
+      "摹本缎",
+      "本色花",
+      "单色花",
+      "亮花",
+      "暗花",
+      "妆金库缎"
+    ],
+    "evidence_level": "B",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "库缎",
+        "什么"
+      ],
+      [
+        "库缎",
+        "金线"
+      ],
+      [
+        "亮花",
+        "暗花"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB018",
+    "category": "品种与工艺",
+    "title": "四类品种的有证据比较",
+    "claims": [
+      {
+        "text": "采用中国非遗网的四类教学入口时，可以分别从局部挖花妆彩、以金线显花、通梭织彩、本色提花等维度理解妆花、织金、库锦和库缎。",
+        "source_ids": [
+          "S03",
+          "S08",
+          "S09"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "官方清册中“织金”可与“妆花”或“库缎”出现在同一对象名称中，说明这些词在对象命名中不必互相排斥。名称共现仍不能替代对织物组织的专业鉴定。",
+        "source_ids": [
+          "S12"
+        ],
+        "evidence_scope": "official_object_name"
+      },
+      {
+        "text": "不同来源采用三类、四类或另列金宝地等口径，本比较不把四类包装成唯一国家分类标准，也不比较高低等级、价格或固定色数。",
+        "source_ids": [
+          "S03",
+          "S08",
+          "S09"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "四大品种",
+      "比较",
+      "区别",
+      "妆花",
+      "织金",
+      "库锦",
+      "库缎",
+      "复合名称",
+      "分类口径"
+    ],
+    "evidence_level": "A/B",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "四大品种",
+        "区别"
+      ],
+      [
+        "织金",
+        "妆花",
+        "区别"
+      ],
+      [
+        "织金",
+        "库缎",
+        "区别"
+      ],
+      [
+        "品种",
+        "比较"
+      ]
+    ],
+    "visual_retrieval": "disabled"
+  },
+  {
+    "id": "KB019",
+    "category": "制作流程",
+    "title": "挑花结本：把图样转成花本",
+    "claims": [
+      {
+        "text": "挑花结本依据意匠图，用线和挑花钩按图案、色彩与次序制成花本，再把花本装到织机供织造使用。",
+        "source_ids": [
+          "S10"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "它连接纹样设计与上机织造，可用“把图样转成织造程序”帮助理解；“编程”是解释性比喻，不等于现代软件、电子代码或穿孔卡。",
+        "source_ids": [
+          "S10",
+          "S11"
+        ],
+        "evidence_scope": "direct_yunjin"
+      }
+    ],
+    "keywords": [
+      "挑花结本",
+      "意匠图",
+      "花本",
+      "挑花钩",
+      "织造程序",
+      "编程比喻"
+    ],
+    "evidence_level": "B",
+    "knowledge_use": "process/history",
+    "answer_terms": [
+      [
+        "挑花结本",
+        "什么"
+      ],
+      [
+        "花本",
+        "作用"
+      ],
+      [
+        "意匠图",
+        "花本"
+      ],
+      [
+        "挑花结本",
+        "编程"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB020",
+    "category": "纹样与文化",
+    "title": "凤纹：云锦文献语境与对象边界",
+    "claims": [
+      {
+        "text": "中国非物质文化遗产网文章在云锦纹样论述中将凤纹与权威、尊贵联系起来；具体作品含义仍取决于组合、用途和时代。",
+        "source_ids": [
+          "S04"
+        ],
+        "evidence_scope": "direct_yunjin"
+      },
+      {
+        "text": "南京云锦博物馆清册中有正式名称含“凤”的对象。名称只证明目录中出现该信息，不证明上传图片包含凤纹。",
+        "source_ids": [
+          "S12"
+        ],
+        "evidence_scope": "official_object_name"
+      }
+    ],
+    "keywords": [
+      "凤",
+      "凤纹",
+      "权威",
+      "尊贵",
+      "官方对象",
+      "名称证据"
+    ],
+    "evidence_level": "A/B",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "凤纹",
+        "寓意"
+      ],
+      [
+        "南京云锦",
+        "凤",
+        "对象"
+      ],
+      [
+        "官方对象",
+        "凤"
+      ]
+    ],
+    "visual_retrieval": "direct"
+  },
+  {
+    "id": "KB021",
+    "category": "官方对象题材证据",
+    "title": "鹤：官方对象名称证据",
+    "claims": [
+      {
+        "text": "南京云锦博物馆清册所列对象中有正式名称包含“鹤”的记录，例如2011年云锦织品《清一品文官补仙鹤》。这只证明官方名称或目录资料中出现鹤题材信息。",
+        "source_ids": [
+          "S12"
+        ],
+        "evidence_scope": "official_object_name"
+      },
+      {
+        "text": "《清一品文官补仙鹤》在清册中记为2011年自主研发作品，不能当作清代原件；名称证据也不能确定任意鹤纹的文化寓意。",
+        "source_ids": [
+          "S12"
+        ],
+        "evidence_scope": "official_object_name"
+      }
+    ],
+    "keywords": [
+      "鹤",
+      "仙鹤",
+      "官方对象",
+      "名称证据",
+      "2011",
+      "清一品文官补仙鹤"
+    ],
+    "evidence_level": "A",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "南京云锦",
+        "鹤",
+        "对象"
+      ],
+      [
+        "官方对象",
+        "鹤"
+      ],
+      [
+        "鹤纹",
+        "一定",
+        "长寿"
+      ],
+      [
+        "仙鹤补子",
+        "清代原件"
+      ]
+    ],
+    "visual_retrieval": "object_name_only"
+  },
+  {
+    "id": "KB022",
+    "category": "官方对象题材证据",
+    "title": "寿：官方对象名称证据",
+    "claims": [
+      {
+        "text": "南京云锦博物馆清册所列对象中有正式名称包含“寿”的记录。名称只证明目录中出现该文字或题材信息，不能自动认定其书体、祝寿用途或具体寓意。",
+        "source_ids": [
+          "S12"
+        ],
+        "evidence_scope": "official_object_name"
+      }
+    ],
+    "keywords": [
+      "寿",
+      "寿字",
+      "官方对象",
+      "名称证据",
+      "长圆寿"
+    ],
+    "evidence_level": "A",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "南京云锦",
+        "寿",
+        "对象"
+      ],
+      [
+        "官方对象",
+        "寿"
+      ],
+      [
+        "寿字",
+        "对象",
+        "寓意"
+      ]
+    ],
+    "visual_retrieval": "object_name_only"
+  },
+  {
+    "id": "KB023",
+    "category": "官方对象题材证据",
+    "title": "灵芝：官方对象名称证据",
+    "claims": [
+      {
+        "text": "南京云锦博物馆清册中《清末墨绿地织金灵芝鹤寿妆花缎》的正式名称包含“灵芝”。这只证明目录名称中出现该题材信息，不能进一步确定其具体寓意、植物种类或药用含义。",
+        "source_ids": [
+          "S12"
+        ],
+        "evidence_scope": "official_object_name"
+      }
+    ],
+    "keywords": [
+      "灵芝",
+      "官方对象",
+      "名称证据",
+      "灵芝鹤寿"
+    ],
+    "evidence_level": "A",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "南京云锦",
+        "灵芝",
+        "对象"
+      ],
+      [
+        "官方对象",
+        "灵芝"
+      ],
+      [
+        "灵芝",
+        "云锦",
+        "意思"
+      ]
+    ],
+    "visual_retrieval": "object_name_only"
+  },
+  {
+    "id": "KB024",
+    "category": "一般传统文化背景",
+    "title": "松鹤组合的一般文化背景",
+    "claims": [
+      {
+        "text": "中国国家博物馆关于清代瓷器纹饰的研究将松鹤组合联系于长寿。这是跨媒介的一般传统文化背景，不是对任意鹤纹或具体南京云锦对象寓意的确定解释。",
+        "source_ids": [
+          "S05"
+        ],
+        "evidence_scope": "general_cultural_background"
+      }
+    ],
+    "keywords": [
+      "松鹤",
+      "鹤",
+      "长寿",
+      "一般文化背景",
+      "跨媒介"
+    ],
+    "evidence_level": "B",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "松鹤",
+        "寓意"
+      ],
+      [
+        "鹤纹",
+        "一定",
+        "长寿"
+      ],
+      [
+        "鹤",
+        "长寿",
+        "一般"
+      ]
+    ],
+    "visual_retrieval": "disabled"
+  },
+  {
+    "id": "KB025",
+    "category": "一般传统文化背景",
+    "title": "寿字的一般传统文化背景",
+    "claims": [
+      {
+        "text": "中国国家博物馆关于清代瓷器纹饰的研究将直接书写“寿”等文字归为吉祥文字表达。这是跨媒介背景，不能证明某件南京云锦对象的祝寿用途、创作意图或具体含义。",
+        "source_ids": [
+          "S05"
+        ],
+        "evidence_scope": "general_cultural_background"
+      }
+    ],
+    "keywords": [
+      "寿字",
+      "吉祥文字",
+      "一般文化背景",
+      "跨媒介"
+    ],
+    "evidence_level": "B",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      [
+        "寿字",
+        "文化",
+        "背景"
+      ],
+      [
+        "寿字",
+        "一般",
+        "寓意"
+      ],
+      [
+        "寿字",
+        "对象",
+        "寓意"
+      ]
+    ],
+    "visual_retrieval": "disabled"
+  }
+]

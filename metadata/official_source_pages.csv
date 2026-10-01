@@ -1,0 +1,12 @@
+source_id,page_title,url,access_date,status,usable_object_count,notes
+home,南京云锦博物馆官网 - 南京历代云锦博物馆,http://www.yjmuseum.com/index.html,2026-09-03,accessed,0,用于确认导航与官网主体
+collection_home,藏品文修-藏品-南京云锦博物馆,http://www.yjmuseum.com/cpwx/cpwx.html,2026-09-03,accessed,0,发现织锦类、世界织锦及清册下载入口
+brocades_page1,藏品文修-织锦类-南京云锦博物馆,http://www.yjmuseum.com/cpwx/detail1.html,2026-09-03,accessed,8,网页对象图已保存但未单独作为云锦正类计数；类别证据优先使用官方云锦类清册
+world_tapestry,藏品文修-世界织锦-南京云锦博物馆,http://www.yjmuseum.com/cpwx/detail2.html,2026-09-03,accessed,8,官网原名明确标注泰国锦、埃及织锦或土耳其织锦
+minority_brocade,藏品文修-少数民族织锦-南京云锦博物馆,http://www.yjmuseum.com/cpwx/detail3.html,2026-09-03,accessed_no_items,0,本次加载未呈现可入库对象
+early_drafts,藏品文修-早期图稿-南京云锦博物馆,http://www.yjmuseum.com/cpwx/detail4.html,2026-09-03,accessed_no_items,0,本次加载未呈现可入库对象
+pattern_drawings,藏品文修-纹样图纸-南京云锦博物馆,http://www.yjmuseum.com/cpwx/detail5.html,2026-09-03,accessed_no_items,0,本次加载未呈现可入库对象
+technical_drafts,藏品文修-意匠稿-南京云锦博物馆,http://www.yjmuseum.com/cpwx/detail6.html,2026-09-03,accessed_no_items,0,本次加载未呈现可入库对象
+collection_downloads,南京历代云锦博物馆藏品室,http://www.yjmuseum.com/cpwx/cpwx_more.html,2026-09-03,accessed,80,下载并保存云锦类1与非云锦类1官方PDF；本轮各选择40个对象
+fine_art,艺术精品-国礼典藏-南京云锦博物馆,http://www.yjmuseum.com/ysjp/ysjp.html,2026-09-03,accessed,7,栏目说明与作品名共同构成南京云锦类别证据
+fine_art_detail,艺术精品详情入口,http://www.yjmuseum.com/ysjp/ysjp1.html,2026-09-03,accessed_no_text,0,本次加载未获得足够对象级说明文字

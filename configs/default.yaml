@@ -1,0 +1,32 @@
+project:
+  seed: 20260903
+  metadata_csv: data/metadata/metadata.csv
+  official_metadata_csv: data/metadata/official_metadata.csv
+  raw_root: data/raw
+  processed_root: data/processed
+  split_csv: data/splits/splits.csv
+  output_dir: artifacts
+
+data:
+  image_size: 224
+  num_workers: 0
+  group_field: source_group_id
+  split_ratios:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+  minimum_level1_per_class: 30
+  minimum_level2_groups_per_label: 20
+  minimum_image_short_side: 224
+  require_known_training_authorization: true
+  require_manual_leakage_review: true
+
+training:
+  batch_size: 16
+  epochs: 10
+  learning_rate: 0.0003
+  pretrained: true
+
+status:
+  level1_metrics: 待训练/待验证
+  level2_metrics: 待训练/待验证

@@ -1,0 +1,13 @@
+label_name,label_type,status,training_status,evidence_scope,notes
+织金,craft,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Await legal images and expert/object-level annotation
+妆花,craft,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Await legal images and expert/object-level annotation
+库缎,craft,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Await legal images and expert/object-level annotation
+龙,pattern,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Do not infer from visual appearance
+寿,pattern,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Do not infer from visual appearance
+鹤,pattern,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Do not infer from visual appearance
+凤,pattern,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Do not infer from visual appearance
+莲,pattern,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Do not infer from visual appearance
+八宝,pattern,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Do not infer from visual appearance
+宝灯,pattern,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Do not infer from visual appearance
+灵芝,pattern,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Do not infer from visual appearance
+牡丹,pattern,Level 2 Candidate Knowledge Label,不训练,Phase 2 official evidence database,Do not infer from visual appearance
