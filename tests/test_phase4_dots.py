@@ -42,8 +42,8 @@ class Phase4DotsTests(unittest.TestCase):
         }
 
     @staticmethod
-    def successful_response() -> FakeHTTPResponse:
-        model_result = {
+    def successful_payload() -> dict:
+        return {
             "subject_pattern_observations": ["视觉上存在花叶状轮廓"],
             "composition": ["主体位于画面中央"],
             "colors": ["以红色和金色为主"],
@@ -51,12 +51,40 @@ class Phase4DotsTests(unittest.TestCase):
             "retrieval_keywords": ["花叶", "对称", "红色", "金色"],
             "limitations": ["不能据此确定工艺、年代、名称、真伪或归属"],
         }
+
+    @classmethod
+    def response_with_content(cls, content: str, response_id: str = "mock-dots-response") -> FakeHTTPResponse:
         return FakeHTTPResponse(
             {
-                "id": "mock-dots-response",
-                "choices": [{"message": {"content": json.dumps(model_result, ensure_ascii=False)}}],
+                "id": response_id,
+                "choices": [{"message": {"content": content}}],
             }
         )
+
+    @classmethod
+    def successful_response(cls) -> FakeHTTPResponse:
+        return cls.response_with_content(json.dumps(cls.successful_payload(), ensure_ascii=False))
+
+    @staticmethod
+    def response_with_payload(payload: dict, response_id: str = "mock-dots-response") -> FakeHTTPResponse:
+        return FakeHTTPResponse(
+            {
+                "id": response_id,
+                "choices": [{"message": {"content": json.dumps(payload, ensure_ascii=False)}}],
+            }
+        )
+
+    @staticmethod
+    def aliased_payload() -> dict:
+        model_result = {
+            "subject_observations": "视觉上存在花叶状轮廓",
+            "composition_observations": ["主体位于画面中央"],
+            "color_observations": "以红色和金色为主",
+            "symmetry_observations": ["左右存在近似重复"],
+            "keywords": ["花叶", "对称", "红色", "金色"],
+            "limits": ["不能据此确定工艺、年代、名称、真伪或归属"],
+        }
+        return model_result
 
     def test_dots_configuration_requires_key(self):
         with patch.dict(os.environ, {"DOTS_API_KEY": ""}, clear=False):
@@ -77,6 +105,7 @@ class Phase4DotsTests(unittest.TestCase):
 
         self.assertEqual(result.provider, "dots:dots3-note-prev")
         self.assertEqual(result.raw_metrics["response_id"], "mock-dots-response")
+        self.assertEqual(result.raw_metrics["dots_attempts"], 1)
         self.assertTrue(any(item.startswith("构图：") for item in result.observable_facts))
         self.assertEqual(result.tentative_elements, ())
 
@@ -172,13 +201,14 @@ class Phase4DotsTests(unittest.TestCase):
     def test_http_failure_falls_back_to_local_cv(self):
         with patch.dict(os.environ, self.dots_env, clear=False), patch(
             "yunjin_ai.vision.urlopen", side_effect=URLError("mock offline")
-        ):
+        ) as mocked_urlopen:
             result = analyze_image(
                 self.image,
                 provider="dots",
                 image_url="https://images.example.org/yunjin-demo.jpg",
             )
 
+        self.assertEqual(mocked_urlopen.call_count, 2)
         self.assertEqual(result.provider, "local_cv")
         self.assertIn("mock offline", result.provider_status)
         self.assertTrue(result.observable_facts)
@@ -205,6 +235,108 @@ class Phase4DotsTests(unittest.TestCase):
         self.assertEqual(result.provider, "local_cv")
         self.assertEqual(result.raw_metrics["image_transport"], "local_cv")
         self.assertIn("invalid image URL: data URL is not supported", result.raw_metrics["fallback_reason"])
+
+    def test_dots_accepts_markdown_json_code_fence(self):
+        content = "```json\n" + json.dumps(self.successful_payload(), ensure_ascii=False) + "\n```"
+        with patch.dict(os.environ, self.dots_env, clear=False), patch(
+            "yunjin_ai.vision.urlopen", return_value=self.response_with_content(content)
+        ):
+            result = analyze_image(
+                self.image,
+                provider="dots",
+                image_url="https://images.example.org/yunjin-demo.jpg",
+            )
+
+        self.assertEqual(result.provider, "dots:dots3-note-prev")
+        self.assertTrue(any(item.startswith("色彩：") for item in result.observable_facts))
+
+    def test_dots_extracts_single_json_object_with_surrounding_text(self):
+        content = (
+            "下面是结构化结果：\n\n"
+            + json.dumps(self.successful_payload(), ensure_ascii=False)
+            + "\n\n以上仅为视觉观察。"
+        )
+        with patch.dict(os.environ, self.dots_env, clear=False), patch(
+            "yunjin_ai.vision.urlopen", return_value=self.response_with_content(content)
+        ):
+            result = analyze_image(
+                self.image,
+                provider="dots",
+                image_url="https://images.example.org/yunjin-demo.jpg",
+            )
+
+        self.assertEqual(result.provider, "dots:dots3-note-prev")
+        self.assertIn("花叶", result.retrieval_keywords)
+
+    def test_dots_normalizes_safe_field_aliases_and_scalar_strings(self):
+        response = self.response_with_payload(self.aliased_payload())
+        with patch.dict(os.environ, self.dots_env, clear=False), patch(
+            "yunjin_ai.vision.urlopen", return_value=response
+        ):
+            result = analyze_image(
+                self.image,
+                provider="dots",
+                image_url="https://images.example.org/yunjin-demo.jpg",
+            )
+
+        self.assertEqual(result.provider, "dots:dots3-note-prev")
+        self.assertIn("色彩：以红色和金色为主", result.observable_facts)
+        self.assertIn("不能据此确定工艺、年代、名称、真伪或归属", result.limitations)
+
+    def test_bad_json_retries_once_then_falls_back_to_local_cv(self):
+        with patch.dict(os.environ, self.dots_env, clear=False), patch(
+            "yunjin_ai.vision.urlopen", return_value=self.response_with_content("不是 JSON")
+        ) as mocked_urlopen:
+            result = analyze_image(
+                self.image,
+                provider="dots",
+                image_url="https://images.example.org/yunjin-demo.jpg",
+            )
+
+        self.assertEqual(mocked_urlopen.call_count, 2)
+        self.assertEqual(result.provider, "local_cv")
+        self.assertIn("Dots API 返回内容无法按预期的结构化视觉结果解析", result.raw_metrics["fallback_reason"])
+
+    def test_first_structured_parse_failure_then_second_success(self):
+        responses = [
+            self.response_with_content("第一次返回说明文字但没有 JSON"),
+            self.successful_response(),
+        ]
+        with patch.dict(os.environ, self.dots_env, clear=False), patch(
+            "yunjin_ai.vision.urlopen", side_effect=responses
+        ) as mocked_urlopen:
+            result = analyze_image(
+                self.image,
+                provider="dots",
+                image_url="https://images.example.org/yunjin-demo.jpg",
+            )
+
+        self.assertEqual(mocked_urlopen.call_count, 2)
+        self.assertEqual(result.provider, "dots:dots3-note-prev")
+        self.assertEqual(result.raw_metrics["dots_attempts"], 2)
+
+    def test_repeated_structured_failures_keep_local_cv_fallback_boundary(self):
+        missing_required_payload = {
+            "subject_pattern_observations": {"unsafe": "free text object"},
+            "composition": ["主体位于画面中央"],
+            "colors": ["以红色和金色为主"],
+            "repetition_symmetry": ["左右存在近似重复"],
+            "retrieval_keywords": ["花叶"],
+            "limitations": ["不能据此确定归属"],
+        }
+        with patch.dict(os.environ, self.dots_env, clear=False), patch(
+            "yunjin_ai.vision.urlopen", return_value=self.response_with_payload(missing_required_payload)
+        ) as mocked_urlopen:
+            result = analyze_image(
+                self.image,
+                provider="dots",
+                image_url="https://images.example.org/yunjin-demo.jpg",
+            )
+
+        self.assertEqual(mocked_urlopen.call_count, 2)
+        self.assertEqual(result.provider, "local_cv")
+        self.assertEqual(result.raw_metrics["image_transport"], "local_cv")
+        self.assertIn("Dots API 返回内容无法按预期的结构化视觉结果解析", result.provider_status)
 
 
 if __name__ == "__main__":

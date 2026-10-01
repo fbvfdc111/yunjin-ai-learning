@@ -6,6 +6,7 @@ import io
 import ipaddress
 import json
 import os
+import re
 from dataclasses import dataclass
 from typing import Any
 from urllib.error import HTTPError, URLError
@@ -57,6 +58,10 @@ limitations 必须说明该结果不是南京云锦归属、具体工艺、年�
 
 class DotsProviderError(RuntimeError):
     """A user-facing Dots provider failure that is safe to show in the UI."""
+
+
+class DotsStructuredResponseError(ValueError):
+    """Dots returned text that cannot be accepted as the required structured observation."""
 
 
 def _nearest_color(rgb: tuple[int, int, int]) -> str:
@@ -240,26 +245,118 @@ def _prepare_dots_data_url(
     }
 
 
-def _json_object_from_model_text(text: str) -> dict[str, Any]:
+DOTS_REQUIRED_FIELDS = (
+    "subject_pattern_observations",
+    "composition",
+    "colors",
+    "repetition_symmetry",
+    "retrieval_keywords",
+    "limitations",
+)
+DOTS_FIELD_ALIASES = {
+    "subject_pattern_observations": (
+        "subject_pattern_observations",
+        "subject_observations",
+        "pattern_observations",
+        "observable_subject_patterns",
+    ),
+    "composition": ("composition", "composition_observations"),
+    "colors": ("colors", "color_observations"),
+    "repetition_symmetry": ("repetition_symmetry", "symmetry_observations", "repetition_observations"),
+    "retrieval_keywords": ("retrieval_keywords", "keywords"),
+    "limitations": ("limitations", "limits"),
+}
+
+
+def _strip_markdown_json_fence(text: str) -> str:
     cleaned = text.strip()
-    if cleaned.startswith("```"):
-        lines = cleaned.splitlines()
-        if lines and lines[0].startswith("```"):
-            lines = lines[1:]
-        if lines and lines[-1].strip() == "```":
-            lines = lines[:-1]
-        cleaned = "\n".join(lines).strip()
-    payload = json.loads(cleaned)
+    fenced = re.fullmatch(r"```(?:json|JSON)?\s*(.*?)\s*```", cleaned, flags=re.DOTALL)
+    if fenced:
+        return fenced.group(1).strip()
+    return cleaned
+
+
+def _extract_single_json_object(text: str) -> dict[str, Any]:
+    cleaned = _strip_markdown_json_fence(text)
+    object_spans: list[tuple[int, int]] = []
+    start: int | None = None
+    depth = 0
+    in_string = False
+    escaped = False
+    for index, char in enumerate(cleaned):
+        if in_string:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                in_string = False
+            continue
+        if char == '"':
+            in_string = True
+        elif char == "{":
+            if depth == 0:
+                start = index
+            depth += 1
+        elif char == "}" and depth:
+            depth -= 1
+            if depth == 0 and start is not None:
+                object_spans.append((start, index + 1))
+                start = None
+    if len(object_spans) != 1:
+        raise DotsStructuredResponseError("response must contain exactly one JSON object")
+    payload = json.loads(cleaned[object_spans[0][0] : object_spans[0][1]])
     if not isinstance(payload, dict):
-        raise ValueError("response JSON is not an object")
+        raise DotsStructuredResponseError("response JSON is not an object")
     return payload
+
+
+def _normalize_dots_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    normalized: dict[str, Any] = {}
+    for canonical_key in DOTS_REQUIRED_FIELDS:
+        value = None
+        found = False
+        for alias in DOTS_FIELD_ALIASES[canonical_key]:
+            if alias in payload:
+                value = payload[alias]
+                found = True
+                break
+        if not found:
+            value = []
+        if isinstance(value, str):
+            value = [value]
+        elif isinstance(value, tuple) and all(isinstance(item, str) for item in value):
+            value = list(value)
+        elif not isinstance(value, list):
+            raise DotsStructuredResponseError(f"{canonical_key} must be a string array")
+        normalized[canonical_key] = value
+    return normalized
+
+
+def _json_object_from_model_text(text: str) -> dict[str, Any]:
+    payload = _extract_single_json_object(text)
+    if not isinstance(payload, dict):
+        raise DotsStructuredResponseError("response JSON is not an object")
+    return _normalize_dots_payload(payload)
 
 
 def _string_list(payload: dict[str, Any], key: str) -> tuple[str, ...]:
     value = payload.get(key, [])
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
-        raise ValueError(f"{key} must be a string array")
+        raise DotsStructuredResponseError(f"{key} must be a string array")
     return tuple(item.strip() for item in value if item.strip())
+
+
+def _dots_http_error_message(exc: HTTPError, api_key: str) -> str:
+    error_body = exc.read().decode("utf-8", errors="replace").strip()
+    if api_key and error_body:
+        error_body = error_body.replace(api_key, "[REDACTED]")
+    detail = f"：{error_body[:4000]}" if error_body else ""
+    return f"Dots API 请求失败（HTTP {exc.code}）{detail}"
+
+
+def _is_retryable_http_status(status_code: int) -> bool:
+    return status_code in {408, 409, 425, 429, 500, 502, 503, 504}
 
 
 def analyze_with_dots(
@@ -306,40 +403,62 @@ def analyze_with_dots(
         "max_tokens": 700,
         "chat_template_kwargs": {"enable_thinking": False},
     }
-    request = Request(
-        f"{_dots_base_url()}/v1/chat/completions",
-        data=json.dumps(request_payload, ensure_ascii=False).encode("utf-8"),
-        headers={"api-key": api_key, "Content-Type": "application/json"},
-        method="POST",
-    )
-    try:
-        with urlopen(request, timeout=30) as response:
-            response_payload = json.loads(response.read().decode("utf-8"))
-        content = response_payload["choices"][0]["message"]["content"]
-        if not isinstance(content, str):
-            raise ValueError("message.content is not text")
-        payload = _json_object_from_model_text(content)
-        sections = (
-            ("主体/纹样", _string_list(payload, "subject_pattern_observations")),
-            ("构图", _string_list(payload, "composition")),
-            ("色彩", _string_list(payload, "colors")),
-            ("重复/对称", _string_list(payload, "repetition_symmetry")),
+    response_payload: dict[str, Any] = {}
+    observable: tuple[str, ...] = ()
+    keywords: tuple[str, ...] = ()
+    limitations: tuple[str, ...] = ()
+    attempts_used = 0
+    last_error: Exception | None = None
+    for attempt in range(1, 3):
+        attempts_used = attempt
+        request = Request(
+            f"{_dots_base_url()}/v1/chat/completions",
+            data=json.dumps(request_payload, ensure_ascii=False).encode("utf-8"),
+            headers={"api-key": api_key, "Content-Type": "application/json"},
+            method="POST",
         )
-        observable = tuple(f"{label}：{item}" for label, items in sections for item in items)
-        keywords = _string_list(payload, "retrieval_keywords")
-        limitations = _string_list(payload, "limitations")
-        if not observable or not keywords or not limitations:
-            raise ValueError("required visual fields are empty")
-    except HTTPError as exc:
-        error_body = exc.read().decode("utf-8", errors="replace").strip()
-        if api_key and error_body:
-            error_body = error_body.replace(api_key, "[REDACTED]")
-        detail = f"：{error_body[:4000]}" if error_body else ""
-        raise DotsProviderError(f"Dots API 请求失败（HTTP {exc.code}）{detail}") from exc
-    except (URLError, TimeoutError, OSError) as exc:
-        raise DotsProviderError(f"Dots API 网络调用失败：{exc.reason if isinstance(exc, URLError) else exc}") from exc
-    except (KeyError, IndexError, TypeError, ValueError, json.JSONDecodeError) as exc:
-        raise DotsProviderError("Dots API 返回内容无法按预期的结构化视觉结果解析。") from exc
+        try:
+            with urlopen(request, timeout=30) as response:
+                response_payload = json.loads(response.read().decode("utf-8"))
+            content = response_payload["choices"][0]["message"]["content"]
+            if not isinstance(content, str):
+                raise DotsStructuredResponseError("message.content is not text")
+            payload = _json_object_from_model_text(content)
+            sections = (
+                ("主体/纹样", _string_list(payload, "subject_pattern_observations")),
+                ("构图", _string_list(payload, "composition")),
+                ("色彩", _string_list(payload, "colors")),
+                ("重复/对称", _string_list(payload, "repetition_symmetry")),
+            )
+            observable = tuple(f"{label}：{item}" for label, items in sections for item in items)
+            keywords = _string_list(payload, "retrieval_keywords")
+            limitations = _string_list(payload, "limitations")
+            if not observable or not keywords or not limitations:
+                raise DotsStructuredResponseError("required visual fields are empty")
+            break
+        except HTTPError as exc:
+            if _is_retryable_http_status(exc.code) and attempt == 1:
+                last_error = exc
+                continue
+            raise DotsProviderError(_dots_http_error_message(exc, api_key)) from exc
+        except (URLError, TimeoutError, OSError) as exc:
+            if attempt == 1:
+                last_error = exc
+                continue
+            raise DotsProviderError(f"Dots API 网络调用失败：{exc.reason if isinstance(exc, URLError) else exc}") from exc
+        except (KeyError, IndexError, TypeError, DotsStructuredResponseError, json.JSONDecodeError) as exc:
+            if attempt == 1:
+                last_error = exc
+                continue
+            raise DotsProviderError("Dots API 返回内容无法按预期的结构化视觉结果解析。") from exc
+    else:
+        if isinstance(last_error, HTTPError):
+            raise DotsProviderError(_dots_http_error_message(last_error, api_key)) from last_error
+        if isinstance(last_error, (URLError, TimeoutError, OSError)):
+            raise DotsProviderError(
+                f"Dots API 网络调用失败：{last_error.reason if isinstance(last_error, URLError) else last_error}"
+            ) from last_error
+        raise DotsProviderError("Dots API 返回内容无法按预期的结构化视觉结果解析。") from last_error
 
     return VisionObservation(
         provider=f"dots:{model}",
@@ -353,6 +472,7 @@ def analyze_with_dots(
         raw_metrics={
             "response_id": response_payload.get("id"),
             "requested_provider": "dots",
+            "dots_attempts": attempts_used,
             "image_transport": image_transport,
             "detail": "medium",
             **image_metadata,
