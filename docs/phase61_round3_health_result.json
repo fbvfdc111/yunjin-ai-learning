@@ -1,0 +1,60 @@
+{
+  "phase": "phase5_round3",
+  "knowledge_items": 25,
+  "knowledge_count_is_quota": false,
+  "sources": 12,
+  "knowledge_errors": [],
+  "required_core_ids_present": true,
+  "general_background_ids": [
+    "KB013",
+    "KB024",
+    "KB025"
+  ],
+  "general_background_visual_disabled": true,
+  "visual_general_hits": [],
+  "visual_object_name_hits": [],
+  "official_objects": 95,
+  "official_label_counts": {
+    "nanjing_yunjin": 47,
+    "other_brocade": 48
+  },
+  "authorization_unknown": 95,
+  "usable_for_training_true": 0,
+  "governance_invariants_ok": true,
+  "relation_records": 47,
+  "objects_with_relations": 19,
+  "relations": 35,
+  "relation_errors": [],
+  "answer_hits": {
+    "妆花是什么？": [
+      "KB008"
+    ],
+    "织金是什么？": [
+      "KB009"
+    ],
+    "库锦是什么？": [
+      "KB016"
+    ],
+    "库缎是什么？": [
+      "KB017"
+    ],
+    "挑花结本是什么，有什么作用？": [
+      "KB019"
+    ],
+    "南京云锦官方对象中有鹤纹吗？": [
+      "KB021"
+    ]
+  },
+  "protected_sha256": {
+    "src/yunjin_ai/vision.py": "F1CCDB58311E63588466431B440235417D6F5595D31E4917C55B55DEC2FDEA09",
+    "tests/test_phase4_dots.py": "B18DCE6BA889B5D3B064111A7A1D4A27BBF0F2552FDC5126AF66DC1F1ABDDCF7",
+    "data/metadata/official_metadata.csv": "915F8C4C9605D912DA7ED8B8307957B4D000DEAED679BA250D4670BD49788823",
+    "data/metadata/official_level2_candidate_labels.csv": "F326EC87F79CEF1E0B474D3515B8954B1460F7C0735A7C2E6750B15A93790C9B",
+    "docs/phase2_audit_results.json": "8FDADF9470E85DA063883A55B39F398FDB9D6EF82609647508C94FAAA8052C39"
+  },
+  "protected_sha256_ok": true,
+  "data_official_files": 145,
+  "dots_provider_code_retained": true,
+  "openai_provider_code_retained": true,
+  "real_external_api_called": false
+}

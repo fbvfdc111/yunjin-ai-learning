@@ -1,0 +1,80 @@
+{
+  "scope": "No external API key is used; Dots falls back to local_cv when not configured.",
+  "cases": [
+    {
+      "case": "nanjing_yunjin_sample",
+      "actual_provider": "local_cv",
+      "provider_status": "Dots 未成功使用，已明确回退 local_cv：未配置 DOTS_API_KEY。",
+      "retrieval_keywords": [
+        "白",
+        "黄",
+        "紫",
+        "纹样",
+        "构图",
+        "对称",
+        "重复"
+      ],
+      "confirmed_learning_terms": [
+        "龙"
+      ],
+      "matched_hit_ids": [
+        "KB011"
+      ],
+      "limitations": [
+        "本地 fallback 只做颜色、边缘与镜像相似性统计，不识别动物、植物、工艺、年代或对象名称。",
+        "这些数值是图像描述指标，不是分类概率或模型置信度。",
+        "分析结果不能证明图片属于南京云锦。",
+        "未配置 DOTS_API_KEY。"
+      ],
+      "no_identity_claim": true
+    },
+    {
+      "case": "other_brocade_sample",
+      "actual_provider": "local_cv",
+      "provider_status": "Dots 未成功使用，已明确回退 local_cv：未配置 DOTS_API_KEY。",
+      "retrieval_keywords": [
+        "白",
+        "棕",
+        "纹样",
+        "构图",
+        "对称",
+        "重复"
+      ],
+      "confirmed_learning_terms": [],
+      "matched_hit_ids": [],
+      "limitations": [
+        "本地 fallback 只做颜色、边缘与镜像相似性统计，不识别动物、植物、工艺、年代或对象名称。",
+        "这些数值是图像描述指标，不是分类概率或模型置信度。",
+        "分析结果不能证明图片属于南京云锦。",
+        "未配置 DOTS_API_KEY。"
+      ],
+      "no_identity_claim": true
+    },
+    {
+      "case": "unrelated_geometric_image",
+      "actual_provider": "local_cv",
+      "provider_status": "Dots 未成功使用，已明确回退 local_cv：未配置 DOTS_API_KEY。",
+      "retrieval_keywords": [
+        "白",
+        "蓝",
+        "红",
+        "纹样",
+        "构图",
+        "对称",
+        "重复"
+      ],
+      "confirmed_learning_terms": [],
+      "matched_hit_ids": [],
+      "limitations": [
+        "本地 fallback 只做颜色、边缘与镜像相似性统计，不识别动物、植物、工艺、年代或对象名称。",
+        "这些数值是图像描述指标，不是分类概率或模型置信度。",
+        "分析结果不能证明图片属于南京云锦。",
+        "未配置 DOTS_API_KEY。"
+      ],
+      "no_identity_claim": true
+    }
+  ],
+  "boundary_question_status": "证据不足",
+  "boundary_answer": "当前本地知识库没有足够证据直接回答这个问题。我不会把常识猜测或模型推测补写成南京云锦文化事实；建议补充权威资料或请专家核验。",
+  "ok": true
+}

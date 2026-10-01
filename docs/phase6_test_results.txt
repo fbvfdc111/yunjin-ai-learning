@@ -1,0 +1,21 @@
+{
+  "checked_at_utc": "2026-09-07T09:36:54.677403+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "streamlit": "1.63.0",
+    "pytest": "9.1.1",
+    "openai": "2.54.0",
+    "Pillow": "12.3.0",
+    "PyYAML": "6.0.3"
+  },
+  "external_api_called": false,
+  "note": "Task-local runtime used; no classifier training dependencies were required by these tests."
+}
+
+Command: python -m pytest tests -q -p no:cacheprovider --junitxml=docs/phase6_test_results.xml
+Exit code: 0
+.............................................................................................                       [100%]
+93 passed, 29 subtests passed in 13.57s
+
+STDERR:

@@ -1,0 +1,1547 @@
+{
+  "baseline_zip_sha256": "4866434272C083C24F65EEDDEBA26F1D1147F084ED9A349CECAC0058DA76AAE6",
+  "baseline_files": 305,
+  "unchanged_files": 303,
+  "allowed_modified_files": [
+    "app.py",
+    "README.md"
+  ],
+  "actual_modified_files": [
+    "README.md",
+    "app.py"
+  ],
+  "unexpected_modified_files": [],
+  "missing_files": [],
+  "official_files": 145,
+  "official_file_differences": 0,
+  "original_zip_and_manifest_verified": null,
+  "original_vision_and_guide_app_blocks_unchanged": null,
+  "ok": true,
+  "files": {
+    ".env.example": {
+      "expected": "A1863E3D3E7F3477850C23713F81EB08526CFA6F347D378ED21ED8D43FF29ABC",
+      "actual": "A1863E3D3E7F3477850C23713F81EB08526CFA6F347D378ED21ED8D43FF29ABC",
+      "unchanged": true
+    },
+    ".gitignore": {
+      "expected": "1774279707D1DBD06E136DD52A46B04A977739F48DC53D79E45F1EAE18F4DD19",
+      "actual": "1774279707D1DBD06E136DD52A46B04A977739F48DC53D79E45F1EAE18F4DD19",
+      "unchanged": true
+    },
+    ".streamlit/config.toml": {
+      "expected": "B86371A67213DA607FE5009EC1122E5466FA494070139CB315E30BA70F53E470",
+      "actual": "B86371A67213DA607FE5009EC1122E5466FA494070139CB315E30BA70F53E470",
+      "unchanged": true
+    },
+    "app.py": {
+      "expected": "DF2E94041DF853AD693E931B4283219F16CF916C666C25DF5C46AAD4A9E47F43",
+      "actual": "848E69A18D2BD6F52B261E5EC979601CBD0D559D85C7077820506DA00C53AD0D",
+      "unchanged": false
+    },
+    "configs/default.yaml": {
+      "expected": "A01879371523C861FA6293CD9B6608374D091DA84EBC1575D6A7991814086140",
+      "actual": "A01879371523C861FA6293CD9B6608374D091DA84EBC1575D6A7991814086140",
+      "unchanged": true
+    },
+    "data/knowledge/knowledge_base.json": {
+      "expected": "3F2E96D9A7DCBCC325B562BEA5705C2E5F7EFDDA3E2F18ADD800A15E7FA1A951",
+      "actual": "3F2E96D9A7DCBCC325B562BEA5705C2E5F7EFDDA3E2F18ADD800A15E7FA1A951",
+      "unchanged": true
+    },
+    "data/knowledge/official_object_knowledge_map.json": {
+      "expected": "7EABAE241D28C356D28AF7E2C2798A9D810DFCE36DB5307ED832F7A56EF5C49E",
+      "actual": "7EABAE241D28C356D28AF7E2C2798A9D810DFCE36DB5307ED832F7A56EF5C49E",
+      "unchanged": true
+    },
+    "data/knowledge/README.md": {
+      "expected": "7E914C80EBDFE214E2447D4AC681B93D479F458F9A5C4E0A85411888AB845B56",
+      "actual": "7E914C80EBDFE214E2447D4AC681B93D479F458F9A5C4E0A85411888AB845B56",
+      "unchanged": true
+    },
+    "data/knowledge/sources.csv": {
+      "expected": "F8E2AE31B53DA3CBEA75A97D20AB22569C365299DA1B6F705A63D1608059D615",
+      "actual": "F8E2AE31B53DA3CBEA75A97D20AB22569C365299DA1B6F705A63D1608059D615",
+      "unchanged": true
+    },
+    "data/knowledge/sources.json": {
+      "expected": "7DB3E258CDE95D50D0087CB5FABBE7AEC73599E36922B6FD1011730F533B3D5E",
+      "actual": "7DB3E258CDE95D50D0087CB5FABBE7AEC73599E36922B6FD1011730F533B3D5E",
+      "unchanged": true
+    },
+    "data/metadata/file_manifest.csv": {
+      "expected": "BB503084D223B237780FB0FC8EF2139FD0824CF50B12E5DB07506716EAAC7EB1",
+      "actual": "BB503084D223B237780FB0FC8EF2139FD0824CF50B12E5DB07506716EAAC7EB1",
+      "unchanged": true
+    },
+    "data/metadata/metadata.csv": {
+      "expected": "D5CA3CE280CC351EA7A2BB50F7883DE387DF039AC9F6DD42C411772AF5ACC676",
+      "actual": "D5CA3CE280CC351EA7A2BB50F7883DE387DF039AC9F6DD42C411772AF5ACC676",
+      "unchanged": true
+    },
+    "data/metadata/official_level2_candidate_labels.csv": {
+      "expected": "F326EC87F79CEF1E0B474D3515B8954B1460F7C0735A7C2E6750B15A93790C9B",
+      "actual": "F326EC87F79CEF1E0B474D3515B8954B1460F7C0735A7C2E6750B15A93790C9B",
+      "unchanged": true
+    },
+    "data/metadata/official_metadata.csv": {
+      "expected": "915F8C4C9605D912DA7ED8B8307957B4D000DEAED679BA250D4670BD49788823",
+      "actual": "915F8C4C9605D912DA7ED8B8307957B4D000DEAED679BA250D4670BD49788823",
+      "unchanged": true
+    },
+    "data/metadata/official_source_pages.csv": {
+      "expected": "F6960C5935E9B856AFDABB3A21F6EE3EE9F538A8ADFF20786D1C63932B3D2390",
+      "actual": "F6960C5935E9B856AFDABB3A21F6EE3EE9F538A8ADFF20786D1C63932B3D2390",
+      "unchanged": true
+    },
+    "data/metadata/phase3_level2_candidate_knowledge_labels.csv": {
+      "expected": "D2EF5222417C67404767FF827161BD7B2EE8DF358212FD589835342D947317BD",
+      "actual": "D2EF5222417C67404767FF827161BD7B2EE8DF358212FD589835342D947317BD",
+      "unchanged": true
+    },
+    "data/metadata/phase3_license_evidence.csv": {
+      "expected": "75656DC8FDBB7FF0F7FF906881C56AC141DA5869D2DE2B15F86DDA3EB42975D4",
+      "actual": "75656DC8FDBB7FF0F7FF906881C56AC141DA5869D2DE2B15F86DDA3EB42975D4",
+      "unchanged": true
+    },
+    "data/metadata/phase3_open_data_candidates.csv": {
+      "expected": "71DE5D74B3DCB7A55EB1F4E72ABFABDFB98015B0D3142671D282378BEDC9A100",
+      "actual": "71DE5D74B3DCB7A55EB1F4E72ABFABDFB98015B0D3142671D282378BEDC9A100",
+      "unchanged": true
+    },
+    "data/metadata/phase3_source_survey.csv": {
+      "expected": "2227E066F927270F9795E0983F2A552A59CC98652C5FEF3B9326C14A4E9D3BD7",
+      "actual": "2227E066F927270F9795E0983F2A552A59CC98652C5FEF3B9326C14A4E9D3BD7",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_003.png": {
+      "expected": "14AE6C4CF0369058465E2044764DC4242DCD03710C361E4EFEBF7E9455995D58",
+      "actual": "14AE6C4CF0369058465E2044764DC4242DCD03710C361E4EFEBF7E9455995D58",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_005.png": {
+      "expected": "189DF1C8704D9E44803A67109A64C1D4004A5C8DFA16177D7DFC7EB8F1C40054",
+      "actual": "189DF1C8704D9E44803A67109A64C1D4004A5C8DFA16177D7DFC7EB8F1C40054",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_006.png": {
+      "expected": "B79A92D5C9EAAF083025BB0ADE8369D30888E2DA151729F9F879FBAD29EAA9A6",
+      "actual": "B79A92D5C9EAAF083025BB0ADE8369D30888E2DA151729F9F879FBAD29EAA9A6",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_007.png": {
+      "expected": "C52602A49109A9EBAF9EA218794819B3457E290932AFB46B77747FBAD7745926",
+      "actual": "C52602A49109A9EBAF9EA218794819B3457E290932AFB46B77747FBAD7745926",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_008.png": {
+      "expected": "B1313F7DB5BBD3E5E9218E61EB5C69D92A8233F73D0F5669FD403CEC19916A66",
+      "actual": "B1313F7DB5BBD3E5E9218E61EB5C69D92A8233F73D0F5669FD403CEC19916A66",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_009.png": {
+      "expected": "6AD990AE47CEDB06AF8B1699D4B815F6F108FB143D70E5C39158A9F731A0BA77",
+      "actual": "6AD990AE47CEDB06AF8B1699D4B815F6F108FB143D70E5C39158A9F731A0BA77",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_010.png": {
+      "expected": "F97C2AD8AFEE614C293694BB864A68F3F064AC68A1538BE79C65CAAEFEA8B6B3",
+      "actual": "F97C2AD8AFEE614C293694BB864A68F3F064AC68A1538BE79C65CAAEFEA8B6B3",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_011.png": {
+      "expected": "67A211C4E7A714D08DFA67395163E3FAAC0DD0D1A82AF7F7ED2F6FF70F2DE5CD",
+      "actual": "67A211C4E7A714D08DFA67395163E3FAAC0DD0D1A82AF7F7ED2F6FF70F2DE5CD",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_012.png": {
+      "expected": "5F069730BCCD0F6FF55F67521073864CE64BDE0768BA60C1D2F2AE8FFECE249F",
+      "actual": "5F069730BCCD0F6FF55F67521073864CE64BDE0768BA60C1D2F2AE8FFECE249F",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_015.png": {
+      "expected": "27BC104CA866D2A81135C64F52E1C69B24B689D639EA020A36B0DFDF75746345",
+      "actual": "27BC104CA866D2A81135C64F52E1C69B24B689D639EA020A36B0DFDF75746345",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_021.png": {
+      "expected": "7A05EF06F5B508EF342080805DE285C14EF3128195B8090958DBD3A43E3E94A3",
+      "actual": "7A05EF06F5B508EF342080805DE285C14EF3128195B8090958DBD3A43E3E94A3",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_028.png": {
+      "expected": "707A4527F96A83C748F307835417CC83DB8226DE130F4AAAFF2F33B12D655CB6",
+      "actual": "707A4527F96A83C748F307835417CC83DB8226DE130F4AAAFF2F33B12D655CB6",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/non_yunjin_page_033.png": {
+      "expected": "986C59889DA75F21E9D15B67C16C76D5226B086845131969A1A6741DD260C48A",
+      "actual": "986C59889DA75F21E9D15B67C16C76D5226B086845131969A1A6741DD260C48A",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/yunjin_page_001.png": {
+      "expected": "38D698FDBFB1BF7A64E757B7E225E49DEC7F70F334ACB4F7831D09F7BD634BAD",
+      "actual": "38D698FDBFB1BF7A64E757B7E225E49DEC7F70F334ACB4F7831D09F7BD634BAD",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/yunjin_page_002.png": {
+      "expected": "4594C64F4FD695CCF45C0E95694A46706867313DA4DF9E17BB861290092F7287",
+      "actual": "4594C64F4FD695CCF45C0E95694A46706867313DA4DF9E17BB861290092F7287",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/yunjin_page_003.png": {
+      "expected": "172EED0A80F21FA9E877081C054E5EFDF11D87F99B299D1B4900FE52BC245C64",
+      "actual": "172EED0A80F21FA9E877081C054E5EFDF11D87F99B299D1B4900FE52BC245C64",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/yunjin_page_004.png": {
+      "expected": "9E0B96DF3AA67441BA4636AF8CF6A680A777315E00C15B13E995F465A527F03A",
+      "actual": "9E0B96DF3AA67441BA4636AF8CF6A680A777315E00C15B13E995F465A527F03A",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/yunjin_page_005.png": {
+      "expected": "AC9416E39CFBA322FCC0AC2B9FC126A45FA6D1C0253132F6B78A43B791332617",
+      "actual": "AC9416E39CFBA322FCC0AC2B9FC126A45FA6D1C0253132F6B78A43B791332617",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/yunjin_page_006.png": {
+      "expected": "4464A92DF4662397E85475B583D8F47DAE4C0DB101F4485114E412562E58DD3F",
+      "actual": "4464A92DF4662397E85475B583D8F47DAE4C0DB101F4485114E412562E58DD3F",
+      "unchanged": true
+    },
+    "data/official/evidence/catalog_pages/yunjin_page_007.png": {
+      "expected": "324C110399B9FC146AD56F81D15C678C3319E2AA4406402B113569BBE3470EA0",
+      "actual": "324C110399B9FC146AD56F81D15C678C3319E2AA4406402B113569BBE3470EA0",
+      "unchanged": true
+    },
+    "data/official/evidence/source_pdfs/official_non_yunjin_catalog_1.pdf": {
+      "expected": "B5B58D30DEA2FDE2AC85BCEE89F5ADC0F17C5C56FDBE6E23B2A6CAA2433891EA",
+      "actual": "B5B58D30DEA2FDE2AC85BCEE89F5ADC0F17C5C56FDBE6E23B2A6CAA2433891EA",
+      "unchanged": true
+    },
+    "data/official/evidence/source_pdfs/official_yunjin_catalog_1.pdf": {
+      "expected": "6F93C2B71CA4D2C9145DECC8AA0841A7758EE175541A86BD4008D56A48326471",
+      "actual": "6F93C2B71CA4D2C9145DECC8AA0841A7758EE175541A86BD4008D56A48326471",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/brocades_page1.png": {
+      "expected": "7D2B019DE3BE66B741F89FF9488C5E684BA39028B85C3A2821FD97FEE01D8D51",
+      "actual": "7D2B019DE3BE66B741F89FF9488C5E684BA39028B85C3A2821FD97FEE01D8D51",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/brocades_y0.png": {
+      "expected": "1F8E944C1941A861093984603A69D3A3DB51EB9B3075BAE7828F2D10386CF70C",
+      "actual": "1F8E944C1941A861093984603A69D3A3DB51EB9B3075BAE7828F2D10386CF70C",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/brocades_y1206.png": {
+      "expected": "201A27B774E026B860E2AC9E3944F4F02A838D309659AD67D9C2EDB6102C8041",
+      "actual": "201A27B774E026B860E2AC9E3944F4F02A838D309659AD67D9C2EDB6102C8041",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/brocades_y603.png": {
+      "expected": "6B41AA4E21E41295410FEDB7FDE627B2C12A3DF2D96DA0746227D2EDC7359460",
+      "actual": "6B41AA4E21E41295410FEDB7FDE627B2C12A3DF2D96DA0746227D2EDC7359460",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/collection_downloads.png": {
+      "expected": "8313B7F3B5A6F43AEC34E1A7D6BA81DF5C6AEAFA8088840332C86FCDD27A395E",
+      "actual": "8313B7F3B5A6F43AEC34E1A7D6BA81DF5C6AEAFA8088840332C86FCDD27A395E",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/collection_downloads_y0.png": {
+      "expected": "4F3CCE3E5A49F1F7DD047F92A3B66C5067DBE70E78AF5121B1263027A46AE2B5",
+      "actual": "4F3CCE3E5A49F1F7DD047F92A3B66C5067DBE70E78AF5121B1263027A46AE2B5",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/collection_downloads_y410.png": {
+      "expected": "7117C9BBBF2A7B74635E8D91851262DC59DF0A345F242BB7772CD38984EA6C50",
+      "actual": "7117C9BBBF2A7B74635E8D91851262DC59DF0A345F242BB7772CD38984EA6C50",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/collection_downloads_y820.png": {
+      "expected": "68BA6E110A6ADF695EA5BC6C81520BBCE111568FEAD62D5D9AABDC034DF13E25",
+      "actual": "68BA6E110A6ADF695EA5BC6C81520BBCE111568FEAD62D5D9AABDC034DF13E25",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/fine_art.png": {
+      "expected": "76F93F34540FEF10AA69BBE52B0D66B1F3455C3D24F71DCF5562C8663D8B7326",
+      "actual": "76F93F34540FEF10AA69BBE52B0D66B1F3455C3D24F71DCF5562C8663D8B7326",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/fine_art_y0.png": {
+      "expected": "87B419E1315DDA5FA0C4D6CFB6E68E8BD91983DB87F73B7EC445828F054419F7",
+      "actual": "87B419E1315DDA5FA0C4D6CFB6E68E8BD91983DB87F73B7EC445828F054419F7",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/fine_art_y407.png": {
+      "expected": "B63E8647F2FBAD728F48BE660C1B7C9DC824D467736F6B71650F11ED63318599",
+      "actual": "B63E8647F2FBAD728F48BE660C1B7C9DC824D467736F6B71650F11ED63318599",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/fine_art_y815.png": {
+      "expected": "6DB9FA6FC3566C491AF8A002015D3F064989320DAE1AFFEEDF0F8FDAABB76131",
+      "actual": "6DB9FA6FC3566C491AF8A002015D3F064989320DAE1AFFEEDF0F8FDAABB76131",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/world_tapestry.png": {
+      "expected": "AD03F8FF681C73F99F9ED161BDEC95890FCECEC0935CDF13C3EF0B3343AA4477",
+      "actual": "AD03F8FF681C73F99F9ED161BDEC95890FCECEC0935CDF13C3EF0B3343AA4477",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/world_tapestry_y0.png": {
+      "expected": "7B98FD7C19B8507C7A661E10951214B455D381DE3C52393BE104B07136D30F43",
+      "actual": "7B98FD7C19B8507C7A661E10951214B455D381DE3C52393BE104B07136D30F43",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/world_tapestry_y1054.png": {
+      "expected": "61D6724E9DF72FA379AAF8A806593B1D4EC8B798C106323F4B5ED91765C37429",
+      "actual": "61D6724E9DF72FA379AAF8A806593B1D4EC8B798C106323F4B5ED91765C37429",
+      "unchanged": true
+    },
+    "data/official/evidence/webpage_screenshots/world_tapestry_y527.png": {
+      "expected": "410456641951101907AAFA831BB029235D6BF76CE72C8DBD61F688F7B270D021",
+      "actual": "410456641951101907AAFA831BB029235D6BF76CE72C8DBD61F688F7B270D021",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YAAAB000000300.png": {
+      "expected": "D5E32E59CED24CDAD9E452D5B41988E9C7CF72F910A7275776BF56280FDCBA7C",
+      "actual": "D5E32E59CED24CDAD9E452D5B41988E9C7CF72F910A7275776BF56280FDCBA7C",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YAAAB000000400.png": {
+      "expected": "081C0949739C7937EAD4EC6F4A6E293A26839357D8ECA70E3C7BA32897563A9A",
+      "actual": "081C0949739C7937EAD4EC6F4A6E293A26839357D8ECA70E3C7BA32897563A9A",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YAAAB000000500.png": {
+      "expected": "D77F8422F1CCE33B69877649840BBE59535AACF79DDC56452903AE2BB949EECD",
+      "actual": "D77F8422F1CCE33B69877649840BBE59535AACF79DDC56452903AE2BB949EECD",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YAAAB000000600.png": {
+      "expected": "014BA98F067A86F58F36C626C108069951107D9DE426106CA566C29556F87EFB",
+      "actual": "014BA98F067A86F58F36C626C108069951107D9DE426106CA566C29556F87EFB",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YAAAB000000700.png": {
+      "expected": "F7E88BAF5C4D02C7EDA3DA739CC0A5FC0F7870B9E2626CB692035E0965520A26",
+      "actual": "F7E88BAF5C4D02C7EDA3DA739CC0A5FC0F7870B9E2626CB692035E0965520A26",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YAAAB000000800.png": {
+      "expected": "08247DB07A961603B16E612271F017BF52AA05AD451D57530AE9F28BFC71C8DD",
+      "actual": "08247DB07A961603B16E612271F017BF52AA05AD451D57530AE9F28BFC71C8DD",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YAAAB000000900.png": {
+      "expected": "E0F696B7B11191DFB2F8BEFD1C0D3EFCF065FA5262D520EC100FE1FE63CFA237",
+      "actual": "E0F696B7B11191DFB2F8BEFD1C0D3EFCF065FA5262D520EC100FE1FE63CFA237",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000000100.png": {
+      "expected": "A2CA30979DAF980880AB5139E1F50826E6B07D84DCDE4DBEA51A1FEAD1EC8D74",
+      "actual": "A2CA30979DAF980880AB5139E1F50826E6B07D84DCDE4DBEA51A1FEAD1EC8D74",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000000200.png": {
+      "expected": "8B4B7E701AC58903EB27A9A9BCE596582D910D9B5B00FEBF6DD68EFFF9F13DDD",
+      "actual": "8B4B7E701AC58903EB27A9A9BCE596582D910D9B5B00FEBF6DD68EFFF9F13DDD",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000000300.png": {
+      "expected": "DF7C129FD101DDFB2C0AAAFD6438A7D1C12A1E66BC2382D8CDD81351BED78415",
+      "actual": "DF7C129FD101DDFB2C0AAAFD6438A7D1C12A1E66BC2382D8CDD81351BED78415",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000000400.png": {
+      "expected": "F343CA562C5C35C7D5EFA3E97B0D1172B960A89921E9AA38F1EAB0F94003DBA5",
+      "actual": "F343CA562C5C35C7D5EFA3E97B0D1172B960A89921E9AA38F1EAB0F94003DBA5",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000000500.png": {
+      "expected": "E16CCFE347DA9CB41008DC662B9015EA1BEE469996ACE36C98D1DC974DEA7348",
+      "actual": "E16CCFE347DA9CB41008DC662B9015EA1BEE469996ACE36C98D1DC974DEA7348",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000000600.png": {
+      "expected": "A23F6C844552BA6A8DFD3E4ED0B1C5160AA9C14ED3DF20364C6B52A2B7CD4BA5",
+      "actual": "A23F6C844552BA6A8DFD3E4ED0B1C5160AA9C14ED3DF20364C6B52A2B7CD4BA5",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000000700.png": {
+      "expected": "19AF3745AD0060C349F65DB496138E849ACDA59209A10B8FBDC229B9150BD170",
+      "actual": "19AF3745AD0060C349F65DB496138E849ACDA59209A10B8FBDC229B9150BD170",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000000800.png": {
+      "expected": "9A0464FFD55710A56958F321906A52AF988A9AC3D51949DD405E72F2455CE9B7",
+      "actual": "9A0464FFD55710A56958F321906A52AF988A9AC3D51949DD405E72F2455CE9B7",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000000900.png": {
+      "expected": "7622184DD4571138BE3FED7C2F43D17CF818C726401ED838A6B95D0EE4762A79",
+      "actual": "7622184DD4571138BE3FED7C2F43D17CF818C726401ED838A6B95D0EE4762A79",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000001000.png": {
+      "expected": "290A14A2CC7CF2CF8D26B810DCEFBD67D808D2C372C25647E9B1DCD8085AD58F",
+      "actual": "290A14A2CC7CF2CF8D26B810DCEFBD67D808D2C372C25647E9B1DCD8085AD58F",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000001100.png": {
+      "expected": "855A37AF8A929F053F978E6EEBDDEBD9B46AE729EBF8FC4A8A8941F4F8DDF8B6",
+      "actual": "855A37AF8A929F053F978E6EEBDDEBD9B46AE729EBF8FC4A8A8941F4F8DDF8B6",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000001200.png": {
+      "expected": "3EE0B6CFA66C9095739C69FD76F942BCF67149D974979AFB41E9D6B61FBB2FA4",
+      "actual": "3EE0B6CFA66C9095739C69FD76F942BCF67149D974979AFB41E9D6B61FBB2FA4",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YABAB000001300.png": {
+      "expected": "E90178477948D24C96B483EE6EB63BDC13A1E50A84BA28E27C51707ED11B78DC",
+      "actual": "E90178477948D24C96B483EE6EB63BDC13A1E50A84BA28E27C51707ED11B78DC",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000000100.png": {
+      "expected": "BA48F89CF6175116E4F20B1242149701ED0CCFA74334B72E179AC3D2547F63C1",
+      "actual": "BA48F89CF6175116E4F20B1242149701ED0CCFA74334B72E179AC3D2547F63C1",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000000200.png": {
+      "expected": "1F4890AA6D11F19C1ECC76EC7340BFC5D48DADC1B97297535DB92E6ECF6BFFF6",
+      "actual": "1F4890AA6D11F19C1ECC76EC7340BFC5D48DADC1B97297535DB92E6ECF6BFFF6",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000000400.png": {
+      "expected": "C938E6C77845FE0C76CFD4BE2469507AAA5773701F45D59AB6E5856F01FDC1FF",
+      "actual": "C938E6C77845FE0C76CFD4BE2469507AAA5773701F45D59AB6E5856F01FDC1FF",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000000500.png": {
+      "expected": "E40BC1F529B59BC0BF7820806C109261736DD0A38DE8602A8D87E59C19D2D42E",
+      "actual": "E40BC1F529B59BC0BF7820806C109261736DD0A38DE8602A8D87E59C19D2D42E",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000000700.png": {
+      "expected": "D58D4A15DB4CAADA2989EF095652CB36A93D9DCD0899C1F88BA840EC3AF089F4",
+      "actual": "D58D4A15DB4CAADA2989EF095652CB36A93D9DCD0899C1F88BA840EC3AF089F4",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000000800.png": {
+      "expected": "457B17AD9C68F453BCCEF3E89EA16C2821F7828E6CC2A42F6811C616C81A7655",
+      "actual": "457B17AD9C68F453BCCEF3E89EA16C2821F7828E6CC2A42F6811C616C81A7655",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000000900.png": {
+      "expected": "BA5C4ABC42D9CCFF045A932F9B8E669330EED0A14065D928DFA23CDE9C0227E0",
+      "actual": "BA5C4ABC42D9CCFF045A932F9B8E669330EED0A14065D928DFA23CDE9C0227E0",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000001100.png": {
+      "expected": "3572FDC2EB302C398FA8B8BDC4A0D22E3229B41B9F124BE103A47EDA141F6959",
+      "actual": "3572FDC2EB302C398FA8B8BDC4A0D22E3229B41B9F124BE103A47EDA141F6959",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000001300.png": {
+      "expected": "DC19746A7A1A17642236B745FB4B2A342A1C76871CD04B79C8240FDFAC617A34",
+      "actual": "DC19746A7A1A17642236B745FB4B2A342A1C76871CD04B79C8240FDFAC617A34",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000001400.png": {
+      "expected": "FAFCC03AF296FEDCCD07EEB13A45EE14390904D5E5F18FA31BE2272945DA8377",
+      "actual": "FAFCC03AF296FEDCCD07EEB13A45EE14390904D5E5F18FA31BE2272945DA8377",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000001500.png": {
+      "expected": "D6E81BDC47973EF5822071A14549F4A4B21D3C708313FBE192A106304BE294EB",
+      "actual": "D6E81BDC47973EF5822071A14549F4A4B21D3C708313FBE192A106304BE294EB",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000001600.png": {
+      "expected": "73FEDD87AAD99C534650AE666F80C673CE1B47029FEB7FF3B2A5DE5AAC6ED9BE",
+      "actual": "73FEDD87AAD99C534650AE666F80C673CE1B47029FEB7FF3B2A5DE5AAC6ED9BE",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000001700.png": {
+      "expected": "3FEA3FEEF567694F605095D38BD7A0A8C7226AA951C40A2EAFF0F9729B3FC300",
+      "actual": "3FEA3FEEF567694F605095D38BD7A0A8C7226AA951C40A2EAFF0F9729B3FC300",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000001800.png": {
+      "expected": "BCA85129A0FCB33229ABBDFE3C0477F52FB6CED4A2FAAA19B6D3463B1C8EADCE",
+      "actual": "BCA85129A0FCB33229ABBDFE3C0477F52FB6CED4A2FAAA19B6D3463B1C8EADCE",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000001900.png": {
+      "expected": "65FAF08EAF69865A7BDEDF3A63D8B71E5EEE722413CC1ECCCE201491B8C9612B",
+      "actual": "65FAF08EAF69865A7BDEDF3A63D8B71E5EEE722413CC1ECCCE201491B8C9612B",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000002000.png": {
+      "expected": "9F38D6312DCE6820DCC734CAEFBC16B0DE0C91103EC3DC401CC855A3CF11D81C",
+      "actual": "9F38D6312DCE6820DCC734CAEFBC16B0DE0C91103EC3DC401CC855A3CF11D81C",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000002100.png": {
+      "expected": "8805F31EB39D0CCE9A8A5276F56E771B3C2085C45B4C314A8DB9D828477E602F",
+      "actual": "8805F31EB39D0CCE9A8A5276F56E771B3C2085C45B4C314A8DB9D828477E602F",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000002200.png": {
+      "expected": "7EA1053F5D0A84B1E6CC915F1C35DE4FDFEA0DA7F007594F715A1EB1EE43EFA2",
+      "actual": "7EA1053F5D0A84B1E6CC915F1C35DE4FDFEA0DA7F007594F715A1EB1EE43EFA2",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000002300.png": {
+      "expected": "589FCA1E30908BEE20482280F384D1BDC02F227003B3CBDCAE656548836F98AE",
+      "actual": "589FCA1E30908BEE20482280F384D1BDC02F227003B3CBDCAE656548836F98AE",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/nanjing_yunjin/yunjin_YBBCA000002400.png": {
+      "expected": "A28B6275D1DDE895829DA05EF92F18FE3AE17E8F0C9F368940855F8F7C716E91",
+      "actual": "A28B6275D1DDE895829DA05EF92F18FE3AE17E8F0C9F368940855F8F7C716E91",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCCA000000100.png": {
+      "expected": "418EA9A907316CE894441DB719332D5F8DEFFE42C4F17248EE1E42D92A62B56E",
+      "actual": "418EA9A907316CE894441DB719332D5F8DEFFE42C4F17248EE1E42D92A62B56E",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCCA000000200.png": {
+      "expected": "890862CC9B92A4E363C30C778D3A0A8CFEAA9CC2C489EE95678AEA6F326A43D5",
+      "actual": "890862CC9B92A4E363C30C778D3A0A8CFEAA9CC2C489EE95678AEA6F326A43D5",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCCA000000300.png": {
+      "expected": "D85C885FFE2677CCD24869934AA9F8554BB54CD2CAF1B201390970F691FFA82F",
+      "actual": "D85C885FFE2677CCD24869934AA9F8554BB54CD2CAF1B201390970F691FFA82F",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCCC000002700.png": {
+      "expected": "979677D4D461B7A6E1F8E48F818C758F66CB16F2234BC1AABECCA9FE3F59FD43",
+      "actual": "979677D4D461B7A6E1F8E48F818C758F66CB16F2234BC1AABECCA9FE3F59FD43",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCCC000002800.png": {
+      "expected": "EDC1F386985F02D303B463684F8CCD9ED6816A1C055A2D3C9D6ED1599A406203",
+      "actual": "EDC1F386985F02D303B463684F8CCD9ED6816A1C055A2D3C9D6ED1599A406203",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCCD000000100.png": {
+      "expected": "1533B5F0876D78816005C9E89BBB7EEC77C3A1D09325D985612F400BD32B3AEE",
+      "actual": "1533B5F0876D78816005C9E89BBB7EEC77C3A1D09325D985612F400BD32B3AEE",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCDC000000100.png": {
+      "expected": "5FDDD6A900236D17423335B27FF7A1321CF8D244EF3654D6BA60B78FF11CDBE4",
+      "actual": "5FDDD6A900236D17423335B27FF7A1321CF8D244EF3654D6BA60B78FF11CDBE4",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCDD000000100.png": {
+      "expected": "240361015B1312E4FF6DDC8D35812E7D93AAEE4559D42D10FB562E2DDE17107A",
+      "actual": "240361015B1312E4FF6DDC8D35812E7D93AAEE4559D42D10FB562E2DDE17107A",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCDF000000100.png": {
+      "expected": "D70B7F446095432B0763EF879C2D68FC3886179F0B22BB23D996099169C03CAF",
+      "actual": "D70B7F446095432B0763EF879C2D68FC3886179F0B22BB23D996099169C03CAF",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCFA000000100.png": {
+      "expected": "A73DDD2C5A53D068BCA082B9D85A4AAEAAD89000724821C20F1EAA93D72BFF15",
+      "actual": "A73DDD2C5A53D068BCA082B9D85A4AAEAAD89000724821C20F1EAA93D72BFF15",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCFF000000100.png": {
+      "expected": "699EB5750355B14171DBC5A169815EB773E4E056D10B16EE213C7F37B1DEEEB6",
+      "actual": "699EB5750355B14171DBC5A169815EB773E4E056D10B16EE213C7F37B1DEEEB6",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKA000001300.png": {
+      "expected": "0F7CA839EEF60CFE08A482728BB1646F4827B878CF65F47B4B6B49D8028E90F6",
+      "actual": "0F7CA839EEF60CFE08A482728BB1646F4827B878CF65F47B4B6B49D8028E90F6",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKA000001700.png": {
+      "expected": "CC10A80DCA5E26B18ADC0CAADE8AAEE3CEE12C7C72580376A0670791D437DC13",
+      "actual": "CC10A80DCA5E26B18ADC0CAADE8AAEE3CEE12C7C72580376A0670791D437DC13",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKA000002400.png": {
+      "expected": "8A0349F6B3B8FE6D6FBC43DFFD0D46AA4907C39E2AA8D93AB74500DCAC8CD6D1",
+      "actual": "8A0349F6B3B8FE6D6FBC43DFFD0D46AA4907C39E2AA8D93AB74500DCAC8CD6D1",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKA000002700.png": {
+      "expected": "D34FE016445B96369F85BFA179A1874380ABA370B438FBE42BF96FB483A496A8",
+      "actual": "D34FE016445B96369F85BFA179A1874380ABA370B438FBE42BF96FB483A496A8",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKA000002800.png": {
+      "expected": "9D880EA213B1A766F46CC08F8DDADF86F22AF24D284D5493F97E1501615C49BF",
+      "actual": "9D880EA213B1A766F46CC08F8DDADF86F22AF24D284D5493F97E1501615C49BF",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKA000002900.png": {
+      "expected": "AA72075DF10817F0C1923572A586A4F410F29D53B88144569F2A5CF19FAC03F7",
+      "actual": "AA72075DF10817F0C1923572A586A4F410F29D53B88144569F2A5CF19FAC03F7",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKC000000300.png": {
+      "expected": "523F756DDB0295AF31239838B6B6A32F212F21CCC67F4C0B6E7D5350F350EEA1",
+      "actual": "523F756DDB0295AF31239838B6B6A32F212F21CCC67F4C0B6E7D5350F350EEA1",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKE000000100.png": {
+      "expected": "B3ABC765317AAD61A7BD2F4BA9ECE29F14F6F36EEB3A75AD5FAD63F2CD89B042",
+      "actual": "B3ABC765317AAD61A7BD2F4BA9ECE29F14F6F36EEB3A75AD5FAD63F2CD89B042",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKE000000500.png": {
+      "expected": "31364925810387E549BB4E5EB43D5E35C339151159825C43DA69832E0A7A0140",
+      "actual": "31364925810387E549BB4E5EB43D5E35C339151159825C43DA69832E0A7A0140",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKE000000700.png": {
+      "expected": "4B714C99A26541C2CF23E4487F716DBFF8061B2B3ABE47C529263694D94DE999",
+      "actual": "4B714C99A26541C2CF23E4487F716DBFF8061B2B3ABE47C529263694D94DE999",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKE000000800.png": {
+      "expected": "1D3FA8389C52BBFFB797EB07573267ECB6D8E4ED3D6AB4FD75EF81501C4FC3F5",
+      "actual": "1D3FA8389C52BBFFB797EB07573267ECB6D8E4ED3D6AB4FD75EF81501C4FC3F5",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKE000000900.png": {
+      "expected": "2282BEDB5763403E6AA4A39F79325C812A19A80ABC8358FC84D3545434039944",
+      "actual": "2282BEDB5763403E6AA4A39F79325C812A19A80ABC8358FC84D3545434039944",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKE000001000.png": {
+      "expected": "B07CE9F205F801D03C5C00AB3132358E78A6139AFEC8D4A9EB37C09EF8B4B91C",
+      "actual": "B07CE9F205F801D03C5C00AB3132358E78A6139AFEC8D4A9EB37C09EF8B4B91C",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKE000001100.png": {
+      "expected": "865AB3245ACE1896CFC015918DE6D7DA820D26FD3321BB51B25E38CF2B62807C",
+      "actual": "865AB3245ACE1896CFC015918DE6D7DA820D26FD3321BB51B25E38CF2B62807C",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKE000001300.png": {
+      "expected": "1C5ADF9FFDE8DBD9FD7097F2A653E0EB9915902B9308B3F64C9BFAF01C063678",
+      "actual": "1C5ADF9FFDE8DBD9FD7097F2A653E0EB9915902B9308B3F64C9BFAF01C063678",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCKF000000100.png": {
+      "expected": "7A6D6F2EC4A05A092E599679358E5EBEB2A880E53434BD5C3F774030348F208B",
+      "actual": "7A6D6F2EC4A05A092E599679358E5EBEB2A880E53434BD5C3F774030348F208B",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCLA000000100.png": {
+      "expected": "7CBA5E10849B888A44B02EE28F2FC038FDD41F74CA7D5D08E064D3C6E68C36CA",
+      "actual": "7CBA5E10849B888A44B02EE28F2FC038FDD41F74CA7D5D08E064D3C6E68C36CA",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCLA000000200.png": {
+      "expected": "B2FAEBD50A9C9A7B3375119468AC54F64FC2DBB1FDA11770FF0E611CC44D6648",
+      "actual": "B2FAEBD50A9C9A7B3375119468AC54F64FC2DBB1FDA11770FF0E611CC44D6648",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCLA000000400.png": {
+      "expected": "E5FC586B06FBDE568CFD3C25041E0BC189370C093D5E557098CC76815F2B9319",
+      "actual": "E5FC586B06FBDE568CFD3C25041E0BC189370C093D5E557098CC76815F2B9319",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCLA000000500.png": {
+      "expected": "EC238742235B2BFEAEEA749697B882B8C18338AFFF63E5A6C472527A923EC0A3",
+      "actual": "EC238742235B2BFEAEEA749697B882B8C18338AFFF63E5A6C472527A923EC0A3",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCLA000000600.png": {
+      "expected": "79B77EE37988CA0ADEF82566DD58D21C15CEE28EF7077942519DFC0DEA68E106",
+      "actual": "79B77EE37988CA0ADEF82566DD58D21C15CEE28EF7077942519DFC0DEA68E106",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCMA000000100.png": {
+      "expected": "8CB5C20A9AEC9B510BC6AE8243CBA3D65B0BF955B15629311F322E74E9264D1C",
+      "actual": "8CB5C20A9AEC9B510BC6AE8243CBA3D65B0BF955B15629311F322E74E9264D1C",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCPA000000100.png": {
+      "expected": "517A64676ED53877C29B3DE8859013C3385C47C4C5B5BF1020EDDCAB654B4877",
+      "actual": "517A64676ED53877C29B3DE8859013C3385C47C4C5B5BF1020EDDCAB654B4877",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCSA000000100.png": {
+      "expected": "36A025FC289EEAC3C8A8D0B58A695B39C69445771137525D8147EB0531100A02",
+      "actual": "36A025FC289EEAC3C8A8D0B58A695B39C69445771137525D8147EB0531100A02",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCXF000001800.png": {
+      "expected": "025F003F029E5B66798727BE22BDFBC665024D412465EF14FC2FD38560A0AB1B",
+      "actual": "025F003F029E5B66798727BE22BDFBC665024D412465EF14FC2FD38560A0AB1B",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCXF000005700.png": {
+      "expected": "9455E9FD69F83986216B21112DDCA65177F54ACEED6B589997D199B29295CF66",
+      "actual": "9455E9FD69F83986216B21112DDCA65177F54ACEED6B589997D199B29295CF66",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCYB000000100.png": {
+      "expected": "46505C17D284E8B403A5A17E7610302374EC6D931C73D0351FFC58A6753F3BFC",
+      "actual": "46505C17D284E8B403A5A17E7610302374EC6D931C73D0351FFC58A6753F3BFC",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCYE000000800.png": {
+      "expected": "388EB9EB71AB17898ABF1F8BA0D3ECB3E38DB092820D066FD77A90A1FE03E144",
+      "actual": "388EB9EB71AB17898ABF1F8BA0D3ECB3E38DB092820D066FD77A90A1FE03E144",
+      "unchanged": true
+    },
+    "data/official/model_images_candidates/other_brocade/other_brocade_YBCYE000000900.png": {
+      "expected": "1BC352AD83B21FAC4432F8EB81BB3B7A156508F139F98594EAFF0F981ED17B97",
+      "actual": "1BC352AD83B21FAC4432F8EB81BB3B7A156508F139F98594EAFF0F981ED17B97",
+      "unchanged": true
+    },
+    "data/official/OFFICIAL_EVIDENCE_DATABASE.md": {
+      "expected": "3E35C226A6379F801BCE2B418D2E68B21AD6BA584D5B02F8D1A3FBEA82A33908",
+      "actual": "3E35C226A6379F801BCE2B418D2E68B21AD6BA584D5B02F8D1A3FBEA82A33908",
+      "unchanged": true
+    },
+    "data/official/web_images/brocades_page1/browser_asset_manifest.json": {
+      "expected": "B29064B3384B6B2CEAC74AC65CD4C4CA2C8E901EA8055B1DFBEA3B9741A538A1",
+      "actual": "B29064B3384B6B2CEAC74AC65CD4C4CA2C8E901EA8055B1DFBEA3B9741A538A1",
+      "unchanged": true
+    },
+    "data/official/web_images/brocades_page1/Top_20240205034943.png": {
+      "expected": "21BFE77ED968A9F41D1F56FBBB1A4AA1C12077FCF85231F8D357C2D4CD8ED9DA",
+      "actual": "21BFE77ED968A9F41D1F56FBBB1A4AA1C12077FCF85231F8D357C2D4CD8ED9DA",
+      "unchanged": true
+    },
+    "data/official/web_images/brocades_page1/Top_20240205035103.png": {
+      "expected": "C0E851330A539140726D7E1221F0470EA9FA29012FD595BB0CE45A26EBCAB2C7",
+      "actual": "C0E851330A539140726D7E1221F0470EA9FA29012FD595BB0CE45A26EBCAB2C7",
+      "unchanged": true
+    },
+    "data/official/web_images/brocades_page1/Top_20240205035224.png": {
+      "expected": "213F3C32E4CD85432E353455A2496106F2158989966AE01D594C05ECB3B42279",
+      "actual": "213F3C32E4CD85432E353455A2496106F2158989966AE01D594C05ECB3B42279",
+      "unchanged": true
+    },
+    "data/official/web_images/brocades_page1/Top_20240205035453.png": {
+      "expected": "1A7DE910F266F949D372AC48A5212148782C32603EF8901CF59C01CF47464F18",
+      "actual": "1A7DE910F266F949D372AC48A5212148782C32603EF8901CF59C01CF47464F18",
+      "unchanged": true
+    },
+    "data/official/web_images/brocades_page1/Top_20240205035709.png": {
+      "expected": "994CE3739D4C01EE0321CC0847FB15A4745A51FA52F93D47F72CD07B9EB12F57",
+      "actual": "994CE3739D4C01EE0321CC0847FB15A4745A51FA52F93D47F72CD07B9EB12F57",
+      "unchanged": true
+    },
+    "data/official/web_images/brocades_page1/Top_20240205035812.png": {
+      "expected": "8F8F3EFD554AA9D5E79C8350149E5B4D9932324F09C6FC8DE89D0B5F0BF56871",
+      "actual": "8F8F3EFD554AA9D5E79C8350149E5B4D9932324F09C6FC8DE89D0B5F0BF56871",
+      "unchanged": true
+    },
+    "data/official/web_images/brocades_page1/Top_20240205040034.png": {
+      "expected": "B51689FF084CBEC7AC14B54FFAC52489E4038AF06D8603DD5180916206D1AB50",
+      "actual": "B51689FF084CBEC7AC14B54FFAC52489E4038AF06D8603DD5180916206D1AB50",
+      "unchanged": true
+    },
+    "data/official/web_images/brocades_page1/Top_20240205040134.png": {
+      "expected": "6F5AAE20414C28FC7FEFF921E509226B4A748B411A1660525E15D209286256DE",
+      "actual": "6F5AAE20414C28FC7FEFF921E509226B4A748B411A1660525E15D209286256DE",
+      "unchanged": true
+    },
+    "data/official/web_images/fine_art/20240305014129.png": {
+      "expected": "9E079534AE803032023DD5723112ADFBAEE2AE179DF0BC7287DD98680974EF8B",
+      "actual": "9E079534AE803032023DD5723112ADFBAEE2AE179DF0BC7287DD98680974EF8B",
+      "unchanged": true
+    },
+    "data/official/web_images/fine_art/20240305014138.png": {
+      "expected": "01DBC7A139E3DACDB2C661C9C79E8B2C43971C88538E8438B5C2EA495D74D13E",
+      "actual": "01DBC7A139E3DACDB2C661C9C79E8B2C43971C88538E8438B5C2EA495D74D13E",
+      "unchanged": true
+    },
+    "data/official/web_images/fine_art/20240305014149.png": {
+      "expected": "F263FF5B8146FC8A573CB12CF0A64F51DF5DB30833A36FB45218132D00D15987",
+      "actual": "F263FF5B8146FC8A573CB12CF0A64F51DF5DB30833A36FB45218132D00D15987",
+      "unchanged": true
+    },
+    "data/official/web_images/fine_art/20240305014158.png": {
+      "expected": "1BF28A20211B0206B90FFB26A9AF1F69AA844ADDF38FF50BDE9CA9C0751C4CCF",
+      "actual": "1BF28A20211B0206B90FFB26A9AF1F69AA844ADDF38FF50BDE9CA9C0751C4CCF",
+      "unchanged": true
+    },
+    "data/official/web_images/fine_art/20240308121701.png": {
+      "expected": "A5D412D348000BABAE01E4C8FD61E4CE3D237FE1E049026D291B0F28816645A2",
+      "actual": "A5D412D348000BABAE01E4C8FD61E4CE3D237FE1E049026D291B0F28816645A2",
+      "unchanged": true
+    },
+    "data/official/web_images/fine_art/20240308121739.jpg": {
+      "expected": "F35B56C7CE469AED925C2FB0DBA7ABFFC7397C6CE8F49C3D9853CEE0CDA73DE3",
+      "actual": "F35B56C7CE469AED925C2FB0DBA7ABFFC7397C6CE8F49C3D9853CEE0CDA73DE3",
+      "unchanged": true
+    },
+    "data/official/web_images/fine_art/20241012023355.png": {
+      "expected": "C2149DCD5EB05B9367FA3C36BC8C97DDBB82AAFCB57393030A90C94774B4C441",
+      "actual": "C2149DCD5EB05B9367FA3C36BC8C97DDBB82AAFCB57393030A90C94774B4C441",
+      "unchanged": true
+    },
+    "data/official/web_images/fine_art/browser_asset_manifest.json": {
+      "expected": "78EAAF126C07A6F2345E187E3140EF09097F3F14CA78852414C1BF0A3552E988",
+      "actual": "78EAAF126C07A6F2345E187E3140EF09097F3F14CA78852414C1BF0A3552E988",
+      "unchanged": true
+    },
+    "data/official/web_images/world_tapestry/browser_asset_manifest.json": {
+      "expected": "8EFB2E65663CA2F505B163115E6BF7E5D4C6D6580CF7E72FEC315193FAB289B7",
+      "actual": "8EFB2E65663CA2F505B163115E6BF7E5D4C6D6580CF7E72FEC315193FAB289B7",
+      "unchanged": true
+    },
+    "data/official/web_images/world_tapestry/Top_20240205044032.png": {
+      "expected": "DE53A517AC36B2B3E15F5C42E1B676289AACD18BF3676F9B30E6CE72959B9277",
+      "actual": "DE53A517AC36B2B3E15F5C42E1B676289AACD18BF3676F9B30E6CE72959B9277",
+      "unchanged": true
+    },
+    "data/official/web_images/world_tapestry/Top_20240205044145.png": {
+      "expected": "509FF6E41540868C05B9218E7B6DD85E491093F7D9729EFDC153581858B1D019",
+      "actual": "509FF6E41540868C05B9218E7B6DD85E491093F7D9729EFDC153581858B1D019",
+      "unchanged": true
+    },
+    "data/official/web_images/world_tapestry/Top_20240205044303.png": {
+      "expected": "6D55D0756D6B4934967F014B95B1FC2054BD436A1298FEF6A4AE38B1F208AF64",
+      "actual": "6D55D0756D6B4934967F014B95B1FC2054BD436A1298FEF6A4AE38B1F208AF64",
+      "unchanged": true
+    },
+    "data/official/web_images/world_tapestry/Top_20240205044416.png": {
+      "expected": "844ED30E1ACECC292E1D24CCC411163F2BE649BDFF3747C990B02583AD8FF268",
+      "actual": "844ED30E1ACECC292E1D24CCC411163F2BE649BDFF3747C990B02583AD8FF268",
+      "unchanged": true
+    },
+    "data/official/web_images/world_tapestry/Top_20240205044649.png": {
+      "expected": "EF2050B47D8DA509893CC105DC78A09534949834EEBC3EE414A79326C9ED0344",
+      "actual": "EF2050B47D8DA509893CC105DC78A09534949834EEBC3EE414A79326C9ED0344",
+      "unchanged": true
+    },
+    "data/official/web_images/world_tapestry/Top_20240205044746.png": {
+      "expected": "E1DA6A37264B7C904A1A5DB176E7FB8DB5F0AA92B3132D628EEE2F9240143EAA",
+      "actual": "E1DA6A37264B7C904A1A5DB176E7FB8DB5F0AA92B3132D628EEE2F9240143EAA",
+      "unchanged": true
+    },
+    "data/official/web_images/world_tapestry/Top_20240205044906.png": {
+      "expected": "A26A3E61310C4F9F106CC208553E11D5F8B979E74B1CD66BAD2231C895E2A40F",
+      "actual": "A26A3E61310C4F9F106CC208553E11D5F8B979E74B1CD66BAD2231C895E2A40F",
+      "unchanged": true
+    },
+    "data/official/web_images/world_tapestry/Top_20240205045021.png": {
+      "expected": "C22C19CB168147C4D375CCE62B7E6F8E86A13379A4E2F5194538A10DC78B4AC3",
+      "actual": "C22C19CB168147C4D375CCE62B7E6F8E86A13379A4E2F5194538A10DC78B4AC3",
+      "unchanged": true
+    },
+    "data/open_training_candidates/nanjing_yunjin/commons_yunjin_bixie_train_installation.jpg": {
+      "expected": "3D786B2F80D063042938B611FA30916813287A73B43EC0CEAC1C335284BF9ED6",
+      "actual": "3D786B2F80D063042938B611FA30916813287A73B43EC0CEAC1C335284BF9ED6",
+      "unchanged": true
+    },
+    "data/open_training_candidates/nanjing_yunjin/commons_yunjin_qianlong_dragon_robe.JPG": {
+      "expected": "84C9034D51380779630F418003859B9AD7716D11CD46E4AD2A5716654ADB3AA4",
+      "actual": "84C9034D51380779630F418003859B9AD7716D11CD46E4AD2A5716654ADB3AA4",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_22133.jpg": {
+      "expected": "B90712EAA068B3C2FC0F2F7550C8D280233101040D1460D871276BF371859625",
+      "actual": "B90712EAA068B3C2FC0F2F7550C8D280233101040D1460D871276BF371859625",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_35828.jpg": {
+      "expected": "B02D36F5CC3B7F28354807D00C556B9057646429BA77CB8AA38D274A3A46AD3D",
+      "actual": "B02D36F5CC3B7F28354807D00C556B9057646429BA77CB8AA38D274A3A46AD3D",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_39726.jpg": {
+      "expected": "14444FE1FBCD63FFA5E1CB317DCADBA787E78ED9C1420A01E13D0B1F3F27CA64",
+      "actual": "14444FE1FBCD63FFA5E1CB317DCADBA787E78ED9C1420A01E13D0B1F3F27CA64",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_44121.jpg": {
+      "expected": "B3FB80D08CE049BB40D944D6CD1908AB7A641636758AB4512EA10E3A855E335F",
+      "actual": "B3FB80D08CE049BB40D944D6CD1908AB7A641636758AB4512EA10E3A855E335F",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_44583.jpg": {
+      "expected": "5D617E093858721E0EE1E4F5BDC13D91BB2F7ADAA215FCC8070550A750DAE62A",
+      "actual": "5D617E093858721E0EE1E4F5BDC13D91BB2F7ADAA215FCC8070550A750DAE62A",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_51081.jpg": {
+      "expected": "3068D072153C2C6E7A08B8DCA63B2F8E4B97AFD34FBB51D1DC54F2C69D22B3CE",
+      "actual": "3068D072153C2C6E7A08B8DCA63B2F8E4B97AFD34FBB51D1DC54F2C69D22B3CE",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_56167.jpg": {
+      "expected": "BFCC0808171530EC994CDEF6965C8969888353D29A0ECED324A79DB54CFFDB5E",
+      "actual": "BFCC0808171530EC994CDEF6965C8969888353D29A0ECED324A79DB54CFFDB5E",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_58771.jpg": {
+      "expected": "948FB488C2B25FEAD5A3B997D6497106BDE3552BE42F45C64B6DF267F4530C5C",
+      "actual": "948FB488C2B25FEAD5A3B997D6497106BDE3552BE42F45C64B6DF267F4530C5C",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_65366.jpg": {
+      "expected": "ADE5EEB3913B8B0FAC866F1E8907C5384645C09D6DC515D61AC460EA36D190C2",
+      "actual": "ADE5EEB3913B8B0FAC866F1E8907C5384645C09D6DC515D61AC460EA36D190C2",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_69178.jpg": {
+      "expected": "AAE870DA1D88E8A54A1829064EC50AF9FC2F60C9D43FA9CA3599C793C1409F25",
+      "actual": "AAE870DA1D88E8A54A1829064EC50AF9FC2F60C9D43FA9CA3599C793C1409F25",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_69179.jpg": {
+      "expected": "19D0F9AF4343AFAEF531DEEB9EF7B9FE822ECD8A3F3D60A1FA7F35D85389E9D9",
+      "actual": "19D0F9AF4343AFAEF531DEEB9EF7B9FE822ECD8A3F3D60A1FA7F35D85389E9D9",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_70777.jpg": {
+      "expected": "CD4402891C90C55226E904CF81B9E01E8F0C2F1AF4ADC21F8AA5A1AF5E8D7EFB",
+      "actual": "CD4402891C90C55226E904CF81B9E01E8F0C2F1AF4ADC21F8AA5A1AF5E8D7EFB",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_71026.jpg": {
+      "expected": "7764BF385B0F5F3C6947E7C524724FA2F52124226ED3379D740212898CCE74E1",
+      "actual": "7764BF385B0F5F3C6947E7C524724FA2F52124226ED3379D740212898CCE74E1",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_71070.jpg": {
+      "expected": "354C8A6BC35BC9578A9DA134460863C968E817CC112C98399137A33D3DA738F4",
+      "actual": "354C8A6BC35BC9578A9DA134460863C968E817CC112C98399137A33D3DA738F4",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_71288.jpg": {
+      "expected": "B6758C70BAB64B8DB056AA6C0A9327B72942246DA4D7F04B509B9AE816B07221",
+      "actual": "B6758C70BAB64B8DB056AA6C0A9327B72942246DA4D7F04B509B9AE816B07221",
+      "unchanged": true
+    },
+    "data/open_training_candidates/other_brocade/met_71581.jpg": {
+      "expected": "86EFCCF1B765E0D615CF779C0BBBAB2C34303D3435DA21A3D505DF2E0D2B34ED",
+      "actual": "86EFCCF1B765E0D615CF779C0BBBAB2C34303D3435DA21A3D505DF2E0D2B34ED",
+      "unchanged": true
+    },
+    "data/processed/.gitkeep": {
+      "expected": "01BA4719C80B6FE911B091A7C05124B64EEECE964E09C058EF8F9805DACA546B",
+      "actual": "01BA4719C80B6FE911B091A7C05124B64EEECE964E09C058EF8F9805DACA546B",
+      "unchanged": true
+    },
+    "data/processed/processed_manifest.csv": {
+      "expected": "CE29DAF1CD2D8522527BF7D81AF4CBE132BE27150250DF4D4601B0A57D0FE8EE",
+      "actual": "CE29DAF1CD2D8522527BF7D81AF4CBE132BE27150250DF4D4601B0A57D0FE8EE",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 222952.png": {
+      "expected": "8787424875B034E39F91A080B2633F5485EA9B8C6273E459808E352CA68574AC",
+      "actual": "8787424875B034E39F91A080B2633F5485EA9B8C6273E459808E352CA68574AC",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223108.png": {
+      "expected": "893417C715E91480BDBE35425188C82D217659ABC8C8750B2B61A00B3E2A3DC3",
+      "actual": "893417C715E91480BDBE35425188C82D217659ABC8C8750B2B61A00B3E2A3DC3",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223138.png": {
+      "expected": "16DEBD4C06232E6335B93AAF169313E41CC040670A1858D440C762CC025010F2",
+      "actual": "16DEBD4C06232E6335B93AAF169313E41CC040670A1858D440C762CC025010F2",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223202.png": {
+      "expected": "EF3BD46B156DA40D4A011D28102319F6AB3ACFE827C25491041D8EC604C4BC93",
+      "actual": "EF3BD46B156DA40D4A011D28102319F6AB3ACFE827C25491041D8EC604C4BC93",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223239.png": {
+      "expected": "C0660E71EE9282AFC5C0FE52BC405285E3BF1DA8BDE06ECA2664196A2AFAFCDF",
+      "actual": "C0660E71EE9282AFC5C0FE52BC405285E3BF1DA8BDE06ECA2664196A2AFAFCDF",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223311.png": {
+      "expected": "2BB77C3C9D3661EAC690B84C972F9B944A00F51EE7266565B2EBD94CFD6943B5",
+      "actual": "2BB77C3C9D3661EAC690B84C972F9B944A00F51EE7266565B2EBD94CFD6943B5",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223338.png": {
+      "expected": "418CDF63FEB69342BB97FB5D4BC89E1C7891218082D9BB924FE25D335EAF9458",
+      "actual": "418CDF63FEB69342BB97FB5D4BC89E1C7891218082D9BB924FE25D335EAF9458",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223407.png": {
+      "expected": "C2017CC2AAFB2A50247D641A5BE4C4A28751040C206B61E8D2B76960E41CC2A6",
+      "actual": "C2017CC2AAFB2A50247D641A5BE4C4A28751040C206B61E8D2B76960E41CC2A6",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223527.png": {
+      "expected": "E14A41312BB5515ACC1CEA22FB6B24A662716BC2B6227C4AC078145ECBA782DA",
+      "actual": "E14A41312BB5515ACC1CEA22FB6B24A662716BC2B6227C4AC078145ECBA782DA",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223559.png": {
+      "expected": "77D816D39D3AD85983B73A8CD69BC5152EC4B6A7784E86145A30F8C5AD0A83F5",
+      "actual": "77D816D39D3AD85983B73A8CD69BC5152EC4B6A7784E86145A30F8C5AD0A83F5",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223632.png": {
+      "expected": "E556319F1BBD76ED995789BF850C71DDF4532D990C1DC1038C969ED0EF7448A8",
+      "actual": "E556319F1BBD76ED995789BF850C71DDF4532D990C1DC1038C969ED0EF7448A8",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223718.png": {
+      "expected": "BC90EEB4376EB4B3D57A9BF87A33791886D4EE557B1844D82F5DD6664BE6A287",
+      "actual": "BC90EEB4376EB4B3D57A9BF87A33791886D4EE557B1844D82F5DD6664BE6A287",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223744.png": {
+      "expected": "C3B4B4771AB0070C86C1227639C1FA54A52E2D9AC172BB73EABD07C1222F1FBE",
+      "actual": "C3B4B4771AB0070C86C1227639C1FA54A52E2D9AC172BB73EABD07C1222F1FBE",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223810.png": {
+      "expected": "46F5835BBE72F3211699506C7746D38969D5777C6DADF5F0353DB6FE2E5268AB",
+      "actual": "46F5835BBE72F3211699506C7746D38969D5777C6DADF5F0353DB6FE2E5268AB",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223837.png": {
+      "expected": "E76F8B09F89F618A897E0E8C483EAF72557DAF4160FDDC629F6143F7E24610D6",
+      "actual": "E76F8B09F89F618A897E0E8C483EAF72557DAF4160FDDC629F6143F7E24610D6",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223907.png": {
+      "expected": "2E7C5F6451FEEBCA7FC1B1A564AB50A565BF03400C7E1788E2AD5159F4A794F1",
+      "actual": "2E7C5F6451FEEBCA7FC1B1A564AB50A565BF03400C7E1788E2AD5159F4A794F1",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 223933.png": {
+      "expected": "DFD06D91DD3FD4C1568D9BCA4688326664F3E2B70DAD1C44750587A700A8C650",
+      "actual": "DFD06D91DD3FD4C1568D9BCA4688326664F3E2B70DAD1C44750587A700A8C650",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 224002.png": {
+      "expected": "8A199A1F98C6D32F6C7FA749F10A9CAD6A5C25265015666ECDA19CD8E12CE5D9",
+      "actual": "8A199A1F98C6D32F6C7FA749F10A9CAD6A5C25265015666ECDA19CD8E12CE5D9",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 224059.png": {
+      "expected": "641ACEE1A0A48320495CE9749B135CC15241EC41D3EBA1B332CF6CEA14E614B1",
+      "actual": "641ACEE1A0A48320495CE9749B135CC15241EC41D3EBA1B332CF6CEA14E614B1",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 224124.png": {
+      "expected": "3BF2A27A72E07FF0755303904C583E3187410DC83DFABABB40BD9CF028370FCC",
+      "actual": "3BF2A27A72E07FF0755303904C583E3187410DC83DFABABB40BD9CF028370FCC",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 224202.png": {
+      "expected": "41DDFCE05EC9433DC9A6499A955D855488469134802443F0740239F3D5738479",
+      "actual": "41DDFCE05EC9433DC9A6499A955D855488469134802443F0740239F3D5738479",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 224256.png": {
+      "expected": "23D69D02DFC675A5F7FBD55DB0197357BF66061F7B61E8E3263C83B86CD94048",
+      "actual": "23D69D02DFC675A5F7FBD55DB0197357BF66061F7B61E8E3263C83B86CD94048",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 224330.png": {
+      "expected": "F86F49B295836E1129FAF8A0ACC4D5A26517F3D4A2FDB0CF851F362FA5749E2A",
+      "actual": "F86F49B295836E1129FAF8A0ACC4D5A26517F3D4A2FDB0CF851F362FA5749E2A",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 224830.png": {
+      "expected": "A2AA8949142B7CAC6C03C619D2B2BA32467F67352AEFE7BAC329BC4996DB9F77",
+      "actual": "A2AA8949142B7CAC6C03C619D2B2BA32467F67352AEFE7BAC329BC4996DB9F77",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 224939.png": {
+      "expected": "6CDEF9B2B5AEBB00B38F3D17315C789FE4FFDC16FBFD6D0366CAD3B73EA69835",
+      "actual": "6CDEF9B2B5AEBB00B38F3D17315C789FE4FFDC16FBFD6D0366CAD3B73EA69835",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 225002.png": {
+      "expected": "24C7B4D0DD510F1E4B2B57C6A19D7E36BA7D56ADB5374D00F1EE9B2493638875",
+      "actual": "24C7B4D0DD510F1E4B2B57C6A19D7E36BA7D56ADB5374D00F1EE9B2493638875",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 225031.png": {
+      "expected": "6429B0DB24A61D2CB0DF20BDFEAA31B12C4B7B68451818BE11FCA612161ECDF8",
+      "actual": "6429B0DB24A61D2CB0DF20BDFEAA31B12C4B7B68451818BE11FCA612161ECDF8",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 225058.png": {
+      "expected": "99499056A3445782FC5BEA6E528331E5B7DADB97C6AAC29495485AFC722D6D43",
+      "actual": "99499056A3445782FC5BEA6E528331E5B7DADB97C6AAC29495485AFC722D6D43",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 225123.png": {
+      "expected": "CCE54CBEAED2241092AB3442FC2190AF6E529B76E2EA4CDBD573BFEA3A39F46C",
+      "actual": "CCE54CBEAED2241092AB3442FC2190AF6E529B76E2EA4CDBD573BFEA3A39F46C",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 225239.png": {
+      "expected": "071DF20792E666E2E982E1CEA06DE50C567A488F1354525E4F08C82AAFB9E0FC",
+      "actual": "071DF20792E666E2E982E1CEA06DE50C567A488F1354525E4F08C82AAFB9E0FC",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 225310.png": {
+      "expected": "5C7F103356C74573FB9D0CC5EFF44B1F9E060D49341A591CC10FFB05C2E2B6CB",
+      "actual": "5C7F103356C74573FB9D0CC5EFF44B1F9E060D49341A591CC10FFB05C2E2B6CB",
+      "unchanged": true
+    },
+    "data/raw/batch_2/屏幕截图 2026-09-02 225338.png": {
+      "expected": "29B7D9FE387C918A1DC86755B4302403B2578A5E88AF31330E17CA49D2B8A952",
+      "actual": "29B7D9FE387C918A1DC86755B4302403B2578A5E88AF31330E17CA49D2B8A952",
+      "unchanged": true
+    },
+    "data/raw/batch_3/屏幕截图 2026-09-02 230510.png": {
+      "expected": "3CA7AC9799A28CC15BA5708FE2DA3639A967B581AF13E8D44232A721E2A72111",
+      "actual": "3CA7AC9799A28CC15BA5708FE2DA3639A967B581AF13E8D44232A721E2A72111",
+      "unchanged": true
+    },
+    "data/raw/batch_3/屏幕截图 2026-09-02 230604.png": {
+      "expected": "813A1FC276D9FCBA8884149C933A0E7DD1EF85717B55F2F27F020F3B3241B006",
+      "actual": "813A1FC276D9FCBA8884149C933A0E7DD1EF85717B55F2F27F020F3B3241B006",
+      "unchanged": true
+    },
+    "data/raw/batch_3/屏幕截图 2026-09-02 230715.png": {
+      "expected": "C6A2EFC0704CE7DC691C7027D6E436F21A8C96FC9A449B7333A37A77067752EA",
+      "actual": "C6A2EFC0704CE7DC691C7027D6E436F21A8C96FC9A449B7333A37A77067752EA",
+      "unchanged": true
+    },
+    "data/raw/batch_3/屏幕截图 2026-09-02 230815.png": {
+      "expected": "EAD25C7E448AAAA5CE99ED237A438DB7E750F37EFF1D95C9167E5723DCB0EDE9",
+      "actual": "EAD25C7E448AAAA5CE99ED237A438DB7E750F37EFF1D95C9167E5723DCB0EDE9",
+      "unchanged": true
+    },
+    "data/raw/batch_3/屏幕截图 2026-09-02 230902.png": {
+      "expected": "530CFFF57E878D7A19535B2A92E4AFA46FC72D4FFEA591F0F52F531464085E56",
+      "actual": "530CFFF57E878D7A19535B2A92E4AFA46FC72D4FFEA591F0F52F531464085E56",
+      "unchanged": true
+    },
+    "data/raw/batch_3/屏幕截图 2026-09-02 230947.png": {
+      "expected": "9562E90186CFC0D3BA09FDF771D8B85EAFCCF1BCF2EFDEE97448B74DADB2B9DC",
+      "actual": "9562E90186CFC0D3BA09FDF771D8B85EAFCCF1BCF2EFDEE97448B74DADB2B9DC",
+      "unchanged": true
+    },
+    "data/raw/batch_3/屏幕截图 2026-09-02 231032.png": {
+      "expected": "580201625405A58CF4B43DEAD12E5725F46D771C4A0BD72CFFA4A21FDBB3165C",
+      "actual": "580201625405A58CF4B43DEAD12E5725F46D771C4A0BD72CFFA4A21FDBB3165C",
+      "unchanged": true
+    },
+    "data/raw/batch_3/屏幕截图 2026-09-02 231114.png": {
+      "expected": "4C4C14A64C5A9FD8A5460E39C1DC3EDEDD21743728EE40A91EDDF5071C25BA8E",
+      "actual": "4C4C14A64C5A9FD8A5460E39C1DC3EDEDD21743728EE40A91EDDF5071C25BA8E",
+      "unchanged": true
+    },
+    "data/splits/.gitkeep": {
+      "expected": "01BA4719C80B6FE911B091A7C05124B64EEECE964E09C058EF8F9805DACA546B",
+      "actual": "01BA4719C80B6FE911B091A7C05124B64EEECE964E09C058EF8F9805DACA546B",
+      "unchanged": true
+    },
+    "data/splits/official_splits.csv": {
+      "expected": "8E0FC258C19517DB8779E969EC7FF1C507D5387B0A9F3079EBF4F4FC0482620C",
+      "actual": "8E0FC258C19517DB8779E969EC7FF1C507D5387B0A9F3079EBF4F4FC0482620C",
+      "unchanged": true
+    },
+    "data/splits/splits.csv": {
+      "expected": "0FECABD6EA987C765A9B613A70E94E75D91E3F5FCC3C3966B7A10B972046A1A9",
+      "actual": "0FECABD6EA987C765A9B613A70E94E75D91E3F5FCC3C3966B7A10B972046A1A9",
+      "unchanged": true
+    },
+    "docs/category_stats.csv": {
+      "expected": "A4D46D3254CFBD213417CC56C88A7842CEAE94D7331F6C0FCA1A715B647F4C39",
+      "actual": "A4D46D3254CFBD213417CC56C88A7842CEAE94D7331F6C0FCA1A715B647F4C39",
+      "unchanged": true
+    },
+    "docs/competition_gap_checklist.md": {
+      "expected": "846B791F15C7E7BB6909643D77256246DA9B8937FACCC26D1386D76AC449ACAE",
+      "actual": "846B791F15C7E7BB6909643D77256246DA9B8937FACCC26D1386D76AC449ACAE",
+      "unchanged": true
+    },
+    "docs/data_supplement_plan.md": {
+      "expected": "7F0E442155F64208D72B92F0B7718182B5E085EC0147CA980F7207BE61BD23BB",
+      "actual": "7F0E442155F64208D72B92F0B7718182B5E085EC0147CA980F7207BE61BD23BB",
+      "unchanged": true
+    },
+    "docs/dataset_audit_report.md": {
+      "expected": "F766AA63590F50E6EDADE37190C973375405B41DBFAA8D6CC3388CDD11E24B28",
+      "actual": "F766AA63590F50E6EDADE37190C973375405B41DBFAA8D6CC3388CDD11E24B28",
+      "unchanged": true
+    },
+    "docs/label_policy.md": {
+      "expected": "CC6866FB7E45D31D3E39DFAEF346CE66C32148B7686B080A9CB93AC13A88ADED",
+      "actual": "CC6866FB7E45D31D3E39DFAEF346CE66C32148B7686B080A9CB93AC13A88ADED",
+      "unchanged": true
+    },
+    "docs/model_training_plan.md": {
+      "expected": "10B894674D91E011A0CB3D374EC84B5204B31B9C1831B006174DCF5EE26EFFC8",
+      "actual": "10B894674D91E011A0CB3D374EC84B5204B31B9C1831B006174DCF5EE26EFFC8",
+      "unchanged": true
+    },
+    "docs/phase2_aic_evidence.md": {
+      "expected": "0005C1407031C8E08E0C25C1D709F0E96034B2320B9A8A9F7CD2D891ACAB6A08",
+      "actual": "0005C1407031C8E08E0C25C1D709F0E96034B2320B9A8A9F7CD2D891ACAB6A08",
+      "unchanged": true
+    },
+    "docs/phase2_audit_results.json": {
+      "expected": "8FDADF9470E85DA063883A55B39F398FDB9D6EF82609647508C94FAAA8052C39",
+      "actual": "8FDADF9470E85DA063883A55B39F398FDB9D6EF82609647508C94FAAA8052C39",
+      "unchanged": true
+    },
+    "docs/phase2_data_audit_report.md": {
+      "expected": "90AE62FEEAE54E312B68F7D0709132D87027A48D61B26419E50C7834E18D0BF8",
+      "actual": "90AE62FEEAE54E312B68F7D0709132D87027A48D61B26419E50C7834E18D0BF8",
+      "unchanged": true
+    },
+    "docs/phase2_duplicate_review.csv": {
+      "expected": "8C10623512FE3467A0539B9E0A77136135DDD53A69B449F2B0C02C14233987C2",
+      "actual": "8C10623512FE3467A0539B9E0A77136135DDD53A69B449F2B0C02C14233987C2",
+      "unchanged": true
+    },
+    "docs/phase2_official_collection_report.md": {
+      "expected": "C2D5FC5ED3A5C98324E842E893734FA54A923B75BF3506E1E86F22ED959718C8",
+      "actual": "C2D5FC5ED3A5C98324E842E893734FA54A923B75BF3506E1E86F22ED959718C8",
+      "unchanged": true
+    },
+    "docs/phase2_official_stats.csv": {
+      "expected": "8AD53602B6183921E92AC8F7F941A35478E6BF02D2D9A6FA789D1D09A591FB55",
+      "actual": "8AD53602B6183921E92AC8F7F941A35478E6BF02D2D9A6FA789D1D09A591FB55",
+      "unchanged": true
+    },
+    "docs/phase2_training_decision.md": {
+      "expected": "40632CE6857BFD5704869AF713BE90305EDDCCE532F412CEF0AB77CA35C30A1F",
+      "actual": "40632CE6857BFD5704869AF713BE90305EDDCCE532F412CEF0AB77CA35C30A1F",
+      "unchanged": true
+    },
+    "docs/phase3_aic_data_compliance_draft.md": {
+      "expected": "EA7E650D7B66F9C530068161F792B648564178A08AC515C209D02B83BF88440C",
+      "actual": "EA7E650D7B66F9C530068161F792B648564178A08AC515C209D02B83BF88440C",
+      "unchanged": true
+    },
+    "docs/phase3_algorithm_route.md": {
+      "expected": "7AD07C82D333AD6AA2D896AC18CC89A787186EA7019CD12CFF099767FC6B1855",
+      "actual": "7AD07C82D333AD6AA2D896AC18CC89A787186EA7019CD12CFF099767FC6B1855",
+      "unchanged": true
+    },
+    "docs/phase3_candidate_contact_sheet.png": {
+      "expected": "A772144B7BE3F53F621E37D9F0C57C03F8AA863F0A265B019276C23FB48E8FEF",
+      "actual": "A772144B7BE3F53F621E37D9F0C57C03F8AA863F0A265B019276C23FB48E8FEF",
+      "unchanged": true
+    },
+    "docs/phase3_counts.json": {
+      "expected": "EFB952694D7E9F5AFC5F616A342E6B15D34CCF2CE7053F1D92585A5E94247691",
+      "actual": "EFB952694D7E9F5AFC5F616A342E6B15D34CCF2CE7053F1D92585A5E94247691",
+      "unchanged": true
+    },
+    "docs/phase3_duplicate_leakage_report.md": {
+      "expected": "8512541FA2A02055398379E3056987179FD2957CC26A9452F840B19BAD5D5960",
+      "actual": "8512541FA2A02055398379E3056987179FD2957CC26A9452F840B19BAD5D5960",
+      "unchanged": true
+    },
+    "docs/phase3_legal_data_register.xlsx": {
+      "expected": "DB983D7654E4065BF7C60E33D562CED0650903967F2C7DEF3155001D08D24695",
+      "actual": "DB983D7654E4065BF7C60E33D562CED0650903967F2C7DEF3155001D08D24695",
+      "unchanged": true
+    },
+    "docs/phase3_legal_data_register.xlsx.inspect.ndjson": {
+      "expected": "5F165282C10777319188BC7B2B0ADB803054DCD884A6C3F791A21541FF8C6036",
+      "actual": "5F165282C10777319188BC7B2B0ADB803054DCD884A6C3F791A21541FF8C6036",
+      "unchanged": true
+    },
+    "docs/phase3_near_duplicate_review.csv": {
+      "expected": "DAFDE6733054BBFB1722DC3F1D246308DFA0E63F90462CAF42455CB5FD16BE9F",
+      "actual": "DAFDE6733054BBFB1722DC3F1D246308DFA0E63F90462CAF42455CB5FD16BE9F",
+      "unchanged": true
+    },
+    "docs/phase3_open_data_audit.json": {
+      "expected": "7BFE45BB381F4E4A2F90C6F710D2AADBDA284A7B619946BF420D2276518234FC",
+      "actual": "7BFE45BB381F4E4A2F90C6F710D2AADBDA284A7B619946BF420D2276518234FC",
+      "unchanged": true
+    },
+    "docs/phase3_open_data_survey_report.md": {
+      "expected": "32C5BC5C8EAF0877EE841392AB32A615E61B4BF9A603E0BCE3EE8DA7F0550AEF",
+      "actual": "32C5BC5C8EAF0877EE841392AB32A615E61B4BF9A603E0BCE3EE8DA7F0550AEF",
+      "unchanged": true
+    },
+    "docs/phase4_aic_innovation_draft.md": {
+      "expected": "1F8FB8A90AB86FDE152A604FB2BFD627F48DA70E80118090606624BF2AAE2F4C",
+      "actual": "1F8FB8A90AB86FDE152A604FB2BFD627F48DA70E80118090606624BF2AAE2F4C",
+      "unchanged": true
+    },
+    "docs/phase4_baseline_integrity.json": {
+      "expected": "8FA1662FE74D84671417596FEBE4FC868960D660C843DE305D6345B2748F503C",
+      "actual": "8FA1662FE74D84671417596FEBE4FC868960D660C843DE305D6345B2748F503C",
+      "unchanged": true
+    },
+    "docs/phase4_delivery_report.md": {
+      "expected": "67D2D9E4C72CE0D905A62404D9758A0136C69FB15C93CC0BD33C8BD9BE92123F",
+      "actual": "67D2D9E4C72CE0D905A62404D9758A0136C69FB15C93CC0BD33C8BD9BE92123F",
+      "unchanged": true
+    },
+    "docs/phase4_system_architecture.md": {
+      "expected": "4DBA77196C1CC03A7248F6F45EF852C99AAC7AE0035233AF6295C79EBE7098C7",
+      "actual": "4DBA77196C1CC03A7248F6F45EF852C99AAC7AE0035233AF6295C79EBE7098C7",
+      "unchanged": true
+    },
+    "docs/phase4_training_recommendations.md": {
+      "expected": "9A1A6169B73F955B9EBEFF01C21B25152A17EFCBC85F98ED2ED4A30392F20D64",
+      "actual": "9A1A6169B73F955B9EBEFF01C21B25152A17EFCBC85F98ED2ED4A30392F20D64",
+      "unchanged": true
+    },
+    "docs/phase5_round1_delivery_report.md": {
+      "expected": "2B4000AAF464E705ADAA2CDD0F885D8C356A439CF4DAFF9A340B9AA99542C74D",
+      "actual": "2B4000AAF464E705ADAA2CDD0F885D8C356A439CF4DAFF9A340B9AA99542C74D",
+      "unchanged": true
+    },
+    "docs/phase5_round2_delivery_report.md": {
+      "expected": "F4E4A51DAEC6FDA5EECAAD2DA14C535480D07B85519BD5344F289EAA8EBABA88",
+      "actual": "F4E4A51DAEC6FDA5EECAAD2DA14C535480D07B85519BD5344F289EAA8EBABA88",
+      "unchanged": true
+    },
+    "docs/phase5_round3_delivery_report.md": {
+      "expected": "9B0C4489FEB7E78AADA61DA575E09D33A338CC63CABF643C2D006C95CBD24482",
+      "actual": "9B0C4489FEB7E78AADA61DA575E09D33A338CC63CABF643C2D006C95CBD24482",
+      "unchanged": true
+    },
+    "docs/phase5_round3_health_check_result.json": {
+      "expected": "E9F4407D2B52C81CDF0BC85ACD84DB7560ECDD34E05EB7F336224A0564C0060D",
+      "actual": "E9F4407D2B52C81CDF0BC85ACD84DB7560ECDD34E05EB7F336224A0564C0060D",
+      "unchanged": true
+    },
+    "docs/phase5_todo.md": {
+      "expected": "3D30FB0EEF01BDA3278F8E23EC3AE04577B9FFCF4B2BAD11AB1E4313171702BD",
+      "actual": "3D30FB0EEF01BDA3278F8E23EC3AE04577B9FFCF4B2BAD11AB1E4313171702BD",
+      "unchanged": true
+    },
+    "inference.py": {
+      "expected": "FECFAB34AE0EA945D0033131264BECC93687499DE854A427315553EBB588255E",
+      "actual": "FECFAB34AE0EA945D0033131264BECC93687499DE854A427315553EBB588255E",
+      "unchanged": true
+    },
+    "README.md": {
+      "expected": "2BF8980A4204CF52C0F86B507629F8F3090FC4D14AF188FC9848483EE5E02AA3",
+      "actual": "4066437B66E016982F2EB8F08876F8D5A9A674F30EEBB31BD8481627936802FF",
+      "unchanged": false
+    },
+    "references/AIC_�����Ļ���������ο����.pdf": {
+      "expected": "49C669A585B12F800EA80CFD59F7D0683DB8D3F6DB559BEB376C561B091FA38C",
+      "actual": "49C669A585B12F800EA80CFD59F7D0683DB8D3F6DB559BEB376C561B091FA38C",
+      "unchanged": true
+    },
+    "references/AIC_�����Ļ�����������Ʒ�ύҪ��.pdf": {
+      "expected": "0963C87ED2B1A5A0372448B83947254EC69816CF2284159D74B749FDA188B360",
+      "actual": "0963C87ED2B1A5A0372448B83947254EC69816CF2284159D74B749FDA188B360",
+      "unchanged": true
+    },
+    "references/README.md": {
+      "expected": "94DBC8EE75172A7D17F2D9E97248A1A00FDA741917E7FC0548ECFD6E244B51A9",
+      "actual": "94DBC8EE75172A7D17F2D9E97248A1A00FDA741917E7FC0548ECFD6E244B51A9",
+      "unchanged": true
+    },
+    "references/�°�(1)(1).docx": {
+      "expected": "A3DCD5FC45466B2E968E7D9ED0460467E3B810355F8CC8185106D06998AC0351",
+      "actual": "A3DCD5FC45466B2E968E7D9ED0460467E3B810355F8CC8185106D06998AC0351",
+      "unchanged": true
+    },
+    "references/���ھٰ�ڰ˽�AIC�㷨�����㷨�������������Ļ�����֪ͨ2607201.pdf": {
+      "expected": "4F3AC10999C4F2A98E58E62A8FD57BFBB9E08349C4E1D2CE342AE835811842A6",
+      "actual": "4F3AC10999C4F2A98E58E62A8FD57BFBB9E08349C4E1D2CE342AE835811842A6",
+      "unchanged": true
+    },
+    "requirements.txt": {
+      "expected": "A2B90FF5EFEEA02F5320B7086D653E697C97B580CC4A8CE63970B8F33FEA110E",
+      "actual": "A2B90FF5EFEEA02F5320B7086D653E697C97B580CC4A8CE63970B8F33FEA110E",
+      "unchanged": true
+    },
+    "scripts/apply_context_reclassification.py": {
+      "expected": "45E4A280DD08AE57AAC570D3D1670236C4CF3B6A073A473F174BB52296994C85",
+      "actual": "45E4A280DD08AE57AAC570D3D1670236C4CF3B6A073A473F174BB52296994C85",
+      "unchanged": true
+    },
+    "scripts/audit_dataset.py": {
+      "expected": "38BA8FCCE704583F2F82F98A81D29676CFC36FAA9113EC034D9E58CF682768DB",
+      "actual": "38BA8FCCE704583F2F82F98A81D29676CFC36FAA9113EC034D9E58CF682768DB",
+      "unchanged": true
+    },
+    "scripts/audit_official_dataset.py": {
+      "expected": "70A52369A9C37548A86B46C945F5618895AF08B63D40FDC2CB09FD54597E89D0",
+      "actual": "70A52369A9C37548A86B46C945F5618895AF08B63D40FDC2CB09FD54597E89D0",
+      "unchanged": true
+    },
+    "scripts/build_official_dataset.py": {
+      "expected": "A56F0F6EDBCD35F14CC7B894D4A734E4EB2258DD4DEAEF84ECEEEA437E9E1CD0",
+      "actual": "A56F0F6EDBCD35F14CC7B894D4A734E4EB2258DD4DEAEF84ECEEEA437E9E1CD0",
+      "unchanged": true
+    },
+    "scripts/create_official_splits.py": {
+      "expected": "8EF51671D272E18DCD06BFCDF181F33A24BA98761B4143FB93910FC1D9AE2486",
+      "actual": "8EF51671D272E18DCD06BFCDF181F33A24BA98761B4143FB93910FC1D9AE2486",
+      "unchanged": true
+    },
+    "scripts/create_splits.py": {
+      "expected": "A0FEAAD4808068C14FD24A68FE73AD10501076530149A5DC1B96A171074E5E25",
+      "actual": "A0FEAAD4808068C14FD24A68FE73AD10501076530149A5DC1B96A171074E5E25",
+      "unchanged": true
+    },
+    "scripts/import_browser_assets.py": {
+      "expected": "71B36207DD353CC0F65684123D16B7FE75C8DAF854091E1275C34954CB0DD4A9",
+      "actual": "71B36207DD353CC0F65684123D16B7FE75C8DAF854091E1275C34954CB0DD4A9",
+      "unchanged": true
+    },
+    "scripts/phase3_apply_manual_review.py": {
+      "expected": "63CC208331340EA1B05F1C526ED1A546582A59087957AE1ABD4D03C0E410B4D2",
+      "actual": "63CC208331340EA1B05F1C526ED1A546582A59087957AE1ABD4D03C0E410B4D2",
+      "unchanged": true
+    },
+    "scripts/phase3_audit_open_data.py": {
+      "expected": "47B20B42986F8DFD517200E3573E0E3716DEE280DBF19F532E873CC3EEA5C608",
+      "actual": "47B20B42986F8DFD517200E3573E0E3716DEE280DBF19F532E873CC3EEA5C608",
+      "unchanged": true
+    },
+    "scripts/phase3_collect_open_data.py": {
+      "expected": "64BA4593E2631DD0970F331FF54CC422DDC386F6E32834967F157BCDD610697A",
+      "actual": "64BA4593E2631DD0970F331FF54CC422DDC386F6E32834967F157BCDD610697A",
+      "unchanged": true
+    },
+    "scripts/phase4_health_check.py": {
+      "expected": "91373E4620F90178FB37D16C988D4348EF361420A2E5E60D3D2038491EE8B870",
+      "actual": "91373E4620F90178FB37D16C988D4348EF361420A2E5E60D3D2038491EE8B870",
+      "unchanged": true
+    },
+    "scripts/phase5_health_check.py": {
+      "expected": "B2126BD6BEE627119B1B9FAC1BD226DEA2047D24BA60F1323EAB44E943BDF298",
+      "actual": "B2126BD6BEE627119B1B9FAC1BD226DEA2047D24BA60F1323EAB44E943BDF298",
+      "unchanged": true
+    },
+    "scripts/phase5_round2_browser_acceptance.js": {
+      "expected": "582A9F5BA446D9B300674C87509431457B9DDFF945EDC3CAF377A8A77A87EEE5",
+      "actual": "582A9F5BA446D9B300674C87509431457B9DDFF945EDC3CAF377A8A77A87EEE5",
+      "unchanged": true
+    },
+    "scripts/phase5_round2_health_check.py": {
+      "expected": "55E5F0484140AABAE952E4267F2FD4F47DE1A07C32AEA181BA317178B4DB3559",
+      "actual": "55E5F0484140AABAE952E4267F2FD4F47DE1A07C32AEA181BA317178B4DB3559",
+      "unchanged": true
+    },
+    "scripts/phase5_round3_health_check.py": {
+      "expected": "E288667B34FA504953CD7E64DF35EACD8942B48FDFE80539DDAF8EA1C5E95DCC",
+      "actual": "E288667B34FA504953CD7E64DF35EACD8942B48FDFE80539DDAF8EA1C5E95DCC",
+      "unchanged": true
+    },
+    "scripts/prepare_data.py": {
+      "expected": "8D4A64ED570B231452E0B0857604A16980235BBB49DA289DEF16A3920990C327",
+      "actual": "8D4A64ED570B231452E0B0857604A16980235BBB49DA289DEF16A3920990C327",
+      "unchanged": true
+    },
+    "src/yunjin_ai/__init__.py": {
+      "expected": "D0795CBAE0B59755D1D63419C0DBEC9FCFC8050100FC656460AD4CE318D9ABA7",
+      "actual": "D0795CBAE0B59755D1D63419C0DBEC9FCFC8050100FC656460AD4CE318D9ABA7",
+      "unchanged": true
+    },
+    "src/yunjin_ai/datasets.py": {
+      "expected": "7C7DC08F7D14D2EDB0AA9DE69A0B204B9508C5F8CA6798A2E8F8822D0045E7CD",
+      "actual": "7C7DC08F7D14D2EDB0AA9DE69A0B204B9508C5F8CA6798A2E8F8822D0045E7CD",
+      "unchanged": true
+    },
+    "src/yunjin_ai/guide.py": {
+      "expected": "5013AF212FC76F4E504D513EBC14544C9D6E4BD71F59B22C837006E9B02C1D92",
+      "actual": "5013AF212FC76F4E504D513EBC14544C9D6E4BD71F59B22C837006E9B02C1D92",
+      "unchanged": true
+    },
+    "src/yunjin_ai/knowledge.py": {
+      "expected": "E91953F0C29647A9AEAFC387ABFAC8511AE3A32763086A474DE78305EF68D3A4",
+      "actual": "E91953F0C29647A9AEAFC387ABFAC8511AE3A32763086A474DE78305EF68D3A4",
+      "unchanged": true
+    },
+    "src/yunjin_ai/metadata.py": {
+      "expected": "4C4C255F08238035560BB7383B7BB1A25C9E4BD7D8463ECECF23DA68D3338116",
+      "actual": "4C4C255F08238035560BB7383B7BB1A25C9E4BD7D8463ECECF23DA68D3338116",
+      "unchanged": true
+    },
+    "src/yunjin_ai/models.py": {
+      "expected": "6BA420961985EEAB55356F09AC11A0E79C399C2EB9C817D89719B768AB4894C2",
+      "actual": "6BA420961985EEAB55356F09AC11A0E79C399C2EB9C817D89719B768AB4894C2",
+      "unchanged": true
+    },
+    "src/yunjin_ai/product.py": {
+      "expected": "3BF2CDF461B5442DCD77873F5996E1A76F202116E8F530A927A40BEBAAF0DAD0",
+      "actual": "3BF2CDF461B5442DCD77873F5996E1A76F202116E8F530A927A40BEBAAF0DAD0",
+      "unchanged": true
+    },
+    "src/yunjin_ai/training.py": {
+      "expected": "397801D7726A146C8A51C5035B019D56A95D6FE824A6928C78873581DB3B4F97",
+      "actual": "397801D7726A146C8A51C5035B019D56A95D6FE824A6928C78873581DB3B4F97",
+      "unchanged": true
+    },
+    "src/yunjin_ai/vision.py": {
+      "expected": "F1CCDB58311E63588466431B440235417D6F5595D31E4917C55B55DEC2FDEA09",
+      "actual": "F1CCDB58311E63588466431B440235417D6F5595D31E4917C55B55DEC2FDEA09",
+      "unchanged": true
+    },
+    "status.yaml": {
+      "expected": "ED6C59DAF1E60C50EA9052E42500CD0C79342CAB91F7C9F4D71BEB3937B3C84B",
+      "actual": "ED6C59DAF1E60C50EA9052E42500CD0C79342CAB91F7C9F4D71BEB3937B3C84B",
+      "unchanged": true
+    },
+    "tests/test_metadata.py": {
+      "expected": "9C50CFFBD5BD5C08E81A87938F6C5F10AD0DD2FA58FF02E609B9C8D477113441",
+      "actual": "9C50CFFBD5BD5C08E81A87938F6C5F10AD0DD2FA58FF02E609B9C8D477113441",
+      "unchanged": true
+    },
+    "tests/test_official_metadata.py": {
+      "expected": "3F299F66A7D80DE2C62797703618B8F73BE85C219F1E809B07B2439A52B99FF9",
+      "actual": "3F299F66A7D80DE2C62797703618B8F73BE85C219F1E809B07B2439A52B99FF9",
+      "unchanged": true
+    },
+    "tests/test_phase4_dots.py": {
+      "expected": "B18DCE6BA889B5D3B064111A7A1D4A27BBF0F2552FDC5126AF66DC1F1ABDDCF7",
+      "actual": "B18DCE6BA889B5D3B064111A7A1D4A27BBF0F2552FDC5126AF66DC1F1ABDDCF7",
+      "unchanged": true
+    },
+    "tests/test_phase4_knowledge.py": {
+      "expected": "734919E713FD3F31AE5CFB8F125E74007660D50016E65AE9F6AE527C0FA69B54",
+      "actual": "734919E713FD3F31AE5CFB8F125E74007660D50016E65AE9F6AE527C0FA69B54",
+      "unchanged": true
+    },
+    "tests/test_phase4_vision.py": {
+      "expected": "E3187F53F4AB53B1A67A2B66B8C50579F552C742205CA87640F9EBA8547A4CD4",
+      "actual": "E3187F53F4AB53B1A67A2B66B8C50579F552C742205CA87640F9EBA8547A4CD4",
+      "unchanged": true
+    },
+    "tests/test_phase5_product.py": {
+      "expected": "1110696B5D1307BDA1E6E6DCF15990F0458F587F07222FB8DB785394B67D11DA",
+      "actual": "1110696B5D1307BDA1E6E6DCF15990F0458F587F07222FB8DB785394B67D11DA",
+      "unchanged": true
+    },
+    "tests/test_phase5_round2_acceptance.py": {
+      "expected": "669EA7FA99988779C6AFD6D3AEBF971A84CAB53E208A68BC6BB9BDC99E2A2F50",
+      "actual": "669EA7FA99988779C6AFD6D3AEBF971A84CAB53E208A68BC6BB9BDC99E2A2F50",
+      "unchanged": true
+    },
+    "tests/test_phase5_round3_core.py": {
+      "expected": "4EBE821730238766FB661B5B309714187B948D6093E85299AEBF1C2B878FF9D2",
+      "actual": "4EBE821730238766FB661B5B309714187B948D6093E85299AEBF1C2B878FF9D2",
+      "unchanged": true
+    },
+    "train_level1.py": {
+      "expected": "310B1D41B892404D14691DE0FBA7CC5A2F2D57D1F54B7B4BD704072140B32A03",
+      "actual": "310B1D41B892404D14691DE0FBA7CC5A2F2D57D1F54B7B4BD704072140B32A03",
+      "unchanged": true
+    },
+    "train_level2.py": {
+      "expected": "6BE93CB55C6A4406E16D39CB3951B81A36B61B9F07E8A9427E57B43DB728791F",
+      "actual": "6BE93CB55C6A4406E16D39CB3951B81A36B61B9F07E8A9427E57B43DB728791F",
+      "unchanged": true
+    },
+    "�����ƽ�AI.bat": {
+      "expected": "7BF278F651AAB5D636D0A777FE96AF4739340CEEF853DCFA97FA06DF7C0E2E5B",
+      "actual": "7BF278F651AAB5D636D0A777FE96AF4739340CEEF853DCFA97FA06DF7C0E2E5B",
+      "unchanged": true
+    }
+  }
+}

@@ -1,0 +1,8 @@
+﻿metric,count,definition
+confirmed_nanjing_yunjin_objects,47,官网清册类别或明确栏目文字证明的独立对象
+confirmed_other_brocade_objects,48,官网非云锦类且原名含锦，或世界织锦明确命名的独立对象
+unknown_objects,0,本轮正式metadata不纳入证据不足对象
+objects_with_label_evidence,95,存在可追溯官网类别证据
+decodable_model_images,95,候选主体图可被Pillow解码
+images_min_dimension_ge_224,14,候选主体图最短边至少224像素
+direct_training_eligible,0,同时满足标签、质量、授权与泄漏要求

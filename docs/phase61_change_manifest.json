@@ -1,0 +1,40 @@
+{
+  "baseline_sha256": "3212C718EF953B5AA4BD7E18C76DF9473BD661BDBC94EE0065DFAD5C75FA9F7B",
+  "modified": [
+    "app.py",
+    "README.md",
+    "src/yunjin_ai/digital_twin_page.py",
+    "src/yunjin_ai/digital_twin_svg.py"
+  ],
+  "added": [
+    "docs/phase61_baseline_manifest.json",
+    "docs/phase61_change_manifest.json",
+    "docs/phase61_delivery_report.md",
+    "docs/phase61_governance_result.json",
+    "docs/phase61_phase4_health_result.json",
+    "docs/phase61_phase4_health_stderr.txt",
+    "docs/phase61_phase5_health_result.json",
+    "docs/phase61_phase5_health_stderr.txt",
+    "docs/phase61_phase61_protection_result.json",
+    "docs/phase61_phase61_protection_stderr.txt",
+    "docs/phase61_phase6_health_result.json",
+    "docs/phase61_phase6_health_stderr.txt",
+    "docs/phase61_phase6_protection_result.json",
+    "docs/phase61_phase6_protection_stderr.txt",
+    "docs/phase61_pytest_result.txt",
+    "docs/phase61_pytest_stderr.txt",
+    "docs/phase61_round2_health_result.json",
+    "docs/phase61_round2_health_stderr.txt",
+    "docs/phase61_round3_health_result.json",
+    "docs/phase61_round3_health_stderr.txt",
+    "docs/phase61_test_results.xml",
+    "docs/phase61_validation.json",
+    "docs/phase61_visual_comparison.html",
+    "scripts/phase61_protection.py",
+    "scripts/phase61_validate.py",
+    "src/yunjin_ai/twin_presentation.py",
+    "status_current.yaml",
+    "tests/test_phase61_presentation.py"
+  ],
+  "deleted": []
+}

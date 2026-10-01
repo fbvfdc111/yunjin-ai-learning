@@ -1,0 +1,11 @@
+{
+  "official_objects": 95,
+  "official_label_counts": {
+    "nanjing_yunjin": 47,
+    "other_brocade": 48
+  },
+  "authorization_unknown": 95,
+  "usable_for_training_true": 0,
+  "governance_invariants_ok": true,
+  "training_gates_block": true
+}

@@ -1,0 +1,42 @@
+{
+  "phase": "phase5_round2",
+  "knowledge_items": 25,
+  "sources": 12,
+  "knowledge_errors": [],
+  "knowledge_uses": [
+    "cultural_content",
+    "governance/methodology",
+    "process/history"
+  ],
+  "official_objects": 95,
+  "official_label_counts": {
+    "nanjing_yunjin": 47,
+    "other_brocade": 48
+  },
+  "governance_invariants_ok": true,
+  "bird_willow_visual_hits": [],
+  "answer_hits": {
+    "妆花是什么？": [
+      "KB008"
+    ],
+    "南京云锦有哪些主要品种？": [
+      "KB007"
+    ],
+    "云锦为什么需要手工织造？": [
+      "KB004"
+    ],
+    "八宝纹有什么文化寓意？": [
+      "KB013"
+    ]
+  },
+  "boundary_question_status": "证据不足",
+  "boundary_question_hits": [],
+  "fallback_questions": [
+    "南京云锦是什么？",
+    "妆花是什么？",
+    "南京云锦有哪些主要品种？"
+  ],
+  "dots_provider_code_retained": true,
+  "openai_provider_code_retained": true,
+  "real_external_api_called": false
+}

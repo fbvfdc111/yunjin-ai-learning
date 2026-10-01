@@ -1,0 +1,27 @@
+{
+  "phase": "phase5_round1",
+  "knowledge_items": 25,
+  "sources": 12,
+  "knowledge_errors": [],
+  "official_objects": 95,
+  "official_label_counts": {
+    "nanjing_yunjin": 47,
+    "other_brocade": 48
+  },
+  "governance_invariants_ok": true,
+  "generic_visual_hits": [],
+  "specific_visual_hits": [
+    "KB012"
+  ],
+  "confirmed_topic_hits": [
+    "KB007",
+    "KB008"
+  ],
+  "visual_retrieval_threshold_ok": true,
+  "local_cv_provider": "local_cv",
+  "visual_sections_present": true,
+  "dots_provider_code_retained": true,
+  "openai_provider_code_retained": true,
+  "guide_handoff_ok": true,
+  "real_external_api_called": false
+}

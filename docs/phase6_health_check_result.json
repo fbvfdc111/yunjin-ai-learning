@@ -1,0 +1,49 @@
+{
+  "phase": "phase6",
+  "prototype": "知识驱动、状态驱动的南京云锦织造教学型数字孪生原型",
+  "state_driver": "user_interaction",
+  "physical_sensors": false,
+  "real_time_bidirectional_sync": false,
+  "physical_parameter_simulation": false,
+  "expert_mechanical_structure_validation": false,
+  "stage_count": 6,
+  "knowledge_items": 25,
+  "sources": 12,
+  "knowledge_relation_errors": [],
+  "question_answer_hits": {
+    "pattern_design": [
+      "KB010"
+    ],
+    "pattern_translation": [
+      "KB019"
+    ],
+    "weaving_preparation": [
+      "KB003"
+    ],
+    "warp_lifting": [
+      "KB001",
+      "KB004"
+    ],
+    "weft_weaving": [
+      "KB004"
+    ],
+    "pattern_emergence": [
+      "KB003"
+    ]
+  },
+  "six_runtime_transitions_and_svg_changes_ok": true,
+  "all_teaching_stages_executed": true,
+  "official_objects": 95,
+  "official_label_counts": {
+    "nanjing_yunjin": 47,
+    "other_brocade": 48
+  },
+  "authorization_unknown": 95,
+  "usable_for_training_true": 0,
+  "governance_invariants_ok": true,
+  "relation_records": 47,
+  "training_gates_block": true,
+  "protected_sha256_ok": true,
+  "real_external_api_called": false,
+  "ok": true
+}

@@ -1,0 +1,45 @@
+﻿dimension,category,count,definition
+source_batch,batch_2,32,metadata direct count
+source_batch,batch_3,8,metadata direct count
+asset_type,object_catalog_screenshot,31,metadata direct count
+asset_type,pattern_record_screenshot,8,metadata direct count
+asset_type,record_card_screenshot,1,metadata direct count
+usage_scope,reference,40,metadata direct count
+level1_label,nanjing_yunjin,5,metadata direct count
+level1_label,other_brocade,7,metadata direct count
+level1_label,unknown,28,metadata direct count
+usable_for_training,false,40,metadata direct count
+collection_scope,nanjing_yunjin_project_related_materials,40,metadata direct count
+level1_confidence,high,7,metadata direct count
+level1_confidence,insufficient,28,metadata direct count
+level1_confidence,medium,5,metadata direct count
+label_evidence_available,false,28,metadata direct count
+label_evidence_available,true,12,metadata direct count
+label_leakage_risk,high,40,metadata direct count
+independent_source_groups,all,34,group-aware count
+near_duplicate_group,YAABB-00501,3,two near-duplicate views plus one record card
+name_supported_pattern,云肩,1,literal evidence only; not a training class count
+name_supported_pattern,云蟒,1,literal evidence only; not a training class count
+name_supported_pattern,人物,1,literal evidence only; not a training class count
+name_supported_pattern,八宝,1,literal evidence only; not a training class count
+name_supported_pattern,八宝纹,1,literal evidence only; not a training class count
+name_supported_pattern,十二章,1,literal evidence only; not a training class count
+name_supported_pattern,双喜,1,literal evidence only; not a training class count
+name_supported_pattern,塔,1,literal evidence only; not a training class count
+name_supported_pattern,寿字,2,literal evidence only; not a training class count
+name_supported_pattern,延安之春,1,literal evidence only; not a training class count
+name_supported_pattern,教堂,2,literal evidence only; not a training class count
+name_supported_pattern,斗牛,1,literal evidence only; not a training class count
+name_supported_pattern,洪福齐天,1,literal evidence only; not a training class count
+name_supported_pattern,灵凤祝寿,1,literal evidence only; not a training class count
+name_supported_pattern,牡丹,1,literal evidence only; not a training class count
+name_supported_pattern,玉亭桥,1,literal evidence only; not a training class count
+name_supported_pattern,福寿如意,1,literal evidence only; not a training class count
+name_supported_pattern,缠枝莲,9,literal evidence only; not a training class count
+name_supported_pattern,花卉,1,literal evidence only; not a training class count
+name_supported_pattern,花蝶,1,literal evidence only; not a training class count
+name_supported_pattern,荷花,1,literal evidence only; not a training class count
+name_supported_pattern,蝶,1,literal evidence only; not a training class count
+name_supported_pattern,骆驼,1,literal evidence only; not a training class count
+name_supported_pattern,龙,2,literal evidence only; not a training class count
+name_supported_pattern,龙栏,3,literal evidence only; not a training class count

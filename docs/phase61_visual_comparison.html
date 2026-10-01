@@ -1,0 +1,101 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase 6 与 Phase 6.1 展示对比</title><style>
+body{margin:0;padding:32px;font:16px/1.7 'Microsoft YaHei',sans-serif;background:#FFFDF8;color:#40352A}
+main{max-width:1500px;margin:auto}h1{font-size:28px}h2{font-size:20px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+iframe{width:100%;border:0;aspect-ratio:900/640}.note{background:#F0E7D9;padding:16px;border-radius:12px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}body{padding:16px}}
+</style><main><h1>同一教学状态，观察展示变化</h1>
+<p>Phase 6 → Phase 6.1 · 织造成纹 2 / 3 · 已完成 5 / 6 个教学步骤</p>
+<p class="note">交互示意｜非织机机械结构精确仿真。这里是同一 Twin State 的静态画面对比，不是实时织机数据，也不是整页浏览器截图。</p>
+<div class="grid"><section><h2>Phase 6 · 已验收基线</h2><iframe title="Phase 6画面" srcdoc="&lt;!doctype html&gt;&lt;html lang=&quot;zh-CN&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;style&gt;
+html, body {margin:0;padding:0;background:transparent;overflow:hidden}
+.twin-scene {box-sizing:border-box;width:100%;background:#F8F2E8;border:1px solid #D9C8B0;border-radius:16px;overflow:hidden}
+.twin-scene svg {display:block;width:100%;height:auto}
+.twin-scene text {font-family:&#x27;Microsoft YaHei&#x27;,&#x27;Noto Sans CJK SC&#x27;,sans-serif;fill:#40352A}
+@keyframes twinPulse12 {from {opacity:.3} to {opacity:1}}
+
+@media (prefers-reduced-motion: reduce) {.twin-scene .event {animation:none}}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;twin-scene&quot;&gt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 900 570&quot;
+role=&quot;img&quot; aria-labelledby=&quot;twin-title twin-desc&quot; data-stage=&quot;pattern_emergence&quot;
+data-revision=&quot;12&quot; data-replays=&quot;0&quot;&gt;
+&lt;title id=&quot;twin-title&quot;&gt;织造成纹 · 教学状态示意&lt;/title&gt;
+&lt;desc id=&quot;twin-desc&quot;&gt;原创几何符号与织造概念示意；画面由用户交互后的 Twin State 渲染，非机械结构复原。&lt;/desc&gt;
+&lt;text x=&quot;30&quot; y=&quot;42&quot; font-size=&quot;20&quot; font-weight=&quot;700&quot;&gt;从图案到织物&lt;/text&gt;
+&lt;text x=&quot;30&quot; y=&quot;72&quot; font-size=&quot;17&quot;&gt;当前观察：织造成纹 · 用户交互驱动&lt;/text&gt;
+&lt;path d=&quot;M270 120V510&quot; stroke=&quot;#DED0BE&quot; stroke-dasharray=&quot;5 7&quot;/&gt;
+&lt;text x=&quot;30&quot; y=&quot;115&quot; font-size=&quot;18&quot;&gt;图案与信息&lt;/text&gt;
+&lt;text x=&quot;310&quot; y=&quot;115&quot; font-size=&quot;18&quot;&gt;织造协作概念区&lt;/text&gt;
+&lt;g id=&quot;draft&quot; data-visible=&quot;true&quot;&gt;
+&lt;rect x=&quot;30&quot; y=&quot;137&quot; width=&quot;210&quot; height=&quot;150&quot; rx=&quot;12&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#CFC1AF&quot;/&gt;
+&lt;text x=&quot;46&quot; y=&quot;166&quot; font-size=&quot;17&quot;&gt;① 图案设计&lt;/text&gt;&lt;g class=&quot;event&quot; stroke=&quot;#7B2431&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot;&gt;
+&lt;path d=&quot;M135 187L175 220L135 259L95 220Z M95 220H175 M135 187V259&quot;/&gt;
+&lt;circle cx=&quot;135&quot; cy=&quot;220&quot; r=&quot;15&quot;/&gt;&lt;/g&gt;&lt;/g&gt;&lt;g id=&quot;carrier&quot; data-visible=&quot;true&quot;&gt;
+&lt;rect x=&quot;30&quot; y=&quot;315&quot; width=&quot;210&quot; height=&quot;164&quot; rx=&quot;12&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#CFC1AF&quot;/&gt;
+&lt;text x=&quot;46&quot; y=&quot;345&quot; font-size=&quot;17&quot;&gt;② 挑花结本&lt;/text&gt;&lt;g class=&quot;event&quot; stroke=&quot;#B98A43&quot; stroke-width=&quot;3&quot; fill=&quot;#FFFDF8&quot;&gt;&lt;path d=&quot;M60 372H210&quot;/&gt;&lt;circle cx=&quot;83&quot; cy=&quot;372&quot; r=&quot;6&quot;/&gt;&lt;circle cx=&quot;152&quot; cy=&quot;372&quot; r=&quot;6&quot;/&gt;&lt;path d=&quot;M60 398H210&quot;/&gt;&lt;circle cx=&quot;96&quot; cy=&quot;398&quot; r=&quot;6&quot;/&gt;&lt;circle cx=&quot;143&quot; cy=&quot;398&quot; r=&quot;6&quot;/&gt;&lt;path d=&quot;M60 424H210&quot;/&gt;&lt;circle cx=&quot;109&quot; cy=&quot;424&quot; r=&quot;6&quot;/&gt;&lt;circle cx=&quot;134&quot; cy=&quot;424&quot; r=&quot;6&quot;/&gt;&lt;/g&gt;&lt;text x=&quot;49&quot; y=&quot;460&quot; font-size=&quot;14&quot;&gt;教学符号 · 非花本编码&lt;/text&gt;&lt;/g&gt;&lt;g id=&quot;preparation&quot; data-ready=&quot;true&quot;&gt;
+&lt;rect x=&quot;306&quot; y=&quot;137&quot; width=&quot;554&quot; height=&quot;364&quot; rx=&quot;16&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#B98A43&quot; stroke-width=&quot;3&quot;/&gt;
+&lt;text x=&quot;324&quot; y=&quot;166&quot; font-size=&quot;17&quot;&gt;③ 准备标记：已点亮&lt;/text&gt;
+&lt;circle class=&quot;event&quot; cx=&quot;823&quot; cy=&quot;160&quot; r=&quot;7&quot; fill=&quot;#B98A43&quot;/&gt;
+&lt;/g&gt;
+&lt;path d=&quot;M376 369V203H684V369 M363 369H697&quot; fill=&quot;none&quot; stroke=&quot;#B8A38A&quot; stroke-width=&quot;7&quot; stroke-linecap=&quot;round&quot;/&gt;
+&lt;g id=&quot;warp&quot; data-emphasis=&quot;a&quot; class=&quot;event&quot;&gt;&lt;path d=&quot;M395 211Q385 270 395 356&quot; fill=&quot;none&quot; stroke=&quot;#7B2431&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M419 211V356&quot; fill=&quot;none&quot; stroke=&quot;#CFC1AF&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M443 211Q433 270 443 356&quot; fill=&quot;none&quot; stroke=&quot;#7B2431&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M467 211V356&quot; fill=&quot;none&quot; stroke=&quot;#CFC1AF&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M491 211Q481 270 491 356&quot; fill=&quot;none&quot; stroke=&quot;#7B2431&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M515 211V356&quot; fill=&quot;none&quot; stroke=&quot;#CFC1AF&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M539 211Q529 270 539 356&quot; fill=&quot;none&quot; stroke=&quot;#7B2431&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M563 211V356&quot; fill=&quot;none&quot; stroke=&quot;#CFC1AF&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M587 211Q577 270 587 356&quot; fill=&quot;none&quot; stroke=&quot;#7B2431&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M611 211V356&quot; fill=&quot;none&quot; stroke=&quot;#CFC1AF&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M635 211Q625 270 635 356&quot; fill=&quot;none&quot; stroke=&quot;#7B2431&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M659 211V356&quot; fill=&quot;none&quot; stroke=&quot;#CFC1AF&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;/g&gt;&lt;circle cx=&quot;775&quot; cy=&quot;220&quot; r=&quot;16&quot; fill=&quot;#B98A43&quot; opacity=&quot;.85&quot;/&gt;
+&lt;path d=&quot;M750 259Q775 223 800 259&quot; stroke=&quot;#B98A43&quot; fill=&quot;none&quot; stroke-width=&quot;6&quot;/&gt;
+&lt;text x=&quot;728&quot; y=&quot;283&quot; font-size=&quot;16&quot;&gt;④ 拽花工&lt;/text&gt;
+&lt;circle cx=&quot;775&quot; cy=&quot;324&quot; r=&quot;16&quot; fill=&quot;#B98A43&quot; opacity=&quot;.85&quot;/&gt;
+&lt;path d=&quot;M750 363Q775 327 800 363&quot; stroke=&quot;#B98A43&quot; fill=&quot;none&quot; stroke-width=&quot;6&quot;/&gt;
+&lt;text x=&quot;736&quot; y=&quot;389&quot; font-size=&quot;16&quot;&gt;⑤ 织手&lt;/text&gt;
+&lt;g id=&quot;weft&quot; data-direction=&quot;right&quot; class=&quot;event&quot;&gt;&lt;path d=&quot;M397 305H663 M647 295L663 305L647 315&quot; fill=&quot;none&quot; stroke=&quot;#B98A43&quot; stroke-width=&quot;5&quot;/&gt;&lt;/g&gt;&lt;text x=&quot;324&quot; y=&quot;414&quot; font-size=&quot;16&quot;&gt;⑥ 织造成纹 · 显示 2/3 段&lt;/text&gt;
+&lt;g id=&quot;pattern&quot; data-bands=&quot;2&quot;&gt;
+&lt;rect x=&quot;325&quot; y=&quot;432&quot; width=&quot;370&quot; height=&quot;48&quot; rx=&quot;6&quot; fill=&quot;#EEE5D8&quot;/&gt;
+&lt;g class=&quot;event&quot;&gt;&lt;rect x=&quot;330&quot; y=&quot;437&quot; width=&quot;114&quot; height=&quot;38&quot; fill=&quot;#7B2431&quot; rx=&quot;3&quot;/&gt;&lt;path d=&quot;M348 443L360 456L348 469L336 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M387 443L399 456L387 469L375 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M426 443L438 456L426 469L414 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;/g&gt;&lt;g class=&quot;event&quot;&gt;&lt;rect x=&quot;450&quot; y=&quot;437&quot; width=&quot;114&quot; height=&quot;38&quot; fill=&quot;#7B2431&quot; rx=&quot;3&quot;/&gt;&lt;path d=&quot;M468 443L480 456L468 469L456 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M507 443L519 456L507 469L495 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M546 443L558 456L546 469L534 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;/g&gt;&lt;/g&gt;&lt;text x=&quot;30&quot; y=&quot;538&quot; font-size=&quot;16&quot;&gt;原创几何图形与概念示意 · 不代表真实尺寸、经线位置或机械结构&lt;/text&gt;
+&lt;/svg&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></section>
+<section><h2>Phase 6.1 · 比赛展示优化</h2><iframe title="Phase 6.1画面" srcdoc="&lt;!doctype html&gt;&lt;html lang=&quot;zh-CN&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;style&gt;
+html, body {margin:0;padding:0;background:transparent;overflow:hidden}
+.twin-scene {box-sizing:border-box;width:100%;background:#FAF7F0;border:1px solid #E5DACE;border-radius:20px;overflow:hidden}
+.twin-scene svg {display:block;width:100%;height:auto}
+.twin-scene text {font-family:&#x27;Microsoft YaHei&#x27;,&#x27;Noto Sans CJK SC&#x27;,sans-serif;fill:#40352A}
+@keyframes twinPulse12 {from {opacity:.3} to {opacity:1}}
+
+@media (prefers-reduced-motion: reduce) {.twin-scene .event {animation:none}}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;twin-scene&quot;&gt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 900 620&quot;
+role=&quot;img&quot; aria-labelledby=&quot;twin-title twin-desc&quot; data-stage=&quot;pattern_emergence&quot;
+data-revision=&quot;12&quot; data-replays=&quot;0&quot;&gt;
+&lt;title id=&quot;twin-title&quot;&gt;织造成纹 · 教学状态示意&lt;/title&gt;
+&lt;desc id=&quot;twin-desc&quot;&gt;原创几何符号与织造概念示意；画面由用户交互后的 Twin State 渲染，非机械结构复原。&lt;/desc&gt;
+&lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;900&quot; height=&quot;91&quot; fill=&quot;#F0E7D9&quot;/&gt;
+&lt;text x=&quot;30&quot; y=&quot;39&quot; font-size=&quot;23&quot; font-weight=&quot;700&quot;&gt;从图案到织物&lt;/text&gt;
+&lt;text x=&quot;30&quot; y=&quot;70&quot; font-size=&quot;17&quot;&gt;当前观察：织造成纹 · 用户交互驱动&lt;/text&gt;
+&lt;rect x=&quot;686&quot; y=&quot;23&quot; width=&quot;180&quot; height=&quot;40&quot; rx=&quot;20&quot; fill=&quot;#FFFCF7&quot;/&gt;
+&lt;text x=&quot;710&quot; y=&quot;49&quot; font-size=&quot;16&quot;&gt;教学交互 · 六个环节&lt;/text&gt;
+&lt;path d=&quot;M270 120V510&quot; stroke=&quot;#DED0BE&quot; stroke-dasharray=&quot;5 7&quot;/&gt;
+&lt;text x=&quot;30&quot; y=&quot;115&quot; font-size=&quot;18&quot;&gt;图案 → 信息载体&lt;/text&gt;
+&lt;text x=&quot;310&quot; y=&quot;115&quot; font-size=&quot;18&quot;&gt;经纬交织 · 协作概念区&lt;/text&gt;
+&lt;g id=&quot;draft&quot; data-visible=&quot;true&quot;&gt;
+&lt;rect x=&quot;30&quot; y=&quot;137&quot; width=&quot;210&quot; height=&quot;150&quot; rx=&quot;12&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#D1C5B5&quot; stroke-width=&quot;1&quot;/&gt;
+&lt;text x=&quot;46&quot; y=&quot;166&quot; font-size=&quot;17&quot;&gt;① 图案设计&lt;/text&gt;&lt;g class=&quot;event&quot; stroke=&quot;#832D42&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot;&gt;
+&lt;path d=&quot;M135 187L175 220L135 259L95 220Z M95 220H175 M135 187V259&quot;/&gt;
+&lt;circle cx=&quot;135&quot; cy=&quot;220&quot; r=&quot;15&quot;/&gt;&lt;/g&gt;&lt;/g&gt;&lt;g id=&quot;carrier&quot; data-visible=&quot;true&quot;&gt;
+&lt;rect x=&quot;30&quot; y=&quot;315&quot; width=&quot;210&quot; height=&quot;164&quot; rx=&quot;12&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#D1C5B5&quot; stroke-width=&quot;1&quot;/&gt;
+&lt;text x=&quot;46&quot; y=&quot;345&quot; font-size=&quot;17&quot;&gt;② 挑花结本&lt;/text&gt;&lt;g class=&quot;event&quot; stroke=&quot;#A97732&quot; stroke-width=&quot;3&quot; fill=&quot;#FFFDF8&quot;&gt;&lt;path d=&quot;M60 372H210&quot;/&gt;&lt;circle cx=&quot;83&quot; cy=&quot;372&quot; r=&quot;6&quot;/&gt;&lt;circle cx=&quot;152&quot; cy=&quot;372&quot; r=&quot;6&quot;/&gt;&lt;path d=&quot;M60 398H210&quot;/&gt;&lt;circle cx=&quot;96&quot; cy=&quot;398&quot; r=&quot;6&quot;/&gt;&lt;circle cx=&quot;143&quot; cy=&quot;398&quot; r=&quot;6&quot;/&gt;&lt;path d=&quot;M60 424H210&quot;/&gt;&lt;circle cx=&quot;109&quot; cy=&quot;424&quot; r=&quot;6&quot;/&gt;&lt;circle cx=&quot;134&quot; cy=&quot;424&quot; r=&quot;6&quot;/&gt;&lt;/g&gt;&lt;text x=&quot;49&quot; y=&quot;460&quot; font-size=&quot;14&quot;&gt;教学符号 · 非花本编码&lt;/text&gt;&lt;/g&gt;&lt;g id=&quot;preparation&quot; data-ready=&quot;true&quot;&gt;
+&lt;rect x=&quot;306&quot; y=&quot;137&quot; width=&quot;554&quot; height=&quot;364&quot; rx=&quot;16&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#A97732&quot; stroke-width=&quot;3&quot;/&gt;
+&lt;text x=&quot;324&quot; y=&quot;166&quot; font-size=&quot;17&quot;&gt;③ 准备标记：已点亮&lt;/text&gt;
+&lt;circle class=&quot;event&quot; cx=&quot;823&quot; cy=&quot;160&quot; r=&quot;7&quot; fill=&quot;#A97732&quot;/&gt;
+&lt;/g&gt;
+&lt;rect x=&quot;373&quot; y=&quot;192&quot; width=&quot;324&quot; height=&quot;188&quot; rx=&quot;14&quot; fill=&quot;#F3EEE6&quot; stroke=&quot;#D1C5B5&quot; stroke-width=&quot;1&quot;/&gt;
+&lt;text x=&quot;326&quot; y=&quot;220&quot; font-size=&quot;15&quot;&gt;经向&lt;/text&gt;
+&lt;path d=&quot;M346 232V275 M341 267L346 275L351 267&quot; fill=&quot;none&quot; stroke=&quot;#832D42&quot; stroke-width=&quot;2&quot;/&gt;
+&lt;text x=&quot;326&quot; y=&quot;323&quot; font-size=&quot;15&quot;&gt;纬向&lt;/text&gt;
+&lt;g id=&quot;warp&quot; data-emphasis=&quot;a&quot; class=&quot;event&quot;&gt;&lt;path d=&quot;M395 211Q385 270 395 356&quot; fill=&quot;none&quot; stroke=&quot;#832D42&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M419 211V356&quot; fill=&quot;none&quot; stroke=&quot;#D1C5B5&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M443 211Q433 270 443 356&quot; fill=&quot;none&quot; stroke=&quot;#832D42&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M467 211V356&quot; fill=&quot;none&quot; stroke=&quot;#D1C5B5&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M491 211Q481 270 491 356&quot; fill=&quot;none&quot; stroke=&quot;#832D42&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M515 211V356&quot; fill=&quot;none&quot; stroke=&quot;#D1C5B5&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M539 211Q529 270 539 356&quot; fill=&quot;none&quot; stroke=&quot;#832D42&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M563 211V356&quot; fill=&quot;none&quot; stroke=&quot;#D1C5B5&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M587 211Q577 270 587 356&quot; fill=&quot;none&quot; stroke=&quot;#832D42&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M611 211V356&quot; fill=&quot;none&quot; stroke=&quot;#D1C5B5&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;path d=&quot;M635 211Q625 270 635 356&quot; fill=&quot;none&quot; stroke=&quot;#832D42&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M659 211V356&quot; fill=&quot;none&quot; stroke=&quot;#D1C5B5&quot; stroke-width=&quot;1.5&quot;/&gt;&lt;/g&gt;&lt;rect x=&quot;714&quot; y=&quot;191&quot; width=&quot;132&quot; height=&quot;105&quot; rx=&quot;12&quot; fill=&quot;#F7ECEF&quot; stroke=&quot;#EDDCE0&quot; stroke-width=&quot;2&quot;/&gt;
+&lt;circle cx=&quot;775&quot; cy=&quot;220&quot; r=&quot;16&quot; fill=&quot;#832D42&quot; opacity=&quot;.85&quot;/&gt;
+&lt;path d=&quot;M750 259Q775 223 800 259&quot; stroke=&quot;#832D42&quot; fill=&quot;none&quot; stroke-width=&quot;6&quot;/&gt;
+&lt;text x=&quot;728&quot; y=&quot;283&quot; font-size=&quot;16&quot;&gt;④ 拽花工&lt;/text&gt;
+&lt;rect x=&quot;714&quot; y=&quot;302&quot; width=&quot;132&quot; height=&quot;99&quot; rx=&quot;12&quot; fill=&quot;#EAF1EF&quot; stroke=&quot;#D7E4E1&quot; stroke-width=&quot;2&quot;/&gt;
+&lt;circle cx=&quot;775&quot; cy=&quot;324&quot; r=&quot;16&quot; fill=&quot;#346C6B&quot; opacity=&quot;.85&quot;/&gt;
+&lt;path d=&quot;M750 363Q775 327 800 363&quot; stroke=&quot;#346C6B&quot; fill=&quot;none&quot; stroke-width=&quot;6&quot;/&gt;
+&lt;text x=&quot;736&quot; y=&quot;389&quot; font-size=&quot;16&quot;&gt;⑤ 织手&lt;/text&gt;
+&lt;g id=&quot;weft&quot; data-direction=&quot;right&quot; class=&quot;event&quot;&gt;&lt;path d=&quot;M397 305H663 M647 295L663 305L647 315&quot; fill=&quot;none&quot; stroke=&quot;#346C6B&quot; stroke-width=&quot;5&quot;/&gt;&lt;/g&gt;&lt;text x=&quot;324&quot; y=&quot;414&quot; font-size=&quot;16&quot;&gt;⑥ 织造成纹 · 显示 2/3 段&lt;/text&gt;
+&lt;g id=&quot;pattern&quot; data-bands=&quot;2&quot;&gt;
+&lt;rect x=&quot;325&quot; y=&quot;432&quot; width=&quot;370&quot; height=&quot;48&quot; rx=&quot;6&quot; fill=&quot;#EEE5D8&quot; stroke=&quot;#832D42&quot; stroke-width=&quot;2&quot;/&gt;
+&lt;g class=&quot;event&quot;&gt;&lt;rect x=&quot;330&quot; y=&quot;437&quot; width=&quot;114&quot; height=&quot;38&quot; fill=&quot;#832D42&quot; rx=&quot;3&quot;/&gt;&lt;path d=&quot;M348 443L360 456L348 469L336 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M387 443L399 456L387 469L375 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M426 443L438 456L426 469L414 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;/g&gt;&lt;g class=&quot;event&quot;&gt;&lt;rect x=&quot;450&quot; y=&quot;437&quot; width=&quot;114&quot; height=&quot;38&quot; fill=&quot;#832D42&quot; rx=&quot;3&quot;/&gt;&lt;path d=&quot;M468 443L480 456L468 469L456 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M507 443L519 456L507 469L495 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M546 443L558 456L546 469L534 456Z&quot; fill=&quot;none&quot; stroke=&quot;#EACB86&quot; stroke-width=&quot;2&quot;/&gt;&lt;/g&gt;&lt;/g&gt;&lt;rect x=&quot;30&quot; y=&quot;521&quot; width=&quot;130&quot; height=&quot;40&quot; rx=&quot;10&quot; fill=&quot;#EEE7DC&quot;/&gt;&lt;text x=&quot;39&quot; y=&quot;547&quot; font-size=&quot;14&quot; style=&quot;fill:#40352A&quot;&gt;1 图案设计&lt;/text&gt;&lt;rect x=&quot;173&quot; y=&quot;521&quot; width=&quot;130&quot; height=&quot;40&quot; rx=&quot;10&quot; fill=&quot;#EEE7DC&quot;/&gt;&lt;text x=&quot;182&quot; y=&quot;547&quot; font-size=&quot;14&quot; style=&quot;fill:#40352A&quot;&gt;2 挑花结本&lt;/text&gt;&lt;rect x=&quot;316&quot; y=&quot;521&quot; width=&quot;130&quot; height=&quot;40&quot; rx=&quot;10&quot; fill=&quot;#EEE7DC&quot;/&gt;&lt;text x=&quot;325&quot; y=&quot;547&quot; font-size=&quot;14&quot; style=&quot;fill:#40352A&quot;&gt;3 织造准备&lt;/text&gt;&lt;rect x=&quot;459&quot; y=&quot;521&quot; width=&quot;130&quot; height=&quot;40&quot; rx=&quot;10&quot; fill=&quot;#EEE7DC&quot;/&gt;&lt;text x=&quot;468&quot; y=&quot;547&quot; font-size=&quot;14&quot; style=&quot;fill:#40352A&quot;&gt;4 拽花工提经&lt;/text&gt;&lt;rect x=&quot;602&quot; y=&quot;521&quot; width=&quot;130&quot; height=&quot;40&quot; rx=&quot;10&quot; fill=&quot;#EEE7DC&quot;/&gt;&lt;text x=&quot;611&quot; y=&quot;547&quot; font-size=&quot;14&quot; style=&quot;fill:#40352A&quot;&gt;5 织手织造&lt;/text&gt;&lt;rect x=&quot;745&quot; y=&quot;521&quot; width=&quot;130&quot; height=&quot;40&quot; rx=&quot;10&quot; fill=&quot;#832D42&quot;/&gt;&lt;text x=&quot;754&quot; y=&quot;547&quot; font-size=&quot;14&quot; style=&quot;fill:#FFFFFF&quot;&gt;6 织造成纹&lt;/text&gt;&lt;text x=&quot;30&quot; y=&quot;590&quot; font-size=&quot;15&quot;&gt;原创几何教学符号 · 非传统纹样复原 · 不代表真实尺寸、经线位置或机械结构&lt;/text&gt;
+&lt;/svg&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></section></div>
+<p>观察重点：经纬方向区分、双人角色配色、当前区域焦点、成纹分段与六环节连续提示。</p>
+<p>实际应用还调整了首页学习路径、执行按钮位置和中文状态面板。最终展示效果仍需用户在 Windows 浏览器进行对比验收。</p></main></html>

@@ -1,0 +1,15 @@
+{
+  "audit_date": "2026-09-04",
+  "candidate_rows": 22,
+  "downloaded_audit_images": 13,
+  "usable_counts": {
+    "other_brocade": 3
+  },
+  "exact_duplicate_groups": [],
+  "near_duplicate_pairs": [],
+  "duplicate_object_ids": [],
+  "source_class_confounding": "The only open-license Yunjin-labelled candidate comes from Wikimedia Commons, while all three currently accepted other-brocade candidates come from The Met. Source is perfectly correlated with the proposed classes and can create a shortcut.",
+  "training_gate": "do_not_train",
+  "training_gate_reason": "Only 0 Yunjin object is immediately usable, versus 3 other-brocade objects. The classes are also perfectly confounded by source institution.",
+  "manual_review_limits": "Automated checks cover hashes and dimensions. Text, exhibit labels, watermarks and object-centric cropping require manual visual review; no OCR result is treated as proof of absence."
+}

@@ -1,0 +1,115 @@
+{
+  "checked_at_utc": "2026-09-10T13:31:06.360688+00:00",
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:09:58) [MSC v.1929 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "packages": {
+    "streamlit": "1.63.0",
+    "pytest": "9.1.1",
+    "Pillow": "12.3.0",
+    "PyYAML": "6.0.3",
+    "openai": "2.54.0",
+    "starlette": "1.6.0"
+  },
+  "external_model_api_called": false,
+  "full_suite_includes_phase6_and_round3": true,
+  "historical_zip_used": false,
+  "note": "Preserved legacy checks use packaged manifests; only Phase 6 ZIP is the development baseline.",
+  "results": [
+    {
+      "name": "pytest",
+      "command": [
+        "D:\\ANACONDA\\python.exe",
+        "-m",
+        "pytest",
+        "tests",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=docs/phase61_test_results.xml"
+      ],
+      "started_utc": "2026-09-10T13:30:42.762850+00:00",
+      "exit_code": 0,
+      "stdout": "docs/phase61_pytest_result.txt",
+      "stderr": "docs/phase61_pytest_stderr.txt"
+    },
+    {
+      "name": "phase6_health",
+      "command": [
+        "D:\\ANACONDA\\python.exe",
+        "scripts/phase6_health_check.py"
+      ],
+      "started_utc": "2026-09-10T13:31:04.901296+00:00",
+      "exit_code": 0,
+      "stdout": "docs/phase61_phase6_health_result.json",
+      "stderr": "docs/phase61_phase6_health_stderr.txt"
+    },
+    {
+      "name": "phase6_protection",
+      "command": [
+        "D:\\ANACONDA\\python.exe",
+        "scripts/phase6_health_check.py",
+        "--protection-only"
+      ],
+      "started_utc": "2026-09-10T13:31:05.141719+00:00",
+      "exit_code": 0,
+      "stdout": "docs/phase61_phase6_protection_result.json",
+      "stderr": "docs/phase61_phase6_protection_stderr.txt"
+    },
+    {
+      "name": "phase4_health",
+      "command": [
+        "D:\\ANACONDA\\python.exe",
+        "scripts/phase4_health_check.py"
+      ],
+      "started_utc": "2026-09-10T13:31:05.374324+00:00",
+      "exit_code": 0,
+      "stdout": "docs/phase61_phase4_health_result.json",
+      "stderr": "docs/phase61_phase4_health_stderr.txt"
+    },
+    {
+      "name": "phase5_health",
+      "command": [
+        "D:\\ANACONDA\\python.exe",
+        "scripts/phase5_health_check.py"
+      ],
+      "started_utc": "2026-09-10T13:31:05.568088+00:00",
+      "exit_code": 0,
+      "stdout": "docs/phase61_phase5_health_result.json",
+      "stderr": "docs/phase61_phase5_health_stderr.txt"
+    },
+    {
+      "name": "round2_health",
+      "command": [
+        "D:\\ANACONDA\\python.exe",
+        "scripts/phase5_round2_health_check.py"
+      ],
+      "started_utc": "2026-09-10T13:31:05.759739+00:00",
+      "exit_code": 0,
+      "stdout": "docs/phase61_round2_health_result.json",
+      "stderr": "docs/phase61_round2_health_stderr.txt"
+    },
+    {
+      "name": "round3_health",
+      "command": [
+        "D:\\ANACONDA\\python.exe",
+        "scripts/phase5_round3_health_check.py"
+      ],
+      "started_utc": "2026-09-10T13:31:05.954526+00:00",
+      "exit_code": 0,
+      "stdout": "docs/phase61_round3_health_result.json",
+      "stderr": "docs/phase61_round3_health_stderr.txt"
+    },
+    {
+      "name": "phase61_protection",
+      "command": [
+        "D:\\ANACONDA\\python.exe",
+        "scripts/phase61_protection.py"
+      ],
+      "started_utc": "2026-09-10T13:31:06.161859+00:00",
+      "exit_code": 0,
+      "stdout": "docs/phase61_phase61_protection_result.json",
+      "stderr": "docs/phase61_phase61_protection_stderr.txt"
+    }
+  ],
+  "ok": true
+}

@@ -1,0 +1,15 @@
+{
+  "baseline_zip": "yunjin_ai_mvp_phase3_legal_data_20260904.zip",
+  "baseline_zip_sha256": "CEA7461342E51AB7E22E3C9F6AA39D7A68B671645771B5C3BFF5E4CD543CC9C7",
+  "baseline_file_count": 294,
+  "missing_baseline_files": 0,
+  "intentionally_modified_existing_files": [
+    "app.py",
+    "README.md",
+    "requirements.txt",
+    "status.yaml",
+    "src/yunjin_ai/__init__.py"
+  ],
+  "preserved_data_governance_metadata_evidence_and_existing_tests": true,
+  "notes": "Phase 4功能通过新增文件实现；上述既有文件仅用于入口、说明、依赖、状态与包版本的增量更新。基线自带pyc已恢复为原哈希。"
+}

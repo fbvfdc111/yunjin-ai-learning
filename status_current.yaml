@@ -1,0 +1,22 @@
+# Phase 6.1 current status. status.yaml remains the historical phase record.
+current_phase: "6.1"
+change_scope: presentation_only
+prototype: 知识驱动、状态驱动的南京云锦织造教学型数字孪生原型
+state_driver: user_interaction
+teaching_stages: 6
+knowledge_items: 25
+knowledge_sources: 12
+official_objects: 95
+nanjing_yunjin: 47
+other_brocade: 48
+official_authorization_unknown: 95
+official_trainable: 0
+classifier_trained: false
+physical_sensors: false
+real_time_bidirectional_sync: false
+physical_parameter_simulation: false
+expert_mechanical_structure_validation: false
+phase6_user_windows_acceptance: user_confirmed
+phase61_user_windows_acceptance: pending
+historical_status_file: status.yaml
+validation_evidence: docs/phase61_validation.json

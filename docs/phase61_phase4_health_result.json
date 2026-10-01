@@ -1,0 +1,13 @@
+{
+  "knowledge_items": 25,
+  "sources": 12,
+  "knowledge_errors": [],
+  "official_objects": 95,
+  "official_unknown_authorization": 95,
+  "official_training_eligible": 0,
+  "local_vision_provider": "local_cv",
+  "local_vision_observation_count": 4,
+  "grounded_answer_status": "基于本地知识库",
+  "openai_provider_configured": false,
+  "dots_provider_configured": false
+}

@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.streamlit/secrets.toml
+artifacts/
+data/processed/*.jpg
+data/processed/*.png
+
