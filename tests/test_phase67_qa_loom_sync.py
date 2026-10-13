@@ -54,6 +54,23 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
                 answer = answer_from_knowledge(question, self.items, self.sources)
                 self.assertNotEqual(answer.status, "证据不足")
 
+    def test_short_topic_labels_route_to_supported_evidence(self):
+        cases = {
+            "纹样文化": "KB010",
+            "南京云锦纹样": "KB010",
+            "历史文化": "KB006",
+            "织造材料": "KB005",
+            "制作工艺": "KB003",
+            "品种分类": "KB007",
+        }
+        for question, expected_id in cases.items():
+            with self.subTest(question=question):
+                hits = search_answerable_knowledge(question, self.items)
+                self.assertTrue(hits, question)
+                self.assertEqual(hits[0].item.id, expected_id)
+                answer = answer_from_knowledge(question, self.items, self.sources)
+                self.assertNotEqual(answer.status, "证据不足")
+
     def test_cloth_growth_uses_same_pick_timeline_as_people_and_mechanisms(self):
         sample = simulation_sample(STAGE_IDS.index("weft_weaving") * SIMULATION_STAGE_SECONDS + 1.0)
         html = render_process_twin_3d(sample, exhibition=True)
