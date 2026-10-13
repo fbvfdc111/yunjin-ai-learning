@@ -92,6 +92,19 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
         self.assertIn("if (!state.exhibitionMode)", html)
         self.assertIn("textureRefreshThreshold", html)
 
+    def test_mobile_home_and_loom_controls_are_responsive(self):
+        app_source = (ROOT / "app.py").read_text(encoding="utf-8")
+        self.assertIn("background-size:100% 100%,auto 100%", app_source)
+        self.assertIn("background-repeat:no-repeat,no-repeat", app_source)
+
+        sample = simulation_sample(STAGE_IDS.index("weft_weaving") * SIMULATION_STAGE_SECONDS + 1.0)
+        html = render_process_twin_3d(sample, exhibition=True)
+        self.assertIn("yunjin-webgl-v37-mobile-fit-camera", html)
+        self.assertIn("const activePointers = new Map()", html)
+        self.assertIn("pinchDistance / nextDistance", html)
+        self.assertIn("compactViewport ? 32 : 24", html)
+        self.assertIn("滚轮/双指缩放", html)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -239,7 +239,7 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
 .webgl-error .fallback{{display:grid}}
 @media(max-width:980px){{.exhibition .scene-title{{font-size:15px;max-width:290px}}.exhibition .badge{{display:none}}.process-ribbon{{bottom:12px;width:min(620px,64vw)}}.process-caption{{top:58px;max-width:78vw}}}}
 @media(max-width:760px){{.scene-head{{display:block}}.badge{{display:inline-block;margin-top:8px}}.hud{{position:static;width:auto;padding:0 14px 8px;grid-template-columns:1fr 1fr}}#webgl-canvas{{height:500px}}.exhibition #webgl-canvas{{height:100%}}.exhibition .hud{{display:none}}.legend{{display:none}}.exhibition .scene-head{{left:10px;right:10px;top:9px}}.exhibition .scene-title{{font-size:12px;max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.audio-hint{{left:10px;bottom:10px;padding:7px 9px;font-size:9px}}.camera-fit{{right:10px;bottom:10px;padding:7px 9px;font-size:9px}}.interaction-hint{{bottom:50px;padding:6px 9px;font-size:9px;white-space:nowrap}}.process-ribbon{{bottom:46px;width:calc(100% - 20px);grid-template-columns:repeat(3,1fr);gap:2px;padding:3px;border-radius:12px}}.process-step{{padding:5px 2px;font-size:8px}}.process-caption{{top:52px;max-width:calc(100% - 24px);font-size:9px;padding:6px 9px}}}}
-@media(max-width:760px){{.audio-hint,.camera-fit{{display:none}}.process-ribbon{{bottom:8px}}}}
+@media(max-width:760px){{.audio-hint{{display:none}}.camera-fit{{display:block;right:10px;bottom:52px}}.interaction-hint{{left:10px;bottom:84px;transform:none}}.process-ribbon{{bottom:8px}}}}
 @media(prefers-reduced-motion:reduce){{.interaction-hint{{animation:none;opacity:1}}.process-step{{transition:none}}}}
 </style>
 </head>
@@ -255,7 +255,7 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
   <canvas id="webgl-canvas" aria-label="{escape(sample.stage_title)} WebGL human loom collaboration scene"></canvas>
   <button id="audio-hint" class="audio-hint" type="button">开启织机音效 / Enable sound</button>
   <button id="camera-fit" class="camera-fit" type="button">整机视图 / Fit view</button>
-  <div class="interaction-hint" id="interaction-hint">拖动旋转 · 滚轮缩放 · 点击“整机视图”复位</div>
+  <div class="interaction-hint" id="interaction-hint">拖动旋转 · 滚轮/双指缩放 · 点击“整机视图”复位</div>
   <div class="process-ribbon" id="process-ribbon" aria-label="织造动作顺序">
     <div class="process-step" data-process="0">① 踩踏板</div><div class="process-step" data-process="1">② 经线开口</div><div class="process-step" data-process="2">③ 梭子引纬</div><div class="process-step" data-process="3">④ 筘框打纬</div><div class="process-step" data-process="4">⑤ 布面前进</div><div class="process-step" data-process="5">⑥ 卷轴收布</div>
   </div>
@@ -464,7 +464,9 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
   const cameraTarget = new THREE.Vector3(state.exhibitionMode ? -.34 : 0, state.exhibitionMode ? 2.55 : 2.45, state.exhibitionMode ? .58 : 0);
   // A new key deliberately retires the old close-up camera that many browsers
   // have persisted. The museum-scale rebuild needs a wider first view.
-  const cameraStoreKey = state.exhibitionMode ? 'yunjin-webgl-v36-lower-worker-readable-camera' : 'yunjin-webgl-v13-camera';
+  const cameraStoreKey = state.exhibitionMode
+    ? (compactViewport ? 'yunjin-webgl-v37-mobile-fit-camera' : 'yunjin-webgl-v36-lower-worker-readable-camera')
+    : 'yunjin-webgl-v13-camera';
   const motionStoreKey = 'yunjin-webgl-v13-continuous-timeline-state';
   function readStoredCamera() {{
     try {{
@@ -497,8 +499,12 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
   const storedCamera = readStoredCamera();
   let orbitTheta = storedCamera && Number.isFinite(storedCamera.theta) ? storedCamera.theta : (state.exhibitionMode ? -0.50 : -0.68);
   let orbitPhi = storedCamera && Number.isFinite(storedCamera.phi) ? storedCamera.phi : (state.exhibitionMode ? 1.03 : 0.92);
-  let orbitRadius = storedCamera && Number.isFinite(storedCamera.radius) ? storedCamera.radius : (state.exhibitionMode ? 13.5 : 11.6);
+  let orbitRadius = storedCamera && Number.isFinite(storedCamera.radius)
+    ? storedCamera.radius
+    : (state.exhibitionMode ? (compactViewport ? 16.8 : 13.5) : 11.6);
   let dragging = false;
+  const activePointers = new Map();
+  let pinchDistance = 0;
   let introTourActive = false;
   try {{
     introTourActive = state.exhibitionMode && sessionStorage.getItem('yunjin-v31-intro-tour-seen') !== '1';
@@ -506,9 +512,14 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
   let userCameraTouched = !introTourActive && !!storedCamera;
   let lastX = 0;
   let lastY = 0;
+  const pointerDistance = () => {{
+    const points = Array.from(activePointers.values());
+    if (points.length < 2) return 0;
+    return Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+  }};
   function updateCamera() {{
     orbitPhi = Math.max(0.26, Math.min(1.34, orbitPhi));
-    orbitRadius = Math.max(6.8, Math.min(24, orbitRadius));
+    orbitRadius = Math.max(6.8, Math.min(compactViewport ? 32 : 24, orbitRadius));
     camera.position.set(
       cameraTarget.x + Math.sin(orbitTheta) * Math.sin(orbitPhi) * orbitRadius,
       cameraTarget.y + Math.cos(orbitPhi) * orbitRadius,
@@ -517,15 +528,34 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
     camera.lookAt(cameraTarget);
   }}
   canvas.addEventListener('pointerdown', function(event) {{
-    dragging = true;
-    lastX = event.clientX;
-    lastY = event.clientY;
+    activePointers.set(event.pointerId, {{x: event.clientX, y: event.clientY}});
+    dragging = activePointers.size === 1;
+    if (dragging) {{
+      lastX = event.clientX;
+      lastY = event.clientY;
+    }} else if (activePointers.size === 2) {{
+      pinchDistance = pointerDistance();
+    }}
     canvas.setPointerCapture(event.pointerId);
     const interactionHint = document.getElementById('interaction-hint');
     if (interactionHint) interactionHint.style.display = 'none';
     introTourActive = false;
   }});
   canvas.addEventListener('pointermove', function(event) {{
+    if (!activePointers.has(event.pointerId)) return;
+    activePointers.set(event.pointerId, {{x: event.clientX, y: event.clientY}});
+    if (activePointers.size >= 2) {{
+      event.preventDefault();
+      const nextDistance = pointerDistance();
+      if (pinchDistance > 0 && nextDistance > 0) {{
+        orbitRadius *= pinchDistance / nextDistance;
+        userCameraTouched = true;
+        updateCamera();
+        saveStoredCamera();
+      }}
+      pinchDistance = nextDistance;
+      return;
+    }}
     if (!dragging) return;
     orbitTheta -= (event.clientX - lastX) * 0.008;
     orbitPhi -= (event.clientY - lastY) * 0.006;
@@ -535,10 +565,19 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
     updateCamera();
     saveStoredCamera();
   }});
-  canvas.addEventListener('pointerup', function(event) {{
-    dragging = false;
+  function endCameraPointer(event) {{
+    activePointers.delete(event.pointerId);
+    pinchDistance = 0;
+    dragging = activePointers.size === 1;
+    if (dragging) {{
+      const remaining = Array.from(activePointers.values())[0];
+      lastX = remaining.x;
+      lastY = remaining.y;
+    }}
     try {{ canvas.releasePointerCapture(event.pointerId); }} catch (error) {{}}
-  }});
+  }}
+  canvas.addEventListener('pointerup', endCameraPointer);
+  canvas.addEventListener('pointercancel', endCameraPointer);
   canvas.addEventListener('wheel', function(event) {{
     event.preventDefault();
     orbitRadius += event.deltaY * 0.012;
@@ -551,7 +590,7 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
     event.stopPropagation();
     orbitTheta = -0.60;
     orbitPhi = 1.03;
-    orbitRadius = 13.6;
+    orbitRadius = compactViewport ? 16.8 : 13.6;
     cameraTarget.set(-.34, 2.55, .62);
     userCameraTouched = true;
     updateCamera();
