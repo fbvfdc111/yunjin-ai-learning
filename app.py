@@ -650,7 +650,9 @@ if active_tab == "AI文化助手":
 
     answer_slot = st.container(key="guide_answer_slot")
     with answer_slot:
-        for turn_index, turn in enumerate(st.session_state["guide_history"]):
+        # Keep the newest answer directly below the question form so visitors
+        # do not need to scroll past the full conversation history.
+        for turn_index, turn in enumerate(reversed(st.session_state["guide_history"])):
             answer = turn["answer"]
             with st.chat_message("user"):
                 st.write(turn["question"])

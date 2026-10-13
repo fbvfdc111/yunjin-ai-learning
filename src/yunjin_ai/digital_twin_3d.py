@@ -295,7 +295,7 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
   try {{
   const state = JSON.parse(document.getElementById('scene-state').textContent);
   if (!window.THREE || !THREE.WebGLRenderer) {{ root.classList.add('webgl-error'); return; }}
-  const loomAudio = {{context: null, master: null, enabled: false, lastPhase: 0}};
+  const loomAudio = {{context: null, master: null, enabled: false, lastPhase: 0, lastCycle: -1}};
   function startLoomAudio() {{
     if (!state.exhibitionMode) return;
     if (!loomAudio.context) {{
@@ -303,61 +303,107 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
       if (!AudioContextClass) return;
       loomAudio.context = new AudioContextClass();
       loomAudio.master = loomAudio.context.createGain();
-      loomAudio.master.gain.value = .22;
-      loomAudio.master.connect(loomAudio.context.destination);
-      const drone = loomAudio.context.createOscillator();
-      const droneGain = loomAudio.context.createGain();
-      drone.type = 'sine';
-      drone.frequency.value = 58;
-      droneGain.gain.value = .008;
-      drone.connect(droneGain).connect(loomAudio.master);
-      drone.start();
+      loomAudio.master.gain.value = .30;
+      const compressor = loomAudio.context.createDynamicsCompressor();
+      compressor.threshold.value = -20;
+      compressor.knee.value = 16;
+      compressor.ratio.value = 5;
+      compressor.attack.value = .004;
+      compressor.release.value = .18;
+      loomAudio.master.connect(compressor).connect(loomAudio.context.destination);
     }}
     if (loomAudio.context.state === 'suspended') loomAudio.context.resume();
     loomAudio.enabled = true;
     const hint = document.getElementById('audio-hint');
     if (hint) {{ hint.textContent = '织机音效已开启 / Sound on'; hint.disabled = true; }}
   }}
-  function playLoomTone(frequency, duration, type, volume) {{
+  function playWoodResonance(frequency, duration, volume, delay = 0, detune = 0) {{
     if (!loomAudio.enabled || !loomAudio.context) return;
-    const now = loomAudio.context.currentTime;
+    const now = loomAudio.context.currentTime + delay;
     const oscillator = loomAudio.context.createOscillator();
     const gain = loomAudio.context.createGain();
-    oscillator.type = type;
-    oscillator.frequency.value = frequency;
+    const filter = loomAudio.context.createBiquadFilter();
+    oscillator.type = 'triangle';
+    oscillator.frequency.setValueAtTime(frequency * 1.06, now);
+    oscillator.frequency.exponentialRampToValueAtTime(frequency * .94, now + duration);
+    oscillator.detune.value = detune;
+    filter.type = 'lowpass';
+    filter.frequency.value = 1150;
     gain.gain.setValueAtTime(.0001, now);
-    gain.gain.exponentialRampToValueAtTime(volume, now + .008);
+    gain.gain.exponentialRampToValueAtTime(volume, now + .004);
     gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
-    oscillator.connect(gain).connect(loomAudio.master);
+    oscillator.connect(filter).connect(gain).connect(loomAudio.master);
     oscillator.start(now);
     oscillator.stop(now + duration + .02);
   }}
-  function playLoomNoise(duration, volume, cutoff) {{
+  function playTexturedNoise(duration, volume, filterType, frequency, delay = 0) {{
     if (!loomAudio.enabled || !loomAudio.context) return;
+    const now = loomAudio.context.currentTime + delay;
     const length = Math.floor(loomAudio.context.sampleRate * duration);
     const buffer = loomAudio.context.createBuffer(1, length, loomAudio.context.sampleRate);
     const data = buffer.getChannelData(0);
-    for (let i = 0; i < length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / length);
+    let previous = 0;
+    for (let i = 0; i < length; i++) {{
+      const white = Math.random() * 2 - 1;
+      previous = previous * .72 + white * .28;
+      data[i] = previous;
+    }}
     const source = loomAudio.context.createBufferSource();
     const filter = loomAudio.context.createBiquadFilter();
     const gain = loomAudio.context.createGain();
     source.buffer = buffer;
-    filter.type = 'lowpass';
-    filter.frequency.value = cutoff;
-    gain.gain.value = volume;
+    filter.type = filterType;
+    filter.frequency.value = frequency;
+    filter.Q.value = filterType === 'bandpass' ? 1.4 : .7;
+    gain.gain.setValueAtTime(.0001, now);
+    gain.gain.linearRampToValueAtTime(volume, now + Math.min(.018, duration * .18));
+    gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
     source.connect(filter).connect(gain).connect(loomAudio.master);
-    source.start();
+    source.start(now);
+    source.stop(now + duration + .02);
+  }}
+  function playWoodKnock(frequency, strength, delay = 0) {{
+    playTexturedNoise(.055, strength * .72, 'bandpass', frequency * 5.4, delay);
+    playWoodResonance(frequency, .15, strength, delay, -7);
+    playWoodResonance(frequency * 1.63, .09, strength * .38, delay + .004, 9);
+  }}
+  function playSilkFriction(duration, strength, frequency, delay = 0) {{
+    playTexturedNoise(duration, strength, 'bandpass', frequency, delay);
+    playTexturedNoise(duration * .74, strength * .36, 'highpass', frequency * 1.7, delay + .018);
   }}
   function triggerLoomAudio(timeline) {{
     if (!state.exhibitionMode || !loomAudio.enabled) return;
-    if (timeline.phase < loomAudio.lastPhase) loomAudio.lastPhase = 0;
-    if (loomAudio.lastPhase < .14 && timeline.phase >= .14) playLoomNoise(.07, .055, 1800);
-    if (loomAudio.lastPhase < .38 && timeline.phase >= .38) {{
-      playLoomNoise(.12, .07, 2200);
-      playLoomTone(340, .08, 'triangle', .035);
+    if (loomAudio.lastCycle < 0) {{
+      loomAudio.lastCycle = timeline.cycleIndex;
+      loomAudio.lastPhase = timeline.phase;
+      return;
     }}
-    if (loomAudio.lastPhase < .62 && timeline.phase >= .62) playLoomNoise(.10, .13, 1200);
-    if (loomAudio.lastPhase < .91 && timeline.phase >= .91) playLoomNoise(.09, .08, 700);
+    if (timeline.cycleIndex !== loomAudio.lastCycle || timeline.phase < loomAudio.lastPhase) {{
+      loomAudio.lastCycle = timeline.cycleIndex;
+      loomAudio.lastPhase = 0;
+    }}
+    // One restrained acoustic event per visible operation: treadle, shed,
+    // shuttle, reed, cloth advance and take-up. There is no electronic drone.
+    if (loomAudio.lastPhase < .025 && timeline.phase >= .025) playWoodKnock(92, .16);
+    if (loomAudio.lastPhase < .14 && timeline.phase >= .14) {{
+      playSilkFriction(.16, .045, 1180);
+      playWoodKnock(176, .075, .018);
+    }}
+    if (loomAudio.lastPhase < .38 && timeline.phase >= .38) {{
+      playWoodKnock(238, .105);
+      playSilkFriction(.30, .052, 1650, .025);
+    }}
+    if (loomAudio.lastPhase < .62 && timeline.phase >= .62) {{
+      playWoodKnock(108, .31);
+      playWoodKnock(194, .15, .048);
+    }}
+    if (loomAudio.lastPhase < .79 && timeline.phase >= .79) {{
+      playSilkFriction(.22, .035, 820);
+    }}
+    if (loomAudio.lastPhase < .91 && timeline.phase >= .91) {{
+      playWoodKnock(72, .12);
+      playSilkFriction(.28, .028, 540, .035);
+    }}
     loomAudio.lastPhase = timeline.phase;
   }}
   canvas.addEventListener('pointerdown', startLoomAudio);
