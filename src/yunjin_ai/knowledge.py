@@ -90,7 +90,7 @@ QUESTION_INTENT_EXPANSIONS = (
         ("织造", "材料"),
     ),
     (
-        ("历史文化", "历史用途", "以前做什么", "以前有什么用途", "过去做什么", "过去有什么用途", "当代保护", "如何保护", "传承现状"),
+        ("南京云锦的历史", "南京云锦历史", "云锦的历史", "云锦历史", "历史文化", "历史沿革", "发展历史", "历史用途", "以前做什么", "以前有什么用途", "过去做什么", "过去有什么用途", "当代保护", "如何保护", "传承现状"),
         ("历史", "用途", "当代", "保护"),
     ),
     (
@@ -112,7 +112,7 @@ QUESTION_INTENT_FILTERS = (
         ("织造材料", "材料"),
     ),
     (
-        ("历史文化", "历史用途", "以前做什么", "以前有什么用途", "过去做什么", "过去有什么用途", "当代保护", "如何保护", "传承现状"),
+        ("南京云锦的历史", "南京云锦历史", "云锦的历史", "云锦历史", "历史文化", "历史沿革", "发展历史", "历史用途", "以前做什么", "以前有什么用途", "过去做什么", "过去有什么用途", "当代保护", "如何保护", "传承现状"),
         ("历史用途", "历史", "用途", "保护"),
     ),
     (
@@ -122,6 +122,10 @@ QUESTION_INTENT_FILTERS = (
     (
         ("挑花结本有什么用", "挑花结本的作用", "花本有什么用", "花本的作用"),
         ("挑花结本", "纹样转成花本"),
+    ),
+    (
+        ("为什么珍贵", "为何珍贵", "为什么贵", "独特之处", "特别之处", "有什么特点", "有什么特色", "和普通织锦有什么不同", "有什么区别"),
+        ("材料", "手工", "工序", "外观", "品种", "逐花异色"),
     ),
 )
 
@@ -319,10 +323,25 @@ def _item_relevant_to_question_intent(question: str, item: KnowledgeItem) -> boo
     return True
 
 
+def _question_contains_term(normalized_question: str, term: str) -> bool:
+    normalized_term = _normalized_visual_term(term)
+    if normalized_term == "什么":
+        return normalized_term in normalized_question.replace("为什么", "")
+    return normalized_term in normalized_question
+
+
 def item_answers_question(question: str, item: KnowledgeItem) -> bool:
     normalized = _normalized_visual_term(normalize_question_for_answering(question))
+    if item.id == "KB001" and any(
+        intent in normalized
+        for intent in (
+            "为什么", "为何", "不同", "区别", "作用", "材料", "品种", "种类",
+            "纹样", "工序", "流程", "特点", "特色", "用途", "时候", "多久",
+        )
+    ):
+        return False
     return bool(normalized) and any(
-        all(_normalized_visual_term(term) in normalized for term in group) for group in item.answer_terms
+        all(_question_contains_term(normalized, term) for term in group) for group in item.answer_terms
     )
 
 
@@ -346,11 +365,56 @@ def search_answerable_knowledge(
     for item in answerable:
         if item.id not in hits:
             group = max(
-                (group for group in item.answer_terms if all(_normalized_visual_term(term) in normalized for term in group)),
+                (group for group in item.answer_terms if all(_question_contains_term(normalized, term) for term in group)),
                 key=len,
             )
             hits[item.id] = SearchHit(item, 8.0 + len(group), tuple(group))
     return sorted(hits.values(), key=lambda hit: (-hit.score, hit.item.id))[:limit]
+
+
+YUNJIN_DOMAIN_TERMS = (
+    "南京云锦", "云锦", "妆花", "织金", "库锦", "库缎", "金宝地",
+    "大花楼", "挑花结本", "花本", "拽花工", "织手", "织机", "织造",
+    "纹样", "经线", "纬线", "梭子", "筘框", "非遗",
+)
+RELATED_QUERY_EXPANSIONS = (
+    (
+        ("为什么珍贵", "为何珍贵", "为什么贵", "独特之处", "特别之处", "有什么特点", "有什么特色", "和普通织锦有什么不同", "有什么区别"),
+        ("手工", "材料", "工序", "织造", "逐花异色"),
+    ),
+)
+
+
+def search_related_knowledge(
+    question: str,
+    items: Iterable[KnowledgeItem],
+    *,
+    context_keywords: Iterable[str] = (),
+    limit: int = 3,
+) -> list[SearchHit]:
+    """Return sourced nearby knowledge for new in-domain wording.
+
+    This is deliberately separate from ``search_answerable_knowledge``: the
+    caller must present these hits as related context, not as a direct answer.
+    """
+    normalized = _normalized_visual_term(question)
+    if not normalized or not any(_normalized_visual_term(term) in normalized for term in YUNJIN_DOMAIN_TERMS):
+        return []
+    expanded = normalize_question_for_answering(question)
+    related_parts = [expanded]
+    for aliases, related_terms in RELATED_QUERY_EXPANSIONS:
+        if any(_normalized_visual_term(alias) in normalized for alias in aliases):
+            related_parts.extend(related_terms)
+    candidates = [
+        item for item in items
+        if item.knowledge_use in {"cultural_content", "process/history"}
+        and _item_relevant_to_question_intent(expanded, item)
+    ]
+    return search_knowledge(
+        " ".join([*related_parts, *context_keywords]).strip(),
+        candidates,
+        limit=limit,
+    )
 
 
 def _is_automatic_visual_term_allowed(term: str) -> bool:

@@ -280,7 +280,21 @@ def apply_yunjin_editorial_refinement() -> None:
         .yunjin-aurora{display:block;opacity:.34;filter:blur(26px);mix-blend-mode:screen}.yunjin-shuttle-path{display:block;top:76%;opacity:.56}.yunjin-shuttle-path i{animation-duration:5.4s}.yunjin-spectacle-corners:before,.yunjin-spectacle-corners:after{animation:yj-corner-pulse 4.6s ease-in-out infinite}.yunjin-spectacle-corners:after{animation-delay:-2.3s}
         .yunjin-hero__eyebrow{animation:yj-content-rise .75s .05s both}.yunjin-hero h1{animation:yj-content-rise .9s .16s both,yj-title-glow 5s 1.1s ease-in-out infinite}.yunjin-hero p{animation:yj-content-rise .9s .28s both}.yunjin-hero__tags{animation:yj-content-rise .9s .4s both}
         @media(max-width:900px){.yj-journey-grid{grid-template-columns:1fr}.yj-journey-card{min-height:0}.yj-editorial-heading{display:block}.yj-editorial-heading p{margin-top:.5rem;text-align:left}.yunjin-hero{min-height:390px;background-position:62% center}.yunjin-seal{right:1.3rem;top:1.2rem}}
-        @media(max-width:560px){.stMainBlockContainer{padding-left:.8rem;padding-right:.8rem}.yunjin-hero{min-height:430px;padding:2rem 1.25rem;background-size:100% 100%,auto 100%;background-position:center,58% center;background-repeat:no-repeat,no-repeat;animation:yj-hero-breathe 6.5s ease-in-out infinite}.yunjin-hero h1{font-size:2.35rem;max-width:82%}.yunjin-hero p{max-width:94%;font-size:.9rem}.yunjin-seal{width:54px;height:54px;font-size:.9rem}.yunjin-page-banner{padding:1.3rem}.yj-editorial-heading h2{font-size:1.5rem}}
+        @media(max-width:560px){
+          .stMainBlockContainer{padding-left:.8rem;padding-right:.8rem}
+          [data-testid="stSegmentedControl"]{max-width:100%;overflow-x:auto!important;scrollbar-width:none}
+          [data-testid="stSegmentedControl"]::-webkit-scrollbar{display:none}
+          [data-testid="stSegmentedControl"]>div,[data-testid="stSegmentedControl"] [role="radiogroup"]{display:flex!important;flex-wrap:nowrap!important;width:max-content!important;min-width:100%}
+          [data-testid="stSegmentedControl"] button,[data-testid="stSegmentedControl"] label{flex:0 0 auto!important;white-space:nowrap!important}
+          .yunjin-hero{min-height:465px;padding:1.65rem 1rem 1.8rem;background-size:100% 100%,auto 100%;background-position:center,55% center;background-repeat:no-repeat,no-repeat;animation:yj-hero-breathe 6.5s ease-in-out infinite}
+          .yunjin-hero__eyebrow{max-width:72%;font-size:.56rem;line-height:1.5;letter-spacing:.13em}
+          .yunjin-hero h1{max-width:100%;margin-top:1.25rem;padding-right:0;font-size:2rem;white-space:nowrap}
+          .yunjin-hero p{max-width:100%;font-size:.88rem;line-height:1.72}
+          .yunjin-hero__tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.42rem;margin-top:1.15rem}
+          .yunjin-hero__tags span{padding:.38rem .35rem;text-align:center;white-space:nowrap;font-size:.7rem}
+          .yunjin-seal{right:.85rem;top:.85rem;width:52px;height:52px;font-size:.86rem}
+          .yunjin-page-banner{padding:1.3rem}.yj-editorial-heading h2{font-size:1.5rem}
+        }
         @media(prefers-reduced-motion:reduce){.yunjin-hero,.yunjin-hero:before,.yunjin-aurora,.yunjin-shuttle-path i,.yunjin-spectacle-corners:before,.yunjin-spectacle-corners:after,.yunjin-hero__eyebrow,.yunjin-hero h1,.yunjin-hero p,.yunjin-hero__tags,.yj-editorial-heading,.yj-journey-card,.yj-journey-card:after,.yunjin-page-banner{animation:none!important}.yj-journey-card{transition:none!important}}
         </style>
         """
@@ -650,32 +664,48 @@ if active_tab == "AI文化助手":
 
     answer_slot = st.container(key="guide_answer_slot")
     with answer_slot:
-        # Keep the newest answer directly below the question form so visitors
-        # do not need to scroll past the full conversation history.
-        for turn_index, turn in enumerate(reversed(st.session_state["guide_history"])):
+        def render_guide_turn(turn: dict, *, compact: bool = False) -> None:
             answer = turn["answer"]
             with st.chat_message("user"):
                 st.write(turn["question"])
             with st.chat_message("assistant", avatar=":material/auto_awesome:"):
                 st.caption(answer.status)
+                if answer.status == "可信延伸回答":
+                    st.info("已按语义匹配到相关的本地权威资料；以下内容均保留来源编号。")
                 for claim in answer.claims:
                     st.caption(EVIDENCE_SCOPE_LABELS[claim.evidence_scope])
                     st.write(claim.text)
                     st.caption("该事实来源：" + "、".join(f"[{source_id}]" for source_id in claim.source_ids))
 
                 if answer.source_ids:
-                    levels = tuple(
-                        dict.fromkeys(sources[source_id].evidence_level for source_id in answer.source_ids)
-                    )
-                    with st.expander("查看知识来源与证据", icon=":material/source:"):
-                        show_sources(answer.source_ids, sources)
-                        st.markdown("**证据等级：** " + "、".join(levels))
-                    with st.expander("相关官方对象 metadata", icon=":material/table_view:"):
-                        show_official_objects(
-                            related_official_objects(answer.hits, official_rows, official_relations)
+                    if compact:
+                        st.caption("来源：" + "、".join(f"[{source_id}]" for source_id in answer.source_ids))
+                    else:
+                        levels = tuple(
+                            dict.fromkeys(sources[source_id].evidence_level for source_id in answer.source_ids)
                         )
+                        with st.expander("查看知识来源与证据", icon=":material/source:"):
+                            show_sources(answer.source_ids, sources)
+                            st.markdown("**证据等级：** " + "、".join(levels))
+                        with st.expander("相关官方对象 metadata", icon=":material/table_view:"):
+                            show_official_objects(
+                                related_official_objects(answer.hits, official_rows, official_relations)
+                            )
                 else:
                     st.warning("本地知识库证据不足，系统没有调用大模型补写文化事实。")
+
+        guide_history = st.session_state["guide_history"]
+        if guide_history:
+            # The newest answer is always the first visible result on mobile.
+            render_guide_turn(guide_history[-1])
+            if len(guide_history) > 1:
+                with st.expander(
+                    f"查看历史问答（{len(guide_history) - 1}）",
+                    expanded=False,
+                    icon=":material/history:",
+                ):
+                    for turn in reversed(guide_history[:-1]):
+                        render_guide_turn(turn, compact=True)
 
         if st.session_state["guide_history"]:
             latest_answer = st.session_state["guide_history"][-1]["answer"]

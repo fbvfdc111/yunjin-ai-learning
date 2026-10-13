@@ -3,7 +3,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable
 
-from .knowledge import Claim, SearchHit, Source, citations_for_hits, search_answerable_knowledge
+from .knowledge import (
+    Claim,
+    SearchHit,
+    Source,
+    citations_for_hits,
+    search_answerable_knowledge,
+    search_related_knowledge,
+)
 
 
 @dataclass(frozen=True)
@@ -22,12 +29,22 @@ def answer_from_knowledge(
     context_keywords: Iterable[str] = (),
     limit: int = 4,
 ) -> GroundedAnswer:
+    items = tuple(items)
     hits = search_answerable_knowledge(
         question,
         items,
         context_keywords=context_keywords,
         limit=limit,
     )
+    is_related_fallback = False
+    if not hits:
+        hits = search_related_knowledge(
+            question,
+            items,
+            context_keywords=context_keywords,
+            limit=min(limit, 3),
+        )
+        is_related_fallback = bool(hits)
     sources_are_complete = hits and all(
         source_id in sources for hit in hits for source_id in hit.item.source_ids
     )
@@ -45,7 +62,9 @@ def answer_from_knowledge(
 
     claims = tuple(claim for hit in hits for claim in hit.item.claims)
     scopes = {claim.evidence_scope for claim in claims}
-    if scopes == {"direct_yunjin"}:
+    if is_related_fallback:
+        status = "可信延伸回答"
+    elif scopes == {"direct_yunjin"}:
         status = "基于本地知识库"
     elif scopes == {"official_object_name"}:
         status = "仅官方对象名称/目录证据"
@@ -54,7 +73,10 @@ def answer_from_knowledge(
     else:
         status = "分层证据"
     return GroundedAnswer(
-        answer="\n\n".join(claim.text for claim in claims),
+        answer=(
+            ("根据与问题最相关、且有来源支持的云锦知识作答：\n\n")
+            if is_related_fallback else ""
+        ) + "\n\n".join(claim.text for claim in claims),
         claims=claims,
         hits=tuple(hits),
         source_ids=citations_for_hits(hits),

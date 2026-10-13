@@ -59,6 +59,7 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
             "纹样文化": "KB010",
             "南京云锦纹样": "KB010",
             "历史文化": "KB006",
+            "南京云锦的历史": "KB006",
             "织造材料": "KB005",
             "制作工艺": "KB003",
             "品种分类": "KB007",
@@ -70,6 +71,19 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
                 self.assertEqual(hits[0].item.id, expected_id)
                 answer = answer_from_knowledge(question, self.items, self.sources)
                 self.assertNotEqual(answer.status, "证据不足")
+
+    def test_new_yunjin_wording_gets_sourced_related_context(self):
+        for question in ("为什么南京云锦这么珍贵？", "南京云锦和普通织锦有什么不同？"):
+            with self.subTest(question=question):
+                answer = answer_from_knowledge(question, self.items, self.sources)
+                self.assertEqual(answer.status, "可信延伸回答")
+                self.assertTrue(answer.claims)
+                self.assertTrue(answer.source_ids)
+                self.assertIn("最相关", answer.answer)
+
+        unrelated = answer_from_knowledge("今天南京天气怎么样？", self.items, self.sources)
+        self.assertEqual(unrelated.status, "证据不足")
+        self.assertFalse(unrelated.claims)
 
     def test_cloth_growth_uses_same_pick_timeline_as_people_and_mechanisms(self):
         sample = simulation_sample(STAGE_IDS.index("weft_weaving") * SIMULATION_STAGE_SECONDS + 1.0)
@@ -96,6 +110,11 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
         app_source = (ROOT / "app.py").read_text(encoding="utf-8")
         self.assertIn("background-size:100% 100%,auto 100%", app_source)
         self.assertIn("background-repeat:no-repeat,no-repeat", app_source)
+        self.assertIn("render_guide_turn(guide_history[-1])", app_source)
+        self.assertIn("查看历史问答", app_source)
+        self.assertIn('answer.status == "可信延伸回答"', app_source)
+        self.assertIn("flex-wrap:nowrap!important", app_source)
+        self.assertIn("grid-template-columns:repeat(2,minmax(0,1fr))", app_source)
 
         sample = simulation_sample(STAGE_IDS.index("weft_weaving") * SIMULATION_STAGE_SECONDS + 1.0)
         html = render_process_twin_3d(sample, exhibition=True)
