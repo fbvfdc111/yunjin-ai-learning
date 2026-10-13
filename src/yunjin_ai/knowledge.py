@@ -62,6 +62,8 @@ PROCESS_RELEVANCE_TERMS = frozenset(
         "流程",
     }
 )
+VARIETY_INTENT_TERMS = frozenset({"品种", "种类", "哪几类", "哪几种"})
+VARIETY_RELEVANCE_TERMS = frozenset({"品种", "分类", "种类"})
 
 
 @dataclass(frozen=True)
@@ -226,8 +228,22 @@ def _item_matches_process_intent(item: KnowledgeItem) -> bool:
     )
 
 
+def _has_variety_intent(question: str) -> bool:
+    normalized = _normalized_visual_term(question)
+    return any(_normalized_visual_term(term) in normalized for term in VARIETY_INTENT_TERMS)
+
+
+def _item_matches_variety_intent(item: KnowledgeItem) -> bool:
+    haystack = _normalized_visual_term(" ".join((item.category, item.title, *item.keywords)))
+    return any(_normalized_visual_term(term) in haystack for term in VARIETY_RELEVANCE_TERMS)
+
+
 def _item_relevant_to_question_intent(question: str, item: KnowledgeItem) -> bool:
-    return not _has_process_intent(question) or _item_matches_process_intent(item)
+    if _has_process_intent(question):
+        return _item_matches_process_intent(item)
+    if _has_variety_intent(question):
+        return _item_matches_variety_intent(item)
+    return True
 
 
 def item_answers_question(question: str, item: KnowledgeItem) -> bool:

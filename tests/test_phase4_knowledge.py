@@ -8,7 +8,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from yunjin_ai.guide import answer_from_knowledge
-from yunjin_ai.knowledge import load_knowledge, load_sources, search_knowledge, validate_knowledge
+from yunjin_ai.knowledge import (
+    load_knowledge,
+    load_sources,
+    search_answerable_knowledge,
+    search_knowledge,
+    validate_knowledge,
+)
 
 
 class Phase4KnowledgeTests(unittest.TestCase):
@@ -34,6 +40,25 @@ class Phase4KnowledgeTests(unittest.TestCase):
         refusal = answer_from_knowledge("请评价今天南京天气", self.items, self.sources)
         self.assertEqual(refusal.status, "证据不足")
         self.assertFalse(refusal.source_ids)
+
+    def test_variety_questions_do_not_fall_back_to_generic_overview(self):
+        questions = (
+            "南京云锦有什么品种？",
+            "南京云锦有哪些品种？",
+            "云锦分为哪几类？",
+            "南京云锦有哪几种？",
+        )
+        for question in questions:
+            with self.subTest(question=question):
+                hits = search_answerable_knowledge(question, self.items)
+                self.assertTrue(hits)
+                self.assertEqual(hits[0].item.id, "KB007")
+                self.assertNotIn("KB001", {hit.item.id for hit in hits})
+                answer = answer_from_knowledge(question, self.items, self.sources)
+                self.assertIn("织金", answer.answer)
+                self.assertIn("库锦", answer.answer)
+                self.assertIn("库缎", answer.answer)
+                self.assertIn("妆花", answer.answer)
 
 
 if __name__ == "__main__":

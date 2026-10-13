@@ -2339,6 +2339,10 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
       return Date.now() / 1000;
     }}
   }}
+  // Capture the shared documentary cycle at mount time. Introductory cloth
+  // growth is counted in completed picks, never in unrelated wall-clock
+  // seconds, so the worker, shuttle, reed, cloth and roller cannot drift.
+  const exhibitionStartCycleIndex = Math.floor(continuousAnimationSeconds() / 16.0);
   function animate() {{
     const t = continuousAnimationSeconds();
     const elapsed = clock.getElapsedTime();
@@ -2403,14 +2407,22 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
     const wovenPicks = (timeline.cycleIndex % 24) + timeline.takeup * .92;
     const exhibitionClothProgress = .10 + (wovenPicks / 24) * .82;
     const clothProgress = state.exhibitionMode ? exhibitionClothProgress : Math.min(0.98, clothMotion);
-    // Use this iframe's own elapsed time. The continuous documentary clock is
-    // intentionally persisted across refreshes and would otherwise make the
-    // cloth reveal appear already complete as soon as the page opens.
+    // Build the cloth only after a pick has been inserted and beaten. Two
+    // synchronized picks introduce the flat run, wrap and wound layer. During
+    // pedal, shed, shuttle and reed phases the cloth length is held still.
+    const completedSessionPicks = Math.max(0, timeline.cycleIndex - exhibitionStartCycleIndex);
+    const currentPickFormation = timeline.phase < .79
+      ? 0
+      : timeline.phase < .91
+        ? .65 * smoothstep(clamp01((timeline.phase - .79) / .12))
+        : .65 + .35 * smoothstep(clamp01((timeline.phase - .91) / .09));
+    const clothFormation = state.exhibitionMode
+      ? clamp01((completedSessionPicks + currentPickFormation) / 2.0)
+      : 1;
     // Build the cloth in three overlapping, physically connected stages. The
     // flat run approaches the roller first, the free edge then curls around
     // its surface, and only after contact does the wound layer become visible.
     // Overlap avoids the old one-frame jump from a flat strip to a full roll.
-    const clothFormation = state.exhibitionMode ? clamp01((elapsed - .6) / 15.5) : 1;
     const clothReveal = state.exhibitionMode ? smoothstep(clamp01(clothFormation / .80)) : 1;
     const clothWrapReveal = state.exhibitionMode ? smoothstep(clamp01((clothFormation - .68) / .22)) : 1;
     const clothRollReveal = state.exhibitionMode ? smoothstep(clamp01((clothFormation - .80) / .20)) : 1;
