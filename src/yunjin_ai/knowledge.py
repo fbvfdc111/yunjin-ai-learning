@@ -64,6 +64,66 @@ PROCESS_RELEVANCE_TERMS = frozenset(
 )
 VARIETY_INTENT_TERMS = frozenset({"品种", "种类", "哪几类", "哪几种"})
 VARIETY_RELEVANCE_TERMS = frozenset({"品种", "分类", "种类"})
+QUESTION_INTENT_EXPANSIONS = (
+    (
+        ("制作工艺", "织造工艺", "制作过程", "织造过程", "怎么制作", "如何制作", "怎么织", "如何织", "制作步骤", "有哪些工序"),
+        ("南京云锦", "制作", "流程", "主要", "环节", "织造", "工艺"),
+    ),
+    (
+        ("有哪些品种", "有什么品种", "主要品种", "哪些品种", "分为哪几类", "分哪几类", "有哪几种", "哪些种类"),
+        ("南京云锦", "主要", "品种", "分类"),
+    ),
+    (
+        ("上面的人", "上层的人", "拉线的人", "谁拉线", "谁提经", "拽花工做什么", "拽花工的作用"),
+        ("大花楼", "织机", "拽花工", "织手"),
+    ),
+    (
+        ("下面的人", "下层的人", "下面的织手", "织手如何", "织手怎么", "谁控制梭子", "谁推梭子", "织手做什么", "织手的作用"),
+        ("大花楼", "织机", "拽花工", "织手"),
+    ),
+    (
+        ("为什么要手工", "为什么需要手工", "为什么不能机器", "手工织造"),
+        ("云锦", "手工", "织造"),
+    ),
+    (
+        ("制作材料", "织造材料", "用什么材料", "使用什么材料", "什么材质", "金线银线", "孔雀羽"),
+        ("织造", "材料"),
+    ),
+    (
+        ("历史用途", "以前做什么", "以前有什么用途", "过去做什么", "过去有什么用途", "当代保护", "如何保护", "传承现状"),
+        ("历史", "用途", "当代", "保护"),
+    ),
+    (
+        ("有哪些纹样", "常见纹样", "纹样题材", "图案题材", "怎么构图", "构图形式"),
+        ("传统", "纹样", "题材", "构图", "形式"),
+    ),
+    (
+        ("挑花结本有什么用", "挑花结本的作用", "花本有什么用", "花本的作用"),
+        ("挑花结本", "作用"),
+    ),
+)
+QUESTION_INTENT_FILTERS = (
+    (
+        ("上面的人", "上层的人", "拉线的人", "谁拉线", "谁提经", "拽花工", "下面的人", "下层的人", "下面的织手", "织手如何", "织手怎么", "谁控制梭子", "谁推梭子", "织手做什么", "织手的作用"),
+        ("花本装机", "双人织造", "拽花工", "织手"),
+    ),
+    (
+        ("制作材料", "织造材料", "用什么材料", "使用什么材料", "什么材质", "金线银线", "孔雀羽"),
+        ("织造材料", "材料"),
+    ),
+    (
+        ("历史用途", "以前做什么", "以前有什么用途", "过去做什么", "过去有什么用途", "当代保护", "如何保护", "传承现状"),
+        ("历史用途", "历史", "用途", "保护"),
+    ),
+    (
+        ("有哪些纹样", "常见纹样", "纹样题材", "图案题材", "怎么构图", "构图形式"),
+        ("纹样题材", "纹样题材与构图", "构图"),
+    ),
+    (
+        ("挑花结本有什么用", "挑花结本的作用", "花本有什么用", "花本的作用"),
+        ("挑花结本", "纹样转成花本"),
+    ),
+)
 
 
 @dataclass(frozen=True)
@@ -211,9 +271,13 @@ def _normalized_visual_term(term: str) -> str:
 
 def normalize_question_for_answering(question: str) -> str:
     normalized = _normalized_visual_term(question)
+    expanded_parts = [question]
     if "南京云锦" not in normalized and "云锦" in normalized:
-        return f"南京{question}"
-    return question
+        expanded_parts.append("南京云锦")
+    for aliases, canonical_terms in QUESTION_INTENT_EXPANSIONS:
+        if any(_normalized_visual_term(alias) in normalized for alias in aliases):
+            expanded_parts.extend(canonical_terms)
+    return " ".join(dict.fromkeys(part for part in expanded_parts if part))
 
 
 def _has_process_intent(question: str) -> bool:
@@ -238,11 +302,20 @@ def _item_matches_variety_intent(item: KnowledgeItem) -> bool:
     return any(_normalized_visual_term(term) in haystack for term in VARIETY_RELEVANCE_TERMS)
 
 
+def _item_matches_topic_relevance(item: KnowledgeItem, relevance_terms: tuple[str, ...]) -> bool:
+    haystack = _normalized_visual_term(" ".join((item.category, item.title, item.fact, *item.keywords)))
+    return any(_normalized_visual_term(term) in haystack for term in relevance_terms)
+
+
 def _item_relevant_to_question_intent(question: str, item: KnowledgeItem) -> bool:
     if _has_process_intent(question):
         return _item_matches_process_intent(item)
     if _has_variety_intent(question):
         return _item_matches_variety_intent(item)
+    normalized = _normalized_visual_term(question)
+    for aliases, relevance_terms in QUESTION_INTENT_FILTERS:
+        if any(_normalized_visual_term(alias) in normalized for alias in aliases):
+            return _item_matches_topic_relevance(item, relevance_terms)
     return True
 
 
