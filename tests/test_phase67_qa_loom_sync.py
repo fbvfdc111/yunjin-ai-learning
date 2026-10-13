@@ -81,6 +81,17 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
         self.assertIn("timeline.phase < .91", html)
         self.assertNotIn("(elapsed - .6) / 15.5", html)
 
+    def test_exhibition_scene_keeps_visuals_without_unused_payload_or_hidden_updates(self):
+        sample = simulation_sample(STAGE_IDS.index("weft_weaving") * SIMULATION_STAGE_SECONDS + 1.0)
+        html = render_process_twin_3d(sample, exhibition=True)
+        self.assertNotIn("data:model/gltf-binary;base64", html)
+        self.assertLess(len(html.encode("utf-8")), 500_000)
+        self.assertIn("pixelRatioCap", html)
+        self.assertIn("targetFrameInterval", html)
+        self.assertIn("if (document.hidden) return", html)
+        self.assertIn("if (!state.exhibitionMode)", html)
+        self.assertIn("textureRefreshThreshold", html)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -6,7 +6,6 @@ that Streamlit embeds in an iframe.
 """
 from __future__ import annotations
 
-import base64
 import json
 from html import escape
 from pathlib import Path
@@ -32,12 +31,6 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 LICENSED_HUMAN_MODEL = ROOT_DIR / "assets" / "models" / "human-base-rigged.cc0.glb"
 LICENSED_HUMAN_SHA256 = "7135e03b6259e970458deff3e0458610914d7c35164cae12611101361e4a5749"
 
-
-def _licensed_human_data_uri() -> str | None:
-    if not LICENSED_HUMAN_MODEL.exists():
-        return None
-    payload = base64.b64encode(LICENSED_HUMAN_MODEL.read_bytes()).decode("ascii")
-    return f"data:model/gltf-binary;base64,{payload}"
 
 EXPLANATIONS: dict[str, tuple[str, str]] = {
     "pattern_design": (
@@ -159,7 +152,9 @@ def render_process_twin_3d(
         "coordinationStatus": sample.coordination_status,
         "dataSource": sample.data_source,
         "mapping": mapping,
-        "licensedHumanGlbDataUri": _licensed_human_data_uri(),
+        # The current exhibition deliberately uses the procedural workers.
+        # Do not embed the unused 4.76 MB GLB in every iframe refresh.
+        "licensedHumanGlbDataUri": None,
         "licensedHumanModelName": "human-base-rigged.cc0.glb",
         "licensedHumanLicense": "CC0-1.0",
         "licensedHumanSha256": LICENSED_HUMAN_SHA256,
@@ -380,7 +375,7 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
     }}
     if (timeline.cycleIndex !== loomAudio.lastCycle || timeline.phase < loomAudio.lastPhase) {{
       loomAudio.lastCycle = timeline.cycleIndex;
-      loomAudio.lastPhase = 0;
+      loomAudio.lastPhase = timeline.phase;
     }}
     // One restrained acoustic event per visible operation: treadle, shed,
     // shuttle, reed, cloth advance and take-up. There is no electronic drone.
@@ -432,8 +427,11 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
   ];
   const persistentTimelineKey = state.exhibitionMode ? 'yunjin-webgl-v33-smooth-cloth-takeup-epoch' : 'yunjin-webgl-v19-rebuild-continuous-animation-epoch';
 
-  const renderer = new THREE.WebGLRenderer({{canvas: canvas, antialias: true, alpha: true}});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  const renderer = new THREE.WebGLRenderer({{canvas: canvas, antialias: true, alpha: true, powerPreference: 'high-performance'}});
+  const deviceMemory = Number(navigator.deviceMemory || 4);
+  const compactViewport = Math.min(window.innerWidth || 1280, window.innerHeight || 800) < 760;
+  const pixelRatioCap = compactViewport || deviceMemory <= 4 ? 1.25 : 1.5;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, pixelRatioCap));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -976,7 +974,7 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
     const cord = new THREE.Mesh(new THREE.CylinderGeometry(.010, .010, 2.34 + (i % 4) * .08, 8), selectedCord ? mats.activeCord : mats.cord);
     cord.name = 'draw-cord-continuous';
     cord.position.set(x, 3.50, z);
-    cord.castShadow = true;
+    cord.castShadow = false;
     cordCurtain.add(cord);
     cords.push({{mesh: cord, active: selectedCord}});
   }}
@@ -999,7 +997,7 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
     thread.name = important ? 'v18-highlighted-moving-warp-reference-line' : 'v18-muted-reference-warp-line';
     thread.position.set(x, 2.95, -.02 + (i % 4) * .012);
     thread.visible = important || i % 4 === 0;
-    thread.castShadow = true;
+    thread.castShadow = false;
     tallWarpCurtain.add(thread);
   }}
 
@@ -2194,6 +2192,9 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
   const baseLift = state.mapping.warp_lift_ratio;
   const clock = new THREE.Clock();
   let lastPaintedProgress = -1;
+  let renderedFrameIndex = 0;
+  let lastFrameTimestamp = 0;
+  const targetFrameInterval = compactViewport || deviceMemory <= 4 ? 1000 / 30 : 1000 / 45;
   const cinematicViews = {{
     pattern_design: {{theta: -0.62, phi: .92, radius: 9.7, target: new THREE.Vector3(.20, 2.48, .10)}},
     pattern_translation: {{theta: -0.54, phi: .88, radius: 9.2, target: new THREE.Vector3(.20, 2.72, -.80)}},
@@ -2389,7 +2390,12 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
   // growth is counted in completed picks, never in unrelated wall-clock
   // seconds, so the worker, shuttle, reed, cloth and roller cannot drift.
   const exhibitionStartCycleIndex = Math.floor(continuousAnimationSeconds() / 16.0);
-  function animate() {{
+  function animate(timestamp = 0) {{
+    requestAnimationFrame(animate);
+    if (document.hidden) return;
+    if (lastFrameTimestamp && timestamp - lastFrameTimestamp < targetFrameInterval) return;
+    lastFrameTimestamp = timestamp;
+    renderedFrameIndex += 1;
     const t = continuousAnimationSeconds();
     const elapsed = clock.getElapsedTime();
     const motion = videoInspiredMotionScheduler(t);
@@ -2527,7 +2533,7 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
         rollerWrapPositions.setZ(wi, 2.45 + .292 * Math.sin(theta));
       }}
       rollerWrapPositions.needsUpdate = true;
-      rollerWrapGeometry.computeVertexNormals();
+      if (renderedFrameIndex % 2 === 0) rollerWrapGeometry.computeVertexNormals();
       outputClothMat.opacity = clamp01(clothWrapReveal * 1.65);
       clothRollMaterial.opacity = clothRollReveal;
       rollerClothWrap.visible = clothWrapReveal > .004;
@@ -2550,16 +2556,18 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
     takeupRoller.rotation.x = takeupTurn * Math.PI * 2.0;
     takeupBand.rotation.x = takeupTurn * Math.PI * 2.0;
     warpRoller.rotation.x = -takeupTurn * Math.PI * .34;
-    cords.forEach((item) => {{
-      item.mesh.position.y = 3.50 - (item.active ? lift * .58 : lift * .06);
-      item.mesh.rotation.z = Math.sin(t * 1.9 + item.mesh.position.x * 2.2) * .014;
-      item.mesh.material = item.active && lift > .1 ? mats.activeCord : mats.cord;
-    }});
-    warpThreads.forEach((item, i) => {{
-      const split = item.selected ? shedOpen * .66 : -shedOpen * .23;
-      item.mesh.position.y = 1.90 + split;
-      item.mesh.rotation.z = Math.sin(t * 1.5 + i * .22) * .010 + (item.selected ? shedOpen * .025 : -shedOpen * .016);
-    }});
+    if (!state.exhibitionMode) {{
+      cords.forEach((item) => {{
+        item.mesh.position.y = 3.50 - (item.active ? lift * .58 : lift * .06);
+        item.mesh.rotation.z = Math.sin(t * 1.9 + item.mesh.position.x * 2.2) * .014;
+        item.mesh.material = item.active && lift > .1 ? mats.activeCord : mats.cord;
+      }});
+      warpThreads.forEach((item, i) => {{
+        const split = item.selected ? shedOpen * .66 : -shedOpen * .23;
+        item.mesh.position.y = 1.90 + split;
+        item.mesh.rotation.z = Math.sin(t * 1.5 + i * .22) * .010 + (item.selected ? shedOpen * .025 : -shedOpen * .016);
+      }});
+    }}
     // One master travel value drives the selected pattern-cord bank, the
     // upper worker and its corresponding raised warp group.
     const mechanicalLift = state.exhibitionMode
@@ -2629,17 +2637,19 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
       item.knot.material = selectedHandle ? mats.activeCord : mats.gold;
       item.grip.scale.setScalar(selectedHandle ? 1.12 : 1);
     }});
-    denseVideoCordLines.forEach((line, i) => {{
-      const activeLine = i % 7 === 0 || i % 13 === 4;
-      line.position.y = 2.05 + (activeLine ? lift * .20 : Math.sin(t * 1.2 + i) * .008);
-      line.rotation.z = Math.sin(t * 1.1 + i * .17) * .012;
-      line.scale.y = 1 + (activeLine ? timeline.drawPull * .12 : 0);
-    }});
-    jacquardPegRows.forEach((peg, i) => {{
-      const activePeg = i % 9 === 0 || i % 17 === 3;
-      peg.scale.setScalar(activePeg ? 1 + timeline.drawPull * .28 : 1);
-      peg.position.z = -.245 + (activePeg ? timeline.drawPull * .028 : 0);
-    }});
+    if (!state.exhibitionMode) {{
+      denseVideoCordLines.forEach((line, i) => {{
+        const activeLine = i % 7 === 0 || i % 13 === 4;
+        line.position.y = 2.05 + (activeLine ? lift * .20 : Math.sin(t * 1.2 + i) * .008);
+        line.rotation.z = Math.sin(t * 1.1 + i * .17) * .012;
+        line.scale.y = 1 + (activeLine ? timeline.drawPull * .12 : 0);
+      }});
+      jacquardPegRows.forEach((peg, i) => {{
+        const activePeg = i % 9 === 0 || i % 17 === 3;
+        peg.scale.setScalar(activePeg ? 1 + timeline.drawPull * .28 : 1);
+        peg.position.z = -.245 + (activePeg ? timeline.drawPull * .028 : 0);
+      }});
+    }}
 
     const pullCycle = mechanicalLift * 2 - 1;
     const setupPull = stageFade.pattern_translation * (.12 + pulse * .10);
@@ -2895,14 +2905,15 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
       clothPositions.setZ(vi, (wave + fold) * pinnedEdgeFade);
     }}
     clothPositions.needsUpdate = true;
-    clothPlane.geometry.computeVertexNormals();
+    if (renderedFrameIndex % 2 === 0) clothPlane.geometry.computeVertexNormals();
 
-    if (Math.abs(clothProgress - lastPaintedProgress) > .006) {{
+    const textureRefreshThreshold = state.exhibitionMode ? .04 : .006;
+    if (Math.abs(clothProgress - lastPaintedProgress) > textureRefreshThreshold) {{
       paintTeachingCloth(clothProgress);
       clothTexture.needsUpdate = true;
       lastPaintedProgress = clothProgress;
     }}
-    if (elapsed - lastMotionSave > .25) {{
+    if (elapsed - lastMotionSave > 1.0) {{
       saveStoredMotion({{
         savedAt: Date.now(),
         stageBlend: visual.stageBlend,
@@ -2916,9 +2927,8 @@ html,body{{margin:0;height:100%;overflow:hidden;background:transparent;font-fami
     }}
     applyCinematicCamera(documentaryViewFromTimeline(timeline.phase, elapsed));
     renderer.render(scene, camera);
-    requestAnimationFrame(animate);
   }}
-  animate();
+  requestAnimationFrame(animate);
   }} catch (error) {{
     console.error('Yunjin WebGL scene failed:', error);
     root.classList.add('webgl-error');
