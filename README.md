@@ -1,3 +1,69 @@
+# Phase 6.6 3D Scene V2 三维人—织机协同数字孪生原型
+
+本版本在 Phase 6.5 基础上继续强化 **3D Scene V2**，重点解决“人物不够立体、织机过于扁平简单”的问题。原六阶段状态机、simulation signals、Human Coordination、AI探锦、Dots、CLIP/OpenAI provider、AI文化助手、教学模式和知识测验逻辑均保留。
+
+数字织机的 `Live Simulation Mode / 实时仿真模式` 现在以更高大的多层南京云锦大花楼木织机教学重建为主场景：顶部花楼木架、上层工作平台、拽花/提花控制区、密集经线与梭口区、下层织造与卷布区、经轴/卷布轴、横梁、立柱、斜撑、综线/控制线都有明确视觉层次。
+
+两位工匠已改为低多边形 3D 人形，包含头、躯干、上臂、前臂、大腿、小腿。拽花工位于明显更高的上层工作区，织手位于下层织造区。第 4 阶段表现拽花工拉提和经线提升；第 5 阶段表现拽花工保持提经、织手伸臂操作、梭子/纬线横穿；第 6 阶段表现经线复位、织物成纹和一次协同循环完成。
+
+边界说明继续强化：`Visual teaching reconstruction inspired by traditional Nanjing Yunjin drawloom structure; not a dimensionally accurate mechanical reconstruction.` 本版本仍是 `Simulation-driven / Simulated Data` 教学原型，不声称真实传感器、真实机械参数或工匠验证。
+
+本轮修改说明见 `docs/phase66_3d_scene_v2_delivery.md`。
+
+---
+
+# Phase 6.5 三维人—织机协同数字孪生原型
+
+本版本基于 `yunjin_ai_mvp_3d_digital_twin_20261006.zip` 复制开发，未覆盖原稳定版。
+
+数字织机的 `Live Simulation Mode / 实时仿真模式` 已升级为 **3D Human-Loom Collaborative Digital Twin Prototype / 三维人—织机协同数字孪生原型**：
+
+- 保留原有六阶段自动状态机、模拟经纱张力、模拟提经位移、拽花工/织手状态、协同状态和实时曲线。
+- 3D 主场景更接近传统南京云锦大花楼木织机的教学视觉结构：上层提花工作区、高架木质框架、密集经线、下层织造区、梭子/纬线和织物成纹区域。
+- 加入两位可理解的人形角色：拽花工位于上层提花工作区，织手位于下层织造位置。
+- 第 4 阶段“拽花工提经”时，拽花工动作明显，3D 经线直接读取现有 `lift_mm` 模拟位移并升起，织手等待。
+- 第 5 阶段“织手织造”时，拽花工保持提经，织手执行织造动作，梭子/纬线横向穿过。
+- 第 6 阶段“织造成纹”时，经线复位，织物区域增加纹样段，表现一次双人协作循环完成。
+- 3D 场景支持鼠标拖动旋转、滚轮缩放；顶部开发型旋转/俯视/Zoom 滑杆已移除。
+- `Human Coordination` 通过人物动作、经线动作、梭子动作和协同状态条共同表现，不只是文字。
+- 继续明确标注 `Simulation-driven`、`Simulated Data / 仿真数据`、`hardware_connected=False`、`real_sensor_data=False`。
+- 本版本是视觉/教学仿真，不声称真实织机、一比一机械复原、真实传感器、真实机械参数或工匠验证。
+
+本轮修改说明见 `docs/phase65_human_loom_collaboration_delivery.md`。
+
+本版本仍是教学与比赛展示原型：不声称连接真实织机、真实传感器、真实机械精度或专家级机械结构复原。
+AI探锦、Dots、CLIP/OpenAI provider 保留路径、AI文化助手、教学模式、知识测验和原有 2D 教学 SVG 均未删除。
+
+## 零基础 Windows CMD 启动
+
+解压 ZIP 后，双击项目根目录的：
+
+```text
+START_WINDOWS_CMD.bat
+```
+
+如果要手动启动，在项目文件夹地址栏输入 `cmd` 回车，然后执行：
+
+```cmd
+py -3 -m pip install -r requirements.txt
+py -3 -m streamlit run app.py
+```
+
+如果 `py -3` 不可用，改用：
+
+```cmd
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
+```
+
+打开网页后进入：
+
+```text
+数字织机 → Live Simulation Mode / 实时仿真模式
+```
+
+---
+
 # Phase 6.2 比赛试用记录版
 
 本轮在 Phase 6.1 基础上做最小增量：保留 AI探锦、Dots/OpenAI 接口、本地 fallback、

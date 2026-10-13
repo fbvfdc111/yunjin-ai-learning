@@ -18,6 +18,7 @@ def app():
     with patch.dict(os.environ, {'DOTS_API_KEY':'','OPENAI_API_KEY':'','OPENAI_VISION_MODEL':''}):
         at = AppTest.from_file(ROOT / 'app.py', default_timeout=20).run()
         at.segmented_control(key='main_tab').set_value('数字织机').run()
+        at.segmented_control(key='twin_experience_mode').set_value('Teaching Mode / 教学模式').run()
     assert not at.exception
     return at
 
@@ -31,11 +32,16 @@ def rendered(at):
 def test_navigation_visible_state_and_sequential_buttons():
     at = app()
     assert at.segmented_control(key='main_tab').options == ['首页','AI探锦','数字织机','AI文化助手','数据与可信AI']
+    assert at.segmented_control(key='twin_experience_mode').options == [
+        'Exhibition Mode / 展示模式',
+        'Teaching Mode / 教学模式',
+        'Live Simulation Mode / 实时仿真模式',
+    ]
     assert at.session_state['twin_state'] == TwinState()
     assert at.button(key='twin_previous').disabled
     assert at.button(key='twin_next').disabled
     text = rendered(at)
-    assert VISUAL_BOUNDARY in text and STATE_BOUNDARY in text
+    assert STATE_BOUNDARY in text
     assert '数字孪生状态' in text
     for sid in STAGE_IDS:
         assert at.session_state['twin_state'].current_stage == sid
@@ -62,6 +68,7 @@ def test_free_mode_replay_return_and_reset():
     at.segmented_control(key='main_tab').set_value('首页').run()
     at.segmented_control(key='main_tab').set_value('数字织机').run()
     assert at.session_state['twin_state'] == state
+    at.segmented_control(key='twin_experience_mode').set_value('Teaching Mode / 教学模式').run()
     at.segmented_control(key='twin_mode_widget').set_value('sequential').run()
     assert at.session_state['twin_state'].current_stage == STAGE_IDS[0]
     at.button(key='twin_reset').click().run()

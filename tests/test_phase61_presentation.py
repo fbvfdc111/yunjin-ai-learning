@@ -29,6 +29,9 @@ def test_home_entry_and_raw_state_is_only_inside_collapsed_expander():
         at.button(key='home_open_twin').click().run()
         assert not at.exception
         assert at.segmented_control(key='main_tab').value == '数字织机'
+        assert at.segmented_control(key='twin_experience_mode').value == 'Exhibition Mode / 展示模式'
+        assert '南京云锦大花楼织机沉浸展示' in at.get('iframe')[0].proto.srcdoc
+        at.segmented_control(key='twin_experience_mode').set_value('Teaching Mode / 教学模式').run()
         raw = next(e for e in at.expander if e.label == '查看运行时 Twin State')
         assert raw.proto.expanded is False
         assert len(raw.get('json')) == 1

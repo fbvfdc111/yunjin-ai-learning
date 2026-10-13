@@ -1,14 +1,14 @@
 [theme]
 base = "light"
-primaryColor = "#7B2431"
-backgroundColor = "#FFFDF8"
-secondaryBackgroundColor = "#F5EFE5"
-textColor = "#2D241F"
-linkColor = "#6B3F1D"
-borderColor = "#D9C8B0"
-codeBackgroundColor = "#F2E9DC"
-baseRadius = "10px"
-buttonRadius = "10px"
+primaryColor = "#8F2E40"
+backgroundColor = "#FFFAF2"
+secondaryBackgroundColor = "#F5E8D2"
+textColor = "#38231F"
+linkColor = "#7C2839"
+borderColor = "#C9A35D"
+codeBackgroundColor = "#EEE0C8"
+baseRadius = "16px"
+buttonRadius = "12px"
 showWidgetBorder = true
 showSidebarBorder = true
 font = "sans-serif"
@@ -16,8 +16,8 @@ headingFont = "serif"
 headingFontWeights = [700, 650, 600, 600, 600, 600]
 
 [theme.sidebar]
-backgroundColor = "#F2E9DC"
-secondaryBackgroundColor = "#EADCC8"
-textColor = "#2D241F"
-borderColor = "#D0B99B"
-primaryColor = "#7B2431"
+backgroundColor = "#35191C"
+secondaryBackgroundColor = "#4B2227"
+textColor = "#F7EAD6"
+borderColor = "#A77F43"
+primaryColor = "#D6AD5E"
