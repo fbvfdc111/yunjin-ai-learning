@@ -34,6 +34,10 @@
       [
         "南京云锦",
         "非遗"
+      ],
+      [
+        "2009",
+        "联合国名录"
       ]
     ],
     "visual_retrieval": "direct"
@@ -190,6 +194,10 @@
         "云锦",
         "手工",
         "织造"
+      ],
+      [
+        "梭子",
+        "织手"
       ]
     ],
     "visual_retrieval": "direct"
@@ -657,6 +665,10 @@
     "answer_terms": [
       [
         "候选知识标签",
+        "什么"
+      ],
+      [
+        "候选知识标签",
         "证据"
       ],
       [
@@ -1090,6 +1102,11 @@
         "灵芝",
         "云锦",
         "意思"
+      ],
+      [
+        "灵芝",
+        "固定",
+        "寓意"
       ]
     ],
     "visual_retrieval": "object_name_only"
@@ -1176,6 +1193,82 @@
         "对象",
         "寓意"
       ]
+    ],
+    "visual_retrieval": "disabled"
+  },
+  {
+    "id": "KB026",
+    "category": "可信 AI 边界",
+    "title": "视觉观察不等于专业鉴定",
+    "claims": [
+      {
+        "text": "本项目的图片分析只描述颜色、构图、重复关系和疑似视觉元素。仅凭上传图片不能确认是否属于南京云锦，也不能确定具体工艺、年代、真伪、文物身份或作者。",
+        "source_ids": ["S13"],
+        "evidence_scope": "governance_methodology"
+      }
+    ],
+    "keywords": ["视觉观察", "图片分析", "专业鉴定", "年代", "真伪", "具体工艺", "南京云锦归属"],
+    "evidence_level": "C",
+    "knowledge_use": "governance/methodology",
+    "answer_terms": [
+      ["图片", "判断", "南京云锦"],
+      ["图片", "证明", "妆花"],
+      ["上传图片", "年代", "真伪"],
+      ["视觉观察", "专业鉴定"]
+    ],
+    "visual_retrieval": "disabled"
+  },
+  {
+    "id": "KB027",
+    "category": "可信 AI 边界",
+    "title": "有证据才回答文化事实",
+    "claims": [
+      {
+        "text": "文化助手只使用本地知识库中带来源的事实作答。问题超出已有证据时会明确提示证据不足，而不会用常识猜测或模型推测补写南京云锦文化事实。",
+        "source_ids": ["S13"],
+        "evidence_scope": "governance_methodology"
+      },
+      {
+        "text": "官方对象名称或目录记录只能证明名称中出现某个题材信息，不能反向证明上传图片内容、具体寓意或创作意图。",
+        "source_ids": ["S12", "S13"],
+        "evidence_scope": "governance_methodology"
+      }
+    ],
+    "keywords": ["证据不足", "拒绝回答", "可信回答", "官方对象名称", "目录证据", "上传图片"],
+    "evidence_level": "C",
+    "knowledge_use": "governance/methodology",
+    "answer_terms": [
+      ["为什么", "拒绝回答"],
+      ["证据不足", "为什么"],
+      ["官方对象名称", "证明", "图像"],
+      ["目录证据", "图片内容"]
+    ],
+    "visual_retrieval": "disabled"
+  },
+  {
+    "id": "KB028",
+    "category": "数据治理边界",
+    "title": "公开可访问不等于获得训练授权",
+    "claims": [
+      {
+        "text": "项目整理的 95 条官网对象记录目前授权状态均为 unknown，usable_for_training 均为 false，因此只用于来源核验和知识组织，不作为监督训练集。公开可访问不等于已经获得模型训练授权。",
+        "source_ids": ["S07", "S13"],
+        "evidence_scope": "governance_methodology"
+      },
+      {
+        "text": "当前网站没有训练南京云锦监督分类器，也不提供 Accuracy、Precision、Recall、F1、Loss、混淆矩阵或模型权重。",
+        "source_ids": ["S13"],
+        "evidence_scope": "governance_methodology"
+      }
+    ],
+    "keywords": ["公开图片", "训练授权", "训练集", "监督分类器", "准确率", "素材授权"],
+    "evidence_level": "C",
+    "knowledge_use": "governance/methodology",
+    "answer_terms": [
+      ["公开图片", "训练模型"],
+      ["公开可访问", "训练授权"],
+      ["网站", "训练", "分类器"],
+      ["识别准确率", "测试结果"]
     ],
     "visual_retrieval": "disabled"
   }

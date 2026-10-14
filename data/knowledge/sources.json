@@ -142,5 +142,17 @@
     "notes": "只支持清册名称、登记号、年代和来源栏。在线旧站本次无法打开；项目存档PDF共92页，目标对象所在第1、3、4、5、6页已目视核对。",
     "locator": "data/official/evidence/source_pdfs/official_yunjin_catalog_1.pdf；目标页1、3、4、5、6",
     "verification_status": "项目存档原PDF及目标页图已核对"
+  },
+  {
+    "source_id": "S13",
+    "title": "本项目可信 AI 与视觉观察边界说明",
+    "publisher": "南京云锦智能识别与数字化传承项目",
+    "url": "docs/trustworthy_ai_boundaries.md",
+    "accessed_at": "2026-10-14",
+    "source_type": "local_project_methodology",
+    "evidence_level": "C",
+    "notes": "记录视觉观察、文化问答、对象名称证据、素材授权和监督训练的产品边界；只支持项目方法说明，不替代外部文化事实来源。",
+    "locator": "全文",
+    "verification_status": "已纳入自动化覆盖测试"
   }
 ]

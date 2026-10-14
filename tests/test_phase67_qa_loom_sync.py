@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -105,6 +106,20 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
             with self.subTest(question=question):
                 answer = answer_from_knowledge(question, self.items, self.sources)
                 self.assertNotEqual(answer.status, "证据不足")
+                self.assertTrue(answer.claims)
+                self.assertTrue(answer.source_ids)
+
+    def test_fifty_core_questions_are_grounded_and_route_to_expected_topics(self):
+        rows = json.loads(
+            (ROOT / "data" / "knowledge" / "coverage_questions.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(len(rows), 50)
+        for row in rows:
+            with self.subTest(question=row["question"]):
+                answer = answer_from_knowledge(row["question"], self.items, self.sources)
+                hit_ids = {hit.item.id for hit in answer.hits}
+                self.assertNotEqual(answer.status, "证据不足")
+                self.assertTrue(hit_ids.intersection(row["expected_ids"]), (hit_ids, row["expected_ids"]))
                 self.assertTrue(answer.claims)
                 self.assertTrue(answer.source_ids)
 

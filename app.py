@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import json
 import sys
 from pathlib import Path
 
@@ -40,9 +41,9 @@ EVIDENCE_SCOPE_LABELS = {
 }
 QUICK_QUESTIONS = [
     "妆花是什么？",
-    "四大品种有哪些有证据的区别？",
+    "妆花、织金、库锦和库缎有什么区别？",
     "挑花结本是什么，有什么作用？",
-    "南京云锦官方对象中有鹤纹吗？",
+    "南京云锦实物中有带鹤纹的例子吗？",
 ]
 HOME_TOPICS = [
     ("云锦是什么？", "南京云锦是什么？", ":material/auto_stories:"),
@@ -60,6 +61,11 @@ def load_data():
     official = load_official_objects(ROOT / "data" / "metadata" / "official_metadata.csv")
     relations = load_official_relations(KNOWLEDGE_DIR / "official_object_knowledge_map.json")
     return sources, knowledge, official, relations
+
+
+@st.cache_data
+def load_coverage_questions():
+    return json.loads((KNOWLEDGE_DIR / "coverage_questions.json").read_text(encoding="utf-8"))
 
 
 def show_sources(source_ids, sources):
@@ -778,6 +784,24 @@ if active_tab == "数据与可信AI":
 - 官方对象关系只来自名称或目录文字，不是图像鉴定、模型分类或训练标签。
 - 对归属、具体工艺、年代、真伪和文物身份始终保留专业鉴定边界。
         """
+    )
+
+    st.subheader("④ 核心问法覆盖测试")
+    coverage_rows = load_coverage_questions()
+    coverage_answers = [answer_from_knowledge(row["question"], knowledge, sources) for row in coverage_rows]
+    covered_count = sum(
+        answer.status != "证据不足"
+        and bool({hit.item.id for hit in answer.hits}.intersection(row["expected_ids"]))
+        for row, answer in zip(coverage_rows, coverage_answers)
+    )
+    coverage_metrics = st.columns(4)
+    coverage_metrics[0].metric("核心自然问法", f"{len(coverage_rows)} 题")
+    coverage_metrics[1].metric("有来源回答", f"{covered_count} 题")
+    coverage_metrics[2].metric("证据不足", f"{len(coverage_rows) - covered_count} 题")
+    coverage_metrics[3].metric("自动化检查", "通过" if covered_count == len(coverage_rows) else "待完善")
+    st.caption(
+        "这是围绕现有知识库设计的 50 道核心自然问法覆盖测试，用于防止已支持主题在修改后失效；"
+        "它不代表系统能够回答任意问题，也不是模型准确率。"
     )
 
     with st.expander("查看技术与数据治理详情", icon=":material/data_table:"):
