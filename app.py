@@ -709,9 +709,15 @@ if active_tab == "AI文化助手":
 
         if st.session_state["guide_history"]:
             latest_answer = st.session_state["guide_history"][-1]["answer"]
+            asked_questions = tuple(turn["question"] for turn in st.session_state["guide_history"])
             st.subheader("继续了解")
             with st.container(horizontal=True):
-                for index, followup in enumerate(cultural_followup_questions(latest_answer.hits)):
+                for index, followup in enumerate(
+                    cultural_followup_questions(
+                        latest_answer.hits,
+                        exclude_questions=asked_questions,
+                    )
+                ):
                     st.button(
                         followup,
                         key=f"guide_followup_{index}",

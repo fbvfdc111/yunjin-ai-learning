@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable, MutableMapping
+import re
 from typing import Any
 
 from .knowledge import SearchHit
@@ -64,13 +65,51 @@ GENERAL_CULTURE_QUESTIONS = (
 )
 
 
-def cultural_followup_questions(hits: Iterable[SearchHit], limit: int = 3) -> tuple[str, ...]:
-    questions: list[str] = []
+def _followup_question_key(question: str) -> str:
+    normalized = re.sub(r"[^a-z0-9\u4e00-\u9fff]+", "", question.lower())
+    normalized = normalized.replace("为何", "为什么").replace("怎样", "怎么")
+    for filler in (
+        "我想了解", "请问", "请介绍一下", "介绍一下", "能不能", "可以",
+        "主要", "是什么", "为什么", "有哪些", "有什么", "哪几种", "哪几类",
+        "如何", "怎么", "作用", "用处", "吗", "呢",
+    ):
+        normalized = normalized.replace(filler, "")
+    return normalized
+
+
+def _same_followup_topic(left: str, right: str) -> bool:
+    left_key = _followup_question_key(left)
+    right_key = _followup_question_key(right)
+    if not left_key or not right_key:
+        return False
+    return left_key == right_key or (
+        min(len(left_key), len(right_key)) >= 4
+        and (left_key in right_key or right_key in left_key)
+    )
+
+
+def cultural_followup_questions(
+    hits: Iterable[SearchHit],
+    limit: int = 3,
+    *,
+    exclude_questions: Iterable[str] = (),
+) -> tuple[str, ...]:
+    candidates: list[str] = []
     for hit in hits:
-        questions.extend(FOLLOWUP_QUESTIONS.get(hit.item.id, ()))
-    if not questions:
-        questions.extend(GENERAL_CULTURE_QUESTIONS)
-    return tuple(dict.fromkeys(questions))[:limit]
+        candidates.extend(FOLLOWUP_QUESTIONS.get(hit.item.id, ()))
+    candidates.extend(GENERAL_CULTURE_QUESTIONS)
+    for questions in FOLLOWUP_QUESTIONS.values():
+        candidates.extend(questions)
+
+    excluded = tuple(question for question in exclude_questions if question.strip())
+    selected: list[str] = []
+    for candidate in dict.fromkeys(candidates):
+        if any(_same_followup_topic(candidate, question) for question in (*excluded, *selected)):
+            continue
+        selected.append(candidate)
+        if len(selected) >= limit:
+            break
+    return tuple(selected)
 
 
 def apply_guide_handoff(state: MutableMapping[str, Any], question: str) -> None:

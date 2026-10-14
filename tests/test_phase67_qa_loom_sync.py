@@ -13,6 +13,7 @@ from yunjin_ai.digital_twin_3d import render_process_twin_3d
 from yunjin_ai.digital_twin_simulation import SIMULATION_STAGE_SECONDS, simulation_sample
 from yunjin_ai.guide import answer_from_knowledge
 from yunjin_ai.knowledge import load_knowledge, load_sources, search_answerable_knowledge
+from yunjin_ai.product import cultural_followup_questions
 
 
 class Phase67QaAndLoomSyncTests(unittest.TestCase):
@@ -85,6 +86,17 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
         self.assertEqual(unrelated.status, "证据不足")
         self.assertFalse(unrelated.claims)
 
+    def test_followups_exclude_current_and_previous_questions(self):
+        hits = search_answerable_knowledge("云锦有哪些品种？", self.items)
+        questions = cultural_followup_questions(
+            hits,
+            exclude_questions=("云锦有哪些品种？", "妆花是什么？"),
+        )
+        self.assertEqual(len(questions), 3)
+        self.assertNotIn("南京云锦有哪些主要品种？", questions)
+        self.assertNotIn("妆花是什么？", questions)
+        self.assertEqual(len(set(questions)), len(questions))
+
     def test_cloth_growth_uses_same_pick_timeline_as_people_and_mechanisms(self):
         sample = simulation_sample(STAGE_IDS.index("weft_weaving") * SIMULATION_STAGE_SECONDS + 1.0)
         html = render_process_twin_3d(sample, exhibition=True)
@@ -113,6 +125,7 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
         self.assertIn("render_guide_turn(guide_history[-1])", app_source)
         self.assertIn("查看历史问答", app_source)
         self.assertIn('answer.status == "可信延伸回答"', app_source)
+        self.assertIn("exclude_questions=asked_questions", app_source)
         self.assertIn("flex-wrap:nowrap!important", app_source)
         self.assertIn("grid-template-columns:repeat(2,minmax(0,1fr))", app_source)
 
