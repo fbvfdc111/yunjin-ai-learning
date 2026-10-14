@@ -42,7 +42,7 @@ def test_navigation_visible_state_and_sequential_buttons():
     assert at.button(key='twin_next').disabled
     text = rendered(at)
     assert STATE_BOUNDARY in text
-    assert '数字孪生状态' in text
+    assert '教学状态' in text
     for sid in STAGE_IDS:
         assert at.session_state['twin_state'].current_stage == sid
         for _ in range(3 if sid == STAGE_IDS[-1] else 1):

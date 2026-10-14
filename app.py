@@ -286,7 +286,7 @@ def apply_yunjin_editorial_refinement() -> None:
           [data-testid="stSegmentedControl"]::-webkit-scrollbar{display:none}
           [data-testid="stSegmentedControl"]>div,[data-testid="stSegmentedControl"] [role="radiogroup"]{display:flex!important;flex-wrap:nowrap!important;width:max-content!important;min-width:100%}
           [data-testid="stSegmentedControl"] button,[data-testid="stSegmentedControl"] label{flex:0 0 auto!important;white-space:nowrap!important}
-          .yunjin-hero{min-height:465px;padding:1.65rem 1rem 1.8rem;background-size:100% 100%,auto 100%;background-position:center,55% center;background-repeat:no-repeat,no-repeat;animation:yj-hero-breathe 6.5s ease-in-out infinite}
+          .yunjin-hero{min-height:395px;padding:1.4rem 1rem 1.5rem;background-size:100% 100%,auto 100%;background-position:center,55% center;background-repeat:no-repeat,no-repeat;animation:yj-hero-breathe 6.5s ease-in-out infinite}
           .yunjin-hero__eyebrow{max-width:72%;font-size:.56rem;line-height:1.5;letter-spacing:.13em}
           .yunjin-hero h1{max-width:100%;margin-top:1.25rem;padding-right:0;font-size:2rem;white-space:nowrap}
           .yunjin-hero p{max-width:100%;font-size:.88rem;line-height:1.72}
@@ -381,12 +381,13 @@ if st.session_state["main_tab"] == "AI识锦":
     st.session_state["main_tab"] = "AI探锦"
 
 with st.sidebar:
-    st.header("系统状态", icon=":material/monitor_heart:")
-    st.success("本地知识库与可信检索：可用")
-    st.success("本地图像统计 fallback：可用")
-    st.write("Dots Studio：" + ("已配置" if dots_is_configured() else "未配置，将回退 local_cv"))
-    st.write("OpenAI provider：" + ("已配置" if openai_is_configured() else "保留，当前未配置"))
-    st.caption("未训练监督分类模型，不生成 Accuracy、F1、Loss、混淆矩阵或模型权重。")
+    st.header("运行状态", icon=":material/monitor_heart:")
+    st.success("文化知识查询：可用")
+    st.success("图片分析：可用")
+    with st.expander("技术状态", expanded=False):
+        st.write("Dots Studio：" + ("已配置" if dots_is_configured() else "未配置，将使用本地基础分析"))
+        st.write("OpenAI：" + ("已配置" if openai_is_configured() else "当前未配置"))
+        st.caption("未训练监督分类模型，不生成 Accuracy、F1、Loss、混淆矩阵或模型权重。")
 
 active_tab = st.segmented_control(
     "主导航",
@@ -415,6 +416,22 @@ if active_tab == "首页":
         </section>
         """
     )
+    home_action_columns = st.columns(2)
+    home_action_columns[0].button(
+        "体验织造",
+        key="home_open_twin",
+        type="primary",
+        icon=":material/precision_manufacturing:",
+        on_click=lambda: st.session_state.update(main_tab="数字织机"),
+        width="stretch",
+    )
+    home_action_columns[1].button(
+        "上传图片探锦",
+        key="home_open_vision",
+        icon=":material/image_search:",
+        on_click=lambda: st.session_state.update(main_tab="AI探锦"),
+        width="stretch",
+    )
     st.html(
         """
         <section class="yj-craft-signature" aria-label="南京云锦工艺特征">
@@ -426,8 +443,6 @@ if active_tab == "首页":
         """
     )
     st.html('''<div class="yj-editorial-heading"><div><small>SEE · UNDERSTAND · EXPERIENCE</small><h2>从看见纹样，到理解织造</h2></div><p>以视觉观察为入口，以可信知识为依据，最终进入可交互的数字织机。</p></div>''')
-    st.button("体验云锦织造", key="home_open_twin", type="primary",
-              on_click=lambda: st.session_state.update(main_tab="数字织机"))
     st.html('''<section class="yj-journey-grid">
       <article class="yj-journey-card"><small>01 · VISUAL OBSERVATION</small><h3>看见云锦</h3><p>上传织物图片，从纹样、构图和色彩开始观察；结果是文化探索线索，不替代专业鉴定。</p><b>AI 探锦 →</b></article>
       <article class="yj-journey-card"><small>02 · TRUSTED KNOWLEDGE</small><h3>理解云锦</h3><p>连接已核验来源与对象级资料，让每一条文化解释都能回到证据与边界。</p><b>可信文化知识 →</b></article>
@@ -448,21 +463,20 @@ if active_tab == "首页":
 
     with st.expander("项目数据基础", icon=":material/database:"):
         data_columns = st.columns(4)
-        data_columns[0].metric("官网证据对象", len(official_rows))
-        data_columns[1].metric("南京云锦对象", sum(r["level1_label"] == "nanjing_yunjin" for r in official_rows))
-        data_columns[2].metric("其他织锦对象", sum(r["level1_label"] == "other_brocade" for r in official_rows))
-        data_columns[3].metric("可直接训练南京云锦对象", 0)
+        data_columns[0].metric("官网对象记录", f"{len(official_rows)} 条")
+        data_columns[1].metric("南京云锦记录", f"{sum(r['level1_label'] == 'nanjing_yunjin' for r in official_rows)} 条")
+        data_columns[2].metric("其他织锦记录", f"{sum(r['level1_label'] == 'other_brocade' for r in official_rows)} 条")
+        data_columns[3].metric("可直接训练记录", "0 条")
         st.caption(
-            "95 个官网对象仅作为 Official Evidence Database；authorization_status 均为 unknown，"
-            "usable_for_training 均为 false。该事实不会因产品展示需要而隐藏。"
+            "共整理 95 条官网对象记录，其中 47 条为南京云锦记录、48 条为其他织锦记录。"
+            "现有素材授权状态未确认，因此只用于来源核验与知识组织，不作为监督训练集。"
         )
 
     st.subheader("长期生态框架", icon=":material/account_tree:")
-    st.write("AI + Digital Twin + Immersive Learning + Community Participation")
+    st.write("AI 观察 · 可信知识 · 数字织机 · 公众参与")
     st.caption(
-        "当前 MVP 实现 AI视觉理解、文化知识库、evidence-grounded RAG，"
-        "以及知识驱动、状态驱动的南京云锦织造教学型数字孪生原型（数字织机）。"
-        "数字状态由用户交互驱动；实体织机实时双向同步、Immersive Learning、Community Participation 属于后续工作。"
+        "当前版本已实现图片观察、带来源的文化知识问答和交互式数字织机。"
+        "数字织机由用户操作驱动；实体织机实时同步、沉浸式课程与社区参与属于后续阶段。"
     )
 
 if active_tab == "AI探锦":
@@ -734,14 +748,14 @@ if active_tab == "数据与可信AI":
 
     st.subheader("① 数据从哪里来？")
     st.write(
-        "项目整理了 95 个带对象级来源记录的官网对象，作为 Official Evidence Database："
-        "南京云锦 47 个、其他织锦 48 个。它们用于证据核验、知识组织和数据治理，不等于训练集。"
+        "项目整理了 95 条带对象级来源的官网记录，其中南京云锦 47 条、其他织锦 48 条。"
+        "这些记录用于证据核验、知识组织和数据治理，不等于训练集。"
     )
     trust_metrics = st.columns(4)
-    trust_metrics[0].metric("Official Evidence Database", 95)
-    trust_metrics[1].metric("南京云锦", 47)
-    trust_metrics[2].metric("其他织锦", 48)
-    trust_metrics[3].metric("南京云锦可直接训练", 0)
+    trust_metrics[0].metric("官网对象记录", "95 条")
+    trust_metrics[1].metric("南京云锦记录", "47 条")
+    trust_metrics[2].metric("其他织锦记录", "48 条")
+    trust_metrics[3].metric("可直接训练记录", "0 条")
 
     st.subheader("② 为什么没有训练分类器？")
     st.write(

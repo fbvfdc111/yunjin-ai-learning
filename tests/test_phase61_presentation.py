@@ -32,16 +32,24 @@ def test_home_entry_and_raw_state_is_only_inside_collapsed_expander():
         assert at.segmented_control(key='twin_experience_mode').value == 'Exhibition Mode / 展示模式'
         assert '南京云锦大花楼织机沉浸展示' in at.get('iframe')[0].proto.srcdoc
         at.segmented_control(key='twin_experience_mode').set_value('Teaching Mode / 教学模式').run()
-        raw = next(e for e in at.expander if e.label == '查看运行时 Twin State')
+        raw = next(e for e in at.expander if e.label == '查看教学状态技术详情')
         assert raw.proto.expanded is False
         assert len(raw.get('json')) == 1
         assert len(at.get('json')) == 1
         text = '\n'.join(e.value for e in [*at.markdown, *at.caption])
-        assert '当前为教学状态，并非实体织机传感器实时数据。' in text
+        assert '这里记录的是本次体验中的步骤变化，不是实体织机的实时测量数据。' in text
         assert '当前环节：图案设计' in text
         assert 'pattern_design' not in text
         at.button(key='twin_execute').click().run()
         assert '已完成教学步骤：1 / 6' in '\n'.join(e.value for e in at.caption)
+
+
+def test_home_visual_entry_opens_ai_vision():
+    with patch.dict(os.environ, {'DOTS_API_KEY': '', 'OPENAI_API_KEY': ''}):
+        at = AppTest.from_file(ROOT / 'app.py', default_timeout=20).run()
+        at.button(key='home_open_vision').click().run()
+        assert not at.exception
+        assert at.segmented_control(key='main_tab').value == 'AI探锦'
 
 
 @pytest.mark.parametrize('sid', STAGE_IDS)

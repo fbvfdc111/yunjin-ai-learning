@@ -22,6 +22,16 @@ from .learning_quiz import (
 from .twin_presentation import learning_status, teaching_feedback
 
 
+STAGE_ACTION_LABELS = {
+    "pattern_design": "显示设计草图",
+    "pattern_translation": "演示挑花结本",
+    "weaving_preparation": "完成织造准备",
+    "warp_lifting": "提起对应经线",
+    "weft_weaving": "推动梭子引纬",
+    "pattern_emergence": "显示一段纹样",
+}
+
+
 def apply_twin_event(action: str, value: str | None = None) -> None:
     # This callback finishes before the next render; widgets never render a
     # guessed animation directly. The session owns the immutable state object.
@@ -209,7 +219,7 @@ def show_digital_twin(root: Path, knowledge, sources, open_guide: Callable[[str]
         show_exhibition_mode()
         return
 
-    st.caption("执行步骤 → 更新 Twin State → 驱动 SVG 教学画面 · 工艺解释有可信来源，可继续向AI文化助手提问。")
+    st.caption("按步骤操作，观察画面与教学状态如何变化；工艺说明均附有知识来源。")
     st.session_state.setdefault("twin_state", TwinState())
     state = st.session_state["twin_state"]
     index = STAGE_IDS.index(state.current_stage)
@@ -227,12 +237,16 @@ def show_digital_twin(root: Path, knowledge, sources, open_guide: Callable[[str]
             st.button(f"{lesson.stage_index} {lesson.title}{' ✓' if done else ''}",
                       key=f"twin_select_{lesson.id}", type="primary" if lesson.id == state.current_stage else "secondary",
                       disabled=state.mode != "free", on_click=apply_twin_event, args=("select", lesson.id))
-    st.progress(stage.stage_index / 6, text=f"当前位置 {stage.stage_index}/6 · 已执行教学步骤 {len(state.executed_stages)}/6")
+    completed_count = len(state.executed_stages)
+    st.progress(
+        completed_count / 6,
+        text=f"当前第 {stage.stage_index} 步：{stage.title} · 完成进度 {completed_count}/6",
+    )
 
     with st.container(horizontal=True):
         st.button("上一步", key="twin_previous", disabled=index == 0,
                   on_click=apply_twin_event, args=("previous",))
-        st.button("执行当前步骤", key="twin_execute", type="primary",
+        st.button(STAGE_ACTION_LABELS[stage.id], key="twin_execute", type="primary",
                   on_click=apply_twin_event, args=("execute",))
         st.button("下一步", key="twin_next", disabled=index == 5 or (state.mode == "sequential" and not state.current_stage_executed),
                   on_click=apply_twin_event, args=("next",))
@@ -268,9 +282,9 @@ def show_digital_twin(root: Path, knowledge, sources, open_guide: Callable[[str]
             st.caption(f"{item.id} · 事实 {ref['claim_index'] + 1} · 南京云锦直接资料 · " + "、".join(claim.source_ids))
 
     with st.container(border=True, key="twin_state_panel"):
-        st.subheader("数字孪生状态", icon=":material/data_object:")
+        st.subheader("教学状态", icon=":material/data_object:")
         st.write(STATE_BOUNDARY)
-        st.caption("当前为教学状态，并非实体织机传感器实时数据。")
+        st.caption("这里记录的是本次体验中的步骤变化，不是实体织机的实时测量数据。")
         summary = learning_status(state)
         st.write(f"当前环节：{summary['当前环节']} · 体验进度：{summary['体验进度']}")
         st.caption(f"当前模式：{summary['当前模式']} · 已完成教学步骤：{summary['已完成教学步骤']} · 状态驱动：用户交互")
@@ -281,7 +295,7 @@ def show_digital_twin(root: Path, knowledge, sources, open_guide: Callable[[str]
                     st.markdown(f"**{label}**")
                     st.write(value)
         st.caption(teaching_feedback(state))
-        with st.expander("查看运行时 Twin State", expanded=False):
+        with st.expander("查看教学状态技术详情", expanded=False):
             st.json(state_snapshot(state))
             st.caption("以下是用于核验的原始状态变化，非实体测量值。")
             for change in state.last_changes:
@@ -305,13 +319,17 @@ def show_digital_twin(root: Path, knowledge, sources, open_guide: Callable[[str]
             format_func=lambda index: quiz.options[index],
             key=f"quiz_choice_{stage.id}",
             horizontal=False,
+            index=None,
         )
+        if selected is None:
+            st.caption("请选择一个答案后提交。")
         st.button(
             "提交答案",
             key=f"quiz_submit_{stage.id}",
             icon=":material/check:",
             on_click=submit_quiz,
             args=(root, stage.id, selected),
+            disabled=selected is None,
         )
         evaluation = st.session_state.get("quiz_evaluations", {}).get(stage.id)
         if evaluation:
