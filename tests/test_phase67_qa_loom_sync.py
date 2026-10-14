@@ -13,7 +13,7 @@ from yunjin_ai.digital_twin_3d import render_process_twin_3d
 from yunjin_ai.digital_twin_simulation import SIMULATION_STAGE_SECONDS, simulation_sample
 from yunjin_ai.guide import answer_from_knowledge
 from yunjin_ai.knowledge import load_knowledge, load_sources, search_answerable_knowledge
-from yunjin_ai.product import cultural_followup_questions
+from yunjin_ai.product import FOLLOWUP_QUESTIONS, GENERAL_CULTURE_QUESTIONS, cultural_followup_questions
 
 
 class Phase67QaAndLoomSyncTests(unittest.TestCase):
@@ -96,6 +96,17 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
         self.assertNotIn("南京云锦有哪些主要品种？", questions)
         self.assertNotIn("妆花是什么？", questions)
         self.assertEqual(len(set(questions)), len(questions))
+
+    def test_every_recommended_question_is_answerable(self):
+        questions = list(GENERAL_CULTURE_QUESTIONS)
+        for values in FOLLOWUP_QUESTIONS.values():
+            questions.extend(values)
+        for question in dict.fromkeys(questions):
+            with self.subTest(question=question):
+                answer = answer_from_knowledge(question, self.items, self.sources)
+                self.assertNotEqual(answer.status, "证据不足")
+                self.assertTrue(answer.claims)
+                self.assertTrue(answer.source_ids)
 
     def test_cloth_growth_uses_same_pick_timeline_as_people_and_mechanisms(self):
         sample = simulation_sample(STAGE_IDS.index("weft_weaving") * SIMULATION_STAGE_SECONDS + 1.0)
