@@ -44,6 +44,8 @@ class Phase4DotsTests(unittest.TestCase):
     @staticmethod
     def successful_payload() -> dict:
         return {
+            "is_textile_related": True,
+            "relevance_reason": "画面主体为带有重复纹样的织物表面",
             "subject_pattern_observations": ["视觉上存在花叶状轮廓"],
             "composition": ["主体位于画面中央"],
             "colors": ["以红色和金色为主"],
@@ -77,6 +79,8 @@ class Phase4DotsTests(unittest.TestCase):
     @staticmethod
     def aliased_payload() -> dict:
         model_result = {
+            "is_textile_related": True,
+            "relevance_reason": "画面主体为带有重复纹样的织物表面",
             "subject_observations": "视觉上存在花叶状轮廓",
             "composition_observations": ["主体位于画面中央"],
             "color_observations": "以红色和金色为主",
@@ -85,6 +89,30 @@ class Phase4DotsTests(unittest.TestCase):
             "limits": ["不能据此确定工艺、年代、名称、真伪或归属"],
         }
         return model_result
+
+    def test_unrelated_poster_is_blocked_from_cultural_retrieval(self):
+        payload = {
+            "is_textile_related": False,
+            "relevance_reason": "画面主体为文字海报，没有清晰可观察的纺织品表面",
+            "subject_pattern_observations": ["主体为排版文字与图形"],
+            "composition": ["文字居中排列"],
+            "colors": ["以浅色背景为主"],
+            "repetition_symmetry": ["未观察到纺织纹样重复结构"],
+            "retrieval_keywords": ["历史", "文化", "传承"],
+            "limitations": ["图片不属于纺织视觉观察范围"],
+        }
+        with patch.dict(os.environ, self.dots_env, clear=False), patch(
+            "yunjin_ai.vision.urlopen", return_value=self.response_with_payload(payload)
+        ):
+            result = analyze_image(
+                self.image,
+                provider="dots",
+                image_url="https://images.example.org/unrelated-poster.jpg",
+            )
+
+        self.assertFalse(result.is_textile_related)
+        self.assertEqual(result.retrieval_keywords, ())
+        self.assertIn("文字海报", result.relevance_reason)
 
     def test_dots_configuration_requires_key(self):
         with patch.dict(os.environ, {"DOTS_API_KEY": ""}, clear=False):

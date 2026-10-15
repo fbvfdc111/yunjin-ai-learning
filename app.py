@@ -624,21 +624,39 @@ if active_tab == "AI探锦":
                     for limitation in result.limitations:
                         st.write("- " + limitation)
 
-                candidate_labels = ["龙", "凤", "鹤", "莲", "寿", "八宝", "宝灯", "灵芝", "牡丹", "织金", "妆花", "库锦", "库缎"]
-                verified = st.multiselect(
-                    "希望继续探索的文化主题（可选）",
-                    candidate_labels,
-                    help="这里选择的是学习主题，不表示你或系统确认了图片中的纹样、工艺或对象身份。",
-                    key="confirmed_visual_topics",
-                )
-                hits = search_visual_knowledge(
-                    [*result.retrieval_keywords, *result.tentative_elements], verified, knowledge, limit=4
-                )
                 st.header("相关文化知识")
                 st.caption(
                     "仅展示达到最低相关门槛的本地知识条目。以下是文化探索线索，"
                     "不能反向证明上传图片包含某种纹样或属于某种工艺。"
                 )
+                candidate_labels = ["龙", "凤", "鹤", "莲", "寿", "八宝", "宝灯", "灵芝", "牡丹", "织金", "妆花", "库锦", "库缎"]
+                hits = []
+                if result.is_textile_related is False:
+                    st.info(
+                        "未观察到明确的织物、织锦或纺织纹样主体，因此不自动关联云锦文化知识。"
+                        + (f"\n\n判断依据：{result.relevance_reason}" if result.relevance_reason else ""),
+                        icon=":material/image_not_supported:",
+                    )
+                    st.caption("你可以换一张织物局部清晰、纹样占画面主体的照片后重新分析。")
+                else:
+                    if result.is_textile_related is None:
+                        st.info(
+                            "当前使用本地图像统计，无法可靠判断图片是否为织物；为避免错误关联，本次不使用自动关键词推荐文化知识。",
+                            icon=":material/shield:",
+                        )
+                    verified = st.multiselect(
+                        "希望继续探索的文化主题（可选）",
+                        candidate_labels,
+                        help="这里选择的是学习主题，不表示你或系统确认了图片中的纹样、工艺或对象身份。",
+                        key="confirmed_visual_topics",
+                    )
+                    automatic_terms = (
+                        [*result.retrieval_keywords, *result.tentative_elements]
+                        if result.is_textile_related is True
+                        else []
+                    )
+                    hits = search_visual_knowledge(automatic_terms, verified, knowledge, limit=4)
+
                 if hits:
                     show_hits(hits, sources)
                     with st.expander("相关官方对象 metadata", icon=":material/table_view:"):
@@ -654,7 +672,7 @@ if active_tab == "AI探锦":
                                 on_click=open_cultural_guide,
                                 args=(question,),
                             )
-                else:
+                elif result.is_textile_related is not False:
                     st.info("当前视觉线索不足以匹配到高可信度的文化知识。")
                     st.caption(
                         "当前还没有足够的文化知识匹配。你仍可以进入 AI文化助手，"

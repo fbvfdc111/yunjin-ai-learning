@@ -31,6 +31,12 @@ class Phase5RetrievalTests(unittest.TestCase):
         )
         self.assertEqual(hits, [])
 
+    def test_poster_language_does_not_retrieve_history_card(self):
+        hits = search_visual_knowledge(
+            ["历史", "文化", "传承", "艺术展示", "宣传海报"], [], self.items
+        )
+        self.assertEqual(hits, [])
+
     def test_specific_visual_keyword_passes_threshold(self):
         hits = search_visual_knowledge(["视觉上疑似牡丹"], [], self.items)
         self.assertEqual([hit.item.id for hit in hits], ["KB012"])

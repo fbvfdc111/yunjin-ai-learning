@@ -34,6 +34,8 @@ class VisionObservation:
     retrieval_keywords: tuple[str, ...]
     limitations: tuple[str, ...]
     raw_metrics: dict[str, Any]
+    is_textile_related: bool | None = None
+    relevance_reason: str = ""
 
 
 COLOR_NAMES = {
@@ -59,8 +61,11 @@ DOTS_ALLOWED_MIME_TYPES = {"image/jpeg": "JPEG", "image/png": "PNG"}
 DOTS_SYSTEM_PROMPT = """你是谨慎的视觉观察助手，只进行可观察视觉分析，不进行文物鉴定。
 禁止仅凭图片确定：是否为南京云锦；是否为妆花、织金、库缎等具体工艺；年代；文物名称；真伪；作者或制造者。
 不要生成文化事实、历史解释、来源信息、概率或置信度。文化事实将由调用方随后从本地证据知识库检索。
-只返回有效 JSON，不要 Markdown。JSON 必须包含以下字符串数组字段：
+先判断图片的主要对象是否为织物、织锦、刺绣、服饰面料或清晰可观察的纺织纹样主体。
+普通海报、网页截图、纯文字、风景、人物、建筑及非纺织商品必须判为不相关；不能因为图片中出现“云锦、文化、历史、传承”等文字就判为相关。
+只返回有效 JSON，不要 Markdown。JSON 必须包含布尔字段 is_textile_related、字符串字段 relevance_reason，以及以下字符串数组字段：
 subject_pattern_observations、composition、colors、repetition_symmetry、retrieval_keywords、limitations。
+当 is_textile_related 为 false 时，retrieval_keywords 必须为空数组，并在 relevance_reason 中简要说明主要对象为何不属于纺织视觉观察范围。
 描述必须保持中性、可观察；不确定的视觉元素使用“疑似”“可能”或“视觉上存在”等措辞。
 limitations 必须说明该结果不是南京云锦归属、具体工艺、年代、名称、真伪或作者/制造者鉴定。"""
 
@@ -423,6 +428,14 @@ def _normalize_dots_payload(payload: dict[str, Any]) -> dict[str, Any]:
         elif not isinstance(value, list):
             raise DotsStructuredResponseError(f"{canonical_key} must be a string array")
         normalized[canonical_key] = value
+    is_textile_related = payload.get("is_textile_related")
+    if not isinstance(is_textile_related, bool):
+        raise DotsStructuredResponseError("is_textile_related must be a boolean")
+    relevance_reason = payload.get("relevance_reason")
+    if not isinstance(relevance_reason, str) or not relevance_reason.strip():
+        raise DotsStructuredResponseError("relevance_reason must be a non-empty string")
+    normalized["is_textile_related"] = is_textile_related
+    normalized["relevance_reason"] = relevance_reason.strip()
     return normalized
 
 
@@ -536,7 +549,11 @@ def analyze_with_dots(
                     observable = tuple(f"{label}：{item}" for label, items in sections for item in items)
                     keywords = _string_list(payload, "retrieval_keywords")
                     limitations = _string_list(payload, "limitations")
-                    if not observable or not keywords or not limitations:
+                    is_textile_related = payload["is_textile_related"]
+                    relevance_reason = payload["relevance_reason"]
+                    if not is_textile_related:
+                        keywords = ()
+                    if not observable or (is_textile_related and not keywords) or not limitations:
                         raise DotsStructuredResponseError("required visual fields are empty")
                     break
                 except HTTPError as exc:
@@ -579,6 +596,8 @@ def analyze_with_dots(
             "detail": "medium",
             **image_metadata,
         },
+        is_textile_related=is_textile_related,
+        relevance_reason=relevance_reason,
     )
 
 
@@ -619,8 +638,11 @@ def analyze_with_openai(image: Image.Image) -> VisionObservation:
     prompt = (
         "你是谨慎的织物视觉观察助手。只描述可观察的主色调、图案结构、对称/重复特征、"
         "疑似动物/植物/几何元素和织物视觉特征。禁止断言年代、具体工艺、文物名称、真伪或确定属于南京云锦；"
-        "禁止输出概率或置信度。只返回 JSON：observable_facts 字符串数组、tentative_elements 字符串数组、"
-        "retrieval_keywords 字符串数组、limitations 字符串数组。推测元素必须使用“疑似/可能/视觉上存在”措辞。"
+        "禁止输出概率或置信度。先判断主要对象是否为织物、织锦、刺绣、服饰面料或清晰纺织纹样；"
+        "海报、网页截图、纯文字、风景、人物和非纺织商品判为不相关，且不能因文字中出现文化词汇而判为相关。"
+        "只返回 JSON：is_textile_related 布尔值、relevance_reason 字符串、observable_facts 字符串数组、"
+        "tentative_elements 字符串数组、retrieval_keywords 字符串数组、limitations 字符串数组。"
+        "不相关时 retrieval_keywords 必须为空数组。推测元素必须使用“疑似/可能/视觉上存在”措辞。"
     )
     response = OpenAI().responses.create(
         model=os.environ["OPENAI_VISION_MODEL"],
@@ -635,16 +657,25 @@ def analyze_with_openai(image: Image.Image) -> VisionObservation:
         store=False,
     )
     payload = json.loads(response.output_text)
+    is_textile_related = payload.get("is_textile_related")
+    if not isinstance(is_textile_related, bool):
+        raise RuntimeError("视觉服务未返回有效的图片相关性判断。")
+    relevance_reason = payload.get("relevance_reason", "")
+    if not isinstance(relevance_reason, str) or not relevance_reason.strip():
+        raise RuntimeError("视觉服务未返回图片相关性说明。")
+    retrieval_keywords = tuple(payload.get("retrieval_keywords", [])) if is_textile_related else ()
     return VisionObservation(
         provider=f"openai:{os.environ['OPENAI_VISION_MODEL']}",
         provider_status="API 调用成功（输出仍属待人工复核的模型观察）",
         observable_facts=tuple(payload.get("observable_facts", [])),
         tentative_elements=tuple(payload.get("tentative_elements", [])),
-        retrieval_keywords=tuple(payload.get("retrieval_keywords", [])),
+        retrieval_keywords=retrieval_keywords,
         limitations=tuple(payload.get("limitations", [])) + (
             "模型输出不是概率意义上的置信度，也不是专业鉴定结论。",
         ),
         raw_metrics={"response_id": response.id, **crop_metadata},
+        is_textile_related=is_textile_related,
+        relevance_reason=relevance_reason.strip(),
     )
 
 
