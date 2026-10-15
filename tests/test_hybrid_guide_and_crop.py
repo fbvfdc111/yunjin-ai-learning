@@ -13,7 +13,7 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from yunjin_ai.guide import AI_REFERENCE_STATUS, answer_hybrid
+from yunjin_ai.guide import AI_REFERENCE_STATUS, ASSISTANT_INFO_STATUS, answer_hybrid
 from yunjin_ai.knowledge import load_knowledge, load_sources
 from yunjin_ai.vision import analyze_locally
 
@@ -64,6 +64,15 @@ class HybridGuideAndCropTests(unittest.TestCase):
         ) as mocked_urlopen:
             answer = answer_hybrid("今天南京天气怎么样？", self.items, self.sources)
         self.assertEqual(answer.status, "证据不足")
+        mocked_urlopen.assert_not_called()
+
+    def test_identity_question_is_answered_without_spending_api_call(self):
+        with patch.dict(os.environ, {"DOTS_API_KEY": "test-key"}, clear=False), patch(
+            "yunjin_ai.guide.urlopen"
+        ) as mocked_urlopen:
+            answer = answer_hybrid("你是谁", self.items, self.sources)
+        self.assertEqual(answer.status, ASSISTANT_INFO_STATUS)
+        self.assertIn("南京云锦文化 AI 助手", answer.answer)
         mocked_urlopen.assert_not_called()
 
     def test_large_light_screenshot_border_is_cropped_before_local_analysis(self):

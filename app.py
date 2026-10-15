@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from yunjin_ai.guide import (
     AI_REFERENCE_STATUS,
+    ASSISTANT_INFO_STATUS,
     answer_from_knowledge,
     answer_hybrid,
     dots_text_is_configured,
@@ -709,6 +710,8 @@ if active_tab == "AI文化助手":
                         "仅作学习线索，不作为文化事实、专业鉴定或参赛数据结论。"
                     )
                     st.write(answer.answer)
+                elif answer.status == ASSISTANT_INFO_STATUS:
+                    st.info(answer.answer)
                 for claim in answer.claims:
                     st.caption(EVIDENCE_SCOPE_LABELS[claim.evidence_scope])
                     st.write(claim.text)
@@ -728,7 +731,7 @@ if active_tab == "AI文化助手":
                             show_official_objects(
                                 related_official_objects(answer.hits, official_rows, official_relations)
                             )
-                elif answer.status != AI_REFERENCE_STATUS:
+                elif answer.status not in {AI_REFERENCE_STATUS, ASSISTANT_INFO_STATUS}:
                     st.warning(answer.answer)
 
         guide_history = st.session_state["guide_history"]

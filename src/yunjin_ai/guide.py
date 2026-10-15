@@ -30,10 +30,29 @@ class GroundedAnswer:
 DOTS_DEFAULT_BASE_URL = "https://note3-prev-api.askdiandian.com"
 DOTS_DEFAULT_TEXT_MODEL = "dots3-note-prev"
 AI_REFERENCE_STATUS = "AI 辅助参考（待核验）"
+ASSISTANT_INFO_STATUS = "助手说明"
 YUNJIN_ASSISTANT_TERMS = (
     "南京云锦", "云锦", "妆花", "织金", "库锦", "库缎", "金宝地", "挑花结本",
     "大花楼", "拽花工", "织手", "织机", "纹样", "经线", "纬线", "梭子", "筘框", "非遗",
 )
+
+
+def _assistant_info_answer(question: str) -> str | None:
+    normalized = question.lower().replace(" ", "").strip("？?！!。.")
+    if normalized in {"你是谁", "你叫什么", "你是什么", "介绍一下你自己"}:
+        return (
+            "我是南京云锦文化 AI 助手，主要帮助你了解南京云锦的品种、纹样文化、"
+            "制作工艺、传承保护和数字织机。可信文化答案会展示本地资料来源；"
+            "知识库暂未覆盖的问题会明确标注为 AI 辅助参考（待核验）。"
+        )
+    if normalized in {"你好", "您好", "嗨", "hello", "hi"}:
+        return "你好！我是南京云锦文化 AI 助手。你可以问我云锦品种、纹样寓意、织造工艺或传承保护。"
+    if normalized in {"你能做什么", "你会什么", "怎么使用", "怎么用"}:
+        return (
+            "我可以回答南京云锦文化问题、展示可追溯资料来源，并把未核验的 AI 扩展内容单独标注；"
+            "你也可以前往“AI 探锦”观察图片，或在“数字织机”体验织造步骤。"
+        )
+    return None
 
 
 def dots_text_is_configured() -> bool:
@@ -163,6 +182,15 @@ def answer_hybrid(
     limit: int = 4,
 ) -> GroundedAnswer:
     """Prefer sourced local knowledge, then offer a clearly separated AI reference."""
+    assistant_info = _assistant_info_answer(question)
+    if assistant_info:
+        return GroundedAnswer(
+            answer=assistant_info,
+            claims=(),
+            hits=(),
+            source_ids=(),
+            status=ASSISTANT_INFO_STATUS,
+        )
     local = answer_from_knowledge(
         question,
         items,
