@@ -92,8 +92,87 @@ def _similarity(left: Image.Image, right: Image.Image) -> float:
     return max(0.0, min(1.0, 1.0 - mean / 255.0))
 
 
+def _longest_dense_span(values: list[float], threshold: float, max_gap: int = 5) -> tuple[int, int] | None:
+    active = [index for index, value in enumerate(values) if value >= threshold]
+    if not active:
+        return None
+    best = (active[0], active[0] + 1)
+    start = previous = active[0]
+    for index in active[1:]:
+        if index - previous > max_gap + 1:
+            if previous + 1 - start > best[1] - best[0]:
+                best = (start, previous + 1)
+            start = index
+        previous = index
+    if previous + 1 - start > best[1] - best[0]:
+        best = (start, previous + 1)
+    return best
+
+
+def _auto_crop_light_border(image: Image.Image) -> tuple[Image.Image, dict[str, Any]]:
+    """Crop a large near-white screenshot frame while preserving ordinary photos.
+
+    The detector searches for the longest dense block of non-white rows first,
+    which prevents a caption or a thin horizontal rule below the image from
+    expanding the crop. If the detected crop is almost the whole source, the
+    original image is kept.
+    """
+    original = ImageOps.exif_transpose(image).convert("RGB")
+    preview = original.copy()
+    preview.thumbnail((512, 512))
+    pixels = list(preview.getdata())
+    width, height = preview.size
+
+    def is_content(pixel: tuple[int, int, int]) -> bool:
+        low, high = min(pixel), max(pixel)
+        return low < 238 or high - low > 18
+
+    mask = [1 if is_content(pixel) else 0 for pixel in pixels]
+    row_density = [sum(mask[y * width : (y + 1) * width]) / width for y in range(height)]
+    y_span = _longest_dense_span(row_density, 0.08, max_gap=max(3, height // 100))
+    if not y_span or y_span[1] - y_span[0] < max(24, int(height * 0.18)):
+        return original, {"auto_crop_applied": False}
+
+    y0, y1 = y_span
+    span_height = y1 - y0
+    column_density = [
+        sum(mask[y * width + x] for y in range(y0, y1)) / span_height
+        for x in range(width)
+    ]
+    x_span = _longest_dense_span(column_density, 0.06, max_gap=max(3, width // 100))
+    if not x_span or x_span[1] - x_span[0] < max(24, int(width * 0.18)):
+        return original, {"auto_crop_applied": False}
+
+    x0, x1 = x_span
+    margin_x = max(2, int(width * 0.015))
+    margin_y = max(2, int(height * 0.015))
+    x0, x1 = max(0, x0 - margin_x), min(width, x1 + margin_x)
+    y0, y1 = max(0, y0 - margin_y), min(height, y1 + margin_y)
+    retained_share = ((x1 - x0) * (y1 - y0)) / max(1, width * height)
+    if retained_share >= 0.90:
+        return original, {"auto_crop_applied": False}
+
+    scale_x = original.width / width
+    scale_y = original.height / height
+    box = (
+        max(0, int(x0 * scale_x)),
+        max(0, int(y0 * scale_y)),
+        min(original.width, int(x1 * scale_x)),
+        min(original.height, int(y1 * scale_y)),
+    )
+    cropped = original.crop(box)
+    return cropped, {
+        "auto_crop_applied": True,
+        "auto_crop_box": list(box),
+        "auto_crop_retained_share": round((cropped.width * cropped.height) / (original.width * original.height), 3),
+        "original_width": original.width,
+        "original_height": original.height,
+    }
+
+
 def analyze_locally(image: Image.Image) -> VisionObservation:
-    rgb = ImageOps.exif_transpose(image).convert("RGB")
+    original = ImageOps.exif_transpose(image).convert("RGB")
+    rgb, crop_metadata = _auto_crop_light_border(original)
     small = rgb.copy()
     small.thumbnail((384, 384))
     colors = _dominant_colors(small)
@@ -108,6 +187,8 @@ def analyze_locally(image: Image.Image) -> VisionObservation:
 
     color_text = "、".join(f"{row['name']}（RGB {tuple(row['rgb'])}）" for row in colors[:3])
     observable = [f"算法提取的主要色群为：{color_text}。"]
+    if crop_metadata.get("auto_crop_applied"):
+        observable.insert(0, "检测到大面积浅色截图边框，已先裁取主要画面区域再分析。")
     observable.append("画面综合色彩较鲜明。" if mean_saturation >= 0.42 else "画面综合色彩相对克制。")
     symmetry = max(horizontal_symmetry, vertical_symmetry)
     if symmetry >= 0.78:
@@ -134,13 +215,16 @@ def analyze_locally(image: Image.Image) -> VisionObservation:
             "分析结果不能证明图片属于南京云锦。",
         ),
         raw_metrics={
-            "width": rgb.width,
-            "height": rgb.height,
+            "width": original.width,
+            "height": original.height,
+            "analysis_width": rgb.width,
+            "analysis_height": rgb.height,
             "dominant_colors": colors,
             "mean_saturation": round(mean_saturation, 3),
             "horizontal_mirror_similarity": round(horizontal_symmetry, 3),
             "vertical_mirror_similarity": round(vertical_symmetry, 3),
             "edge_density_proxy": round(edge_mean, 3),
+            **crop_metadata,
         },
     )
 
@@ -378,7 +462,15 @@ def analyze_with_dots(
         dots_image_url = _validate_dots_image_url(image_url)
         image_transport = "public_url"
     else:
-        dots_image_url, image_metadata = _prepare_dots_data_url(image, image_mime_type, image_bytes)
+        if image is None:
+            raise DotsProviderError("没有可用于 Dots Base64 实验的本地上传图片。")
+        prepared_image, crop_metadata = _auto_crop_light_border(image)
+        dots_image_url, image_metadata = _prepare_dots_data_url(
+            prepared_image,
+            image_mime_type,
+            None if crop_metadata.get("auto_crop_applied") else image_bytes,
+        )
+        image_metadata.update(crop_metadata)
         image_transport = "base64_data_url"
 
     request_payload = {
@@ -510,8 +602,9 @@ def analyze_with_openai(image: Image.Image) -> VisionObservation:
     except ImportError as exc:
         raise RuntimeError("未安装 openai 包；请运行 pip install -r requirements.txt。") from exc
 
+    prepared_image, crop_metadata = _auto_crop_light_border(image)
     buffer = io.BytesIO()
-    ImageOps.exif_transpose(image).convert("RGB").save(buffer, format="JPEG", quality=90)
+    prepared_image.save(buffer, format="JPEG", quality=90)
     data_url = "data:image/jpeg;base64," + base64.b64encode(buffer.getvalue()).decode("ascii")
     prompt = (
         "你是谨慎的织物视觉观察助手。只描述可观察的主色调、图案结构、对称/重复特征、"
@@ -541,7 +634,7 @@ def analyze_with_openai(image: Image.Image) -> VisionObservation:
         limitations=tuple(payload.get("limitations", [])) + (
             "模型输出不是概率意义上的置信度，也不是专业鉴定结论。",
         ),
-        raw_metrics={"response_id": response.id},
+        raw_metrics={"response_id": response.id, **crop_metadata},
     )
 
 

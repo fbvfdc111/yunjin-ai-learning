@@ -12,7 +12,12 @@ from PIL import Image, UnidentifiedImageError
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from yunjin_ai.guide import answer_from_knowledge
+from yunjin_ai.guide import (
+    AI_REFERENCE_STATUS,
+    answer_from_knowledge,
+    answer_hybrid,
+    dots_text_is_configured,
+)
 from yunjin_ai.digital_twin_page import show_digital_twin
 from yunjin_ai.knowledge import (
     load_knowledge,
@@ -658,9 +663,14 @@ if active_tab == "AI文化助手":
     )
     st.write(
         "你好，我是云锦文化 AI 助手。你可以向我了解南京云锦的品种、纹样文化、制作工艺与传承知识。"
-        "每次回答都先检查本地知识库是否有证据能够直接回答。"
+        "每次回答都会优先检查本地知识库是否有证据能够直接回答。"
     )
-    st.caption("本助手不会绕过知识库补写文化事实；证据不足时会明确说明。")
+    st.caption(
+        "有本地证据的回答会展示来源；本地暂未覆盖时，可提供明确标注为“AI 辅助参考（待核验）”的扩展回答。"
+    )
+    st.caption(
+        "AI 扩展参考：" + ("已启用" if dots_text_is_configured() else "未配置，当前仅使用本地可信知识")
+    )
 
     st.subheader("快捷问题")
     quick_columns = st.columns(2)
@@ -677,7 +687,8 @@ if active_tab == "AI文化助手":
 
     if submitted and question.strip():
         clean_question = question.strip()
-        answer = answer_from_knowledge(clean_question, knowledge, sources)
+        with st.spinner("正在检索本地证据，并在需要时生成待核验参考……"):
+            answer = answer_hybrid(clean_question, knowledge, sources)
         st.session_state["last_question"] = clean_question
         st.session_state["last_answer"] = answer
         st.session_state["guide_history"].append({"question": clean_question, "answer": answer})
@@ -692,6 +703,12 @@ if active_tab == "AI文化助手":
                 st.caption(answer.status)
                 if answer.status == "可信延伸回答":
                     st.info("已按语义匹配到相关的本地权威资料；以下内容均保留来源编号。")
+                elif answer.status == AI_REFERENCE_STATUS:
+                    st.warning(
+                        "以下内容由 AI 在本地知识库覆盖不足时生成，尚未经过本项目资料核验，"
+                        "仅作学习线索，不作为文化事实、专业鉴定或参赛数据结论。"
+                    )
+                    st.write(answer.answer)
                 for claim in answer.claims:
                     st.caption(EVIDENCE_SCOPE_LABELS[claim.evidence_scope])
                     st.write(claim.text)
@@ -711,8 +728,8 @@ if active_tab == "AI文化助手":
                             show_official_objects(
                                 related_official_objects(answer.hits, official_rows, official_relations)
                             )
-                else:
-                    st.warning("本地知识库证据不足，系统没有调用大模型补写文化事实。")
+                elif answer.status != AI_REFERENCE_STATUS:
+                    st.warning(answer.answer)
 
         guide_history = st.session_state["guide_history"]
         if guide_history:
@@ -777,7 +794,7 @@ if active_tab == "数据与可信AI":
     st.markdown(
         """
 - 视觉 provider 只负责可观察特征和检索关键词，不直接提供可信文化事实。
-- 文化事实只从本地知识库检索，并展示来源与证据等级。
+- 文化事实优先从本地知识库检索，并展示来源与证据等级；知识库未覆盖时，AI 只能提供醒目标注、待人工核验的参考线索。
 - 泛化视觉词不会单独触发具体纹样知识；没有足够相关证据时明确拒绝强行匹配。
 - 视觉观察、人工选择和来源支持事实分层展示，不能互相反向证明。
 - 一般传统文化背景与南京云锦直接资料分开存储、检索和展示；跨媒介寓意不用于判断具体对象。

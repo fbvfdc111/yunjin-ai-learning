@@ -1,7 +1,12 @@
 from __future__ import annotations
 
+import json
+import os
 from dataclasses import dataclass
 from typing import Iterable
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
+from urllib.request import Request, urlopen
 
 from .knowledge import (
     Claim,
@@ -20,6 +25,72 @@ class GroundedAnswer:
     hits: tuple[SearchHit, ...]
     source_ids: tuple[str, ...]
     status: str
+
+
+DOTS_DEFAULT_BASE_URL = "https://note3-prev-api.askdiandian.com"
+DOTS_DEFAULT_TEXT_MODEL = "dots3-note-prev"
+AI_REFERENCE_STATUS = "AI 辅助参考（待核验）"
+YUNJIN_ASSISTANT_TERMS = (
+    "南京云锦", "云锦", "妆花", "织金", "库锦", "库缎", "金宝地", "挑花结本",
+    "大花楼", "拽花工", "织手", "织机", "纹样", "经线", "纬线", "梭子", "筘框", "非遗",
+)
+
+
+def dots_text_is_configured() -> bool:
+    return bool(os.getenv("DOTS_API_KEY"))
+
+
+def _is_yunjin_question(question: str) -> bool:
+    normalized = question.lower().replace(" ", "")
+    return any(term.lower() in normalized for term in YUNJIN_ASSISTANT_TERMS)
+
+
+def _dots_text_base_url() -> str:
+    base_url = os.getenv("DOTS_BASE_URL", DOTS_DEFAULT_BASE_URL).rstrip("/")
+    parsed = urlparse(base_url)
+    if parsed.scheme != "https" or not parsed.netloc:
+        raise ValueError("DOTS_BASE_URL 必须是有效的 HTTPS 地址。")
+    return base_url
+
+
+def _answer_with_dots_reference(question: str) -> str:
+    api_key = os.getenv("DOTS_API_KEY")
+    if not api_key:
+        raise RuntimeError("未配置 DOTS_API_KEY。")
+    model = os.getenv("DOTS_TEXT_MODEL") or os.getenv("DOTS_VISION_MODEL") or DOTS_DEFAULT_TEXT_MODEL
+    payload = {
+        "model": model,
+        "messages": [
+            {
+                "role": "system",
+                "content": (
+                    "你是南京云锦文化学习助手。当前问题未被本地核验知识库覆盖。"
+                    "请提供简短、审慎的中文背景参考，不得虚构出处、文物名称、年代、传承人或具体数据；"
+                    "不确定时明确说不确定，并建议查阅中国非物质文化遗产网、博物馆或专业研究资料。"
+                    "不要声称回答已经过本项目知识库核验。"
+                ),
+            },
+            {"role": "user", "content": question},
+        ],
+        "stream": False,
+        "max_tokens": 600,
+        "chat_template_kwargs": {"enable_thinking": False},
+    }
+    request = Request(
+        f"{_dots_text_base_url()}/v1/chat/completions",
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        headers={"api-key": api_key, "Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urlopen(request, timeout=30) as response:
+            result = json.loads(response.read().decode("utf-8"))
+        content = result["choices"][0]["message"]["content"]
+    except (HTTPError, URLError, TimeoutError, OSError, KeyError, IndexError, TypeError, json.JSONDecodeError) as exc:
+        raise RuntimeError("AI 扩展回答暂时不可用。") from exc
+    if not isinstance(content, str) or not content.strip():
+        raise RuntimeError("AI 扩展回答为空。")
+    return content.strip()
 
 
 def answer_from_knowledge(
@@ -81,4 +152,34 @@ def answer_from_knowledge(
         hits=tuple(hits),
         source_ids=citations_for_hits(hits),
         status=status,
+    )
+
+
+def answer_hybrid(
+    question: str,
+    items: Iterable,
+    sources: dict[str, Source],
+    context_keywords: Iterable[str] = (),
+    limit: int = 4,
+) -> GroundedAnswer:
+    """Prefer sourced local knowledge, then offer a clearly separated AI reference."""
+    local = answer_from_knowledge(
+        question,
+        items,
+        sources,
+        context_keywords=context_keywords,
+        limit=limit,
+    )
+    if local.status != "证据不足" or not _is_yunjin_question(question) or not dots_text_is_configured():
+        return local
+    try:
+        reference = _answer_with_dots_reference(question)
+    except (RuntimeError, ValueError):
+        return local
+    return GroundedAnswer(
+        answer=reference,
+        claims=(),
+        hits=(),
+        source_ids=(),
+        status=AI_REFERENCE_STATUS,
     )

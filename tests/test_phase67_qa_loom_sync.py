@@ -47,6 +47,10 @@ class Phase67QaAndLoomSyncTests(unittest.TestCase):
             "云锦过去有什么用途？": "KB006",
             "南京云锦有哪些常见纹样？": "KB010",
             "挑花结本有什么用？": "KB019",
+            "云锦纹样中的龙纹有什么文化含义？": "KB011",
+            "云锦现在是怎么传承保护的？": "KB006",
+            "云锦能不能只看照片认出来？": "KB026",
+            "这些网上图片能训练AI吗？": "KB028",
         }
         for question, expected_id in cases.items():
             with self.subTest(question=question):
