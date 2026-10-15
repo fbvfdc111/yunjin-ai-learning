@@ -78,7 +78,7 @@ QUESTION_INTENT_EXPANSIONS = (
             "妆花为什么能够逐花异色", "妆花为什么能逐花异色", "妆花如何逐花异色",
             "一朵花一个颜色", "一朵花一种颜色", "每朵花不同颜色",
         ),
-        ("逐花异色", "什么"),
+        ("妆花", "逐花异色"),
     ),
     (
         ("传承保护", "保护传承", "怎么传承", "怎样传承", "怎么保护", "怎样保护", "现在如何传承"),
@@ -385,20 +385,32 @@ def _question_contains_term(normalized_question: str, term: str) -> bool:
     return normalized_term in normalized_question
 
 
+def _answer_group_matches(normalized_question: str, group: tuple[str, ...]) -> bool:
+    normalized_group = tuple(_normalized_visual_term(term) for term in group)
+    if "什么" in normalized_group:
+        subjects = tuple(term for term in normalized_group if term != "什么")
+        if not any(
+            f"{subject}是什么" in normalized_question or f"什么是{subject}" in normalized_question
+            for subject in subjects
+        ):
+            return False
+    return all(_question_contains_term(normalized_question, term) for term in group)
+
+
 def item_answers_question(question: str, item: KnowledgeItem) -> bool:
     normalized = _normalized_visual_term(normalize_question_for_answering(question))
     heritage_intent = "非物质文化遗产" in normalized or "非遗" in normalized or "联合国名录" in normalized
-    if item.id == "KB001" and not heritage_intent and any(
-        intent in normalized
-        for intent in (
-            "为什么", "为何", "不同", "区别", "作用", "材料", "品种", "种类",
-            "纹样", "工序", "流程", "特点", "特色", "用途", "时候", "多久",
+    if item.id == "KB001" and not heritage_intent:
+        definition_intent = normalized in {"南京云锦", "云锦"} or any(
+            phrase in normalized
+            for phrase in (
+                "南京云锦是什么", "云锦是什么", "什么是南京云锦", "什么是云锦",
+                "介绍南京云锦", "介绍一下南京云锦", "介绍云锦", "介绍一下云锦",
+            )
         )
-    ):
-        return False
-    return bool(normalized) and any(
-        all(_question_contains_term(normalized, term) for term in group) for group in item.answer_terms
-    )
+        if not definition_intent:
+            return False
+    return bool(normalized) and any(_answer_group_matches(normalized, group) for group in item.answer_terms)
 
 
 def search_answerable_knowledge(
@@ -421,7 +433,7 @@ def search_answerable_knowledge(
     for item in answerable:
         if item.id not in hits:
             group = max(
-                (group for group in item.answer_terms if all(_question_contains_term(normalized, term) for term in group)),
+                (group for group in item.answer_terms if _answer_group_matches(normalized, group)),
                 key=len,
             )
             hits[item.id] = SearchHit(item, 8.0 + len(group), tuple(group))

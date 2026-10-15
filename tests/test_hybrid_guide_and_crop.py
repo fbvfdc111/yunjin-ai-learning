@@ -58,6 +58,26 @@ class HybridGuideAndCropTests(unittest.TestCase):
         self.assertFalse(answer.source_ids)
         self.assertFalse(answer.claims)
 
+    def test_unknown_questions_do_not_fall_back_to_generic_definitions(self):
+        env = {
+            "DOTS_API_KEY": "test-key",
+            "DOTS_BASE_URL": "https://example.test",
+            "DOTS_TEXT_MODEL": "test-model",
+        }
+        questions = (
+            "云锦有什么博物馆展示",
+            "妆花有什么海外展览",
+            "库锦有什么数字项目",
+        )
+        for question in questions:
+            with self.subTest(question=question), patch.dict(os.environ, env, clear=False), patch(
+                "yunjin_ai.guide.urlopen", return_value=_FakeResponse()
+            ) as mocked_urlopen:
+                answer = answer_hybrid(question, self.items, self.sources)
+            self.assertEqual(answer.status, AI_REFERENCE_STATUS)
+            self.assertFalse(answer.source_ids)
+            mocked_urlopen.assert_called_once()
+
     def test_hybrid_does_not_use_ai_for_out_of_domain_question(self):
         with patch.dict(os.environ, {"DOTS_API_KEY": "test-key"}, clear=False), patch(
             "yunjin_ai.guide.urlopen"
