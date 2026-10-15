@@ -9,6 +9,15 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
+from .dots_runtime import (
+    DotsQueueTimeout,
+    dots_max_attempts,
+    dots_request_slot,
+    dots_request_timeout,
+    is_retryable_http_status,
+    user_facing_http_error,
+    wait_before_retry,
+)
 from .knowledge import (
     Claim,
     SearchHit,
@@ -31,6 +40,7 @@ class GroundedAnswer:
 DOTS_DEFAULT_BASE_URL = "https://note3-prev-api.askdiandian.com"
 DOTS_DEFAULT_TEXT_MODEL = "dots3-note-prev"
 AI_REFERENCE_STATUS = "AI 辅助参考（待核验）"
+AI_SERVICE_UNAVAILABLE_STATUS = "AI 扩展服务暂时繁忙"
 ASSISTANT_INFO_STATUS = "助手说明"
 OUT_OF_SCOPE_STATUS = "超出助手范围"
 YUNJIN_ASSISTANT_TERMS = (
@@ -114,15 +124,32 @@ def _answer_with_dots_reference(question: str) -> str:
         headers={"api-key": api_key, "Content-Type": "application/json"},
         method="POST",
     )
+    last_error: Exception | None = None
     try:
-        with urlopen(request, timeout=30) as response:
-            result = json.loads(response.read().decode("utf-8"))
-        content = result["choices"][0]["message"]["content"]
-    except (HTTPError, URLError, TimeoutError, OSError, KeyError, IndexError, TypeError, json.JSONDecodeError) as exc:
-        raise RuntimeError("AI 扩展回答暂时不可用。") from exc
-    if not isinstance(content, str) or not content.strip():
-        raise RuntimeError("AI 扩展回答为空。")
-    return neutralize_generated_links(content.strip())
+        with dots_request_slot():
+            for attempt in range(1, dots_max_attempts() + 1):
+                try:
+                    with urlopen(request, timeout=dots_request_timeout()) as response:
+                        result = json.loads(response.read().decode("utf-8"))
+                    content = result["choices"][0]["message"]["content"]
+                    if not isinstance(content, str) or not content.strip():
+                        raise ValueError("AI 扩展回答为空。")
+                    return neutralize_generated_links(content.strip())
+                except HTTPError as exc:
+                    last_error = exc
+                    if is_retryable_http_status(exc.code) and attempt < dots_max_attempts():
+                        wait_before_retry(attempt, exc.headers)
+                        continue
+                    raise RuntimeError(user_facing_http_error(exc.code)) from exc
+                except (URLError, TimeoutError, OSError, KeyError, IndexError, TypeError, ValueError, json.JSONDecodeError) as exc:
+                    last_error = exc
+                    if attempt < dots_max_attempts():
+                        wait_before_retry(attempt)
+                        continue
+                    raise RuntimeError("Dots 扩展回答连接或返回异常，自动重试后仍未成功。") from exc
+    except DotsQueueTimeout as exc:
+        raise RuntimeError(str(exc)) from exc
+    raise RuntimeError("Dots 扩展回答暂时不可用。") from last_error
 
 
 def answer_from_knowledge(
@@ -229,7 +256,16 @@ def answer_hybrid(
     try:
         reference = _answer_with_dots_reference(question)
     except (RuntimeError, ValueError):
-        return local
+        return GroundedAnswer(
+            answer=(
+                "本地知识库暂未覆盖这个问题，同时 AI 扩展服务当前繁忙或连接异常。"
+                "系统没有把接口失败误写成文化答案，请稍后再次尝试。"
+            ),
+            claims=(),
+            hits=(),
+            source_ids=(),
+            status=AI_SERVICE_UNAVAILABLE_STATUS,
+        )
     return GroundedAnswer(
         answer=reference,
         claims=(),

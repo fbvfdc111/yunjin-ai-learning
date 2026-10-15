@@ -15,6 +15,15 @@ from urllib.request import Request, urlopen
 
 from PIL import Image, ImageChops, ImageFilter, ImageOps, ImageStat
 
+from .dots_runtime import (
+    DotsQueueTimeout,
+    dots_max_attempts,
+    dots_request_slot,
+    dots_request_timeout,
+    is_retryable_http_status,
+    wait_before_retry,
+)
+
 
 @dataclass(frozen=True)
 class VisionObservation:
@@ -44,8 +53,8 @@ DOTS_DEFAULT_BASE_URL = "https://note3-prev-api.askdiandian.com"
 DOTS_DEFAULT_VISION_MODEL = "dots3-note-prev"
 DOTS_IMAGE_URL_REQUIRED = "Dots 当前需要模型服务可访问的图片 URL"
 DOTS_MAX_SOURCE_BYTES = 10 * 1024 * 1024
-DOTS_MAX_SENT_IMAGE_BYTES = 4 * 1024 * 1024
-DOTS_MAX_IMAGE_DIMENSION = 2048
+DOTS_MAX_SENT_IMAGE_BYTES = 2 * 1024 * 1024
+DOTS_MAX_IMAGE_DIMENSION = 1600
 DOTS_ALLOWED_MIME_TYPES = {"image/jpeg": "JPEG", "image/png": "PNG"}
 DOTS_SYSTEM_PROMPT = """你是谨慎的视觉观察助手，只进行可观察视觉分析，不进行文物鉴定。
 禁止仅凭图片确定：是否为南京云锦；是否为妆花、织金、库缎等具体工艺；年代；文物名称；真伪；作者或制造者。
@@ -440,7 +449,7 @@ def _dots_http_error_message(exc: HTTPError, api_key: str) -> str:
 
 
 def _is_retryable_http_status(status_code: int) -> bool:
-    return status_code in {408, 409, 425, 429, 500, 502, 503, 504}
+    return is_retryable_http_status(status_code)
 
 
 def analyze_with_dots(
@@ -501,56 +510,57 @@ def analyze_with_dots(
     limitations: tuple[str, ...] = ()
     attempts_used = 0
     last_error: Exception | None = None
-    for attempt in range(1, 3):
-        attempts_used = attempt
-        request = Request(
-            f"{_dots_base_url()}/v1/chat/completions",
-            data=json.dumps(request_payload, ensure_ascii=False).encode("utf-8"),
-            headers={"api-key": api_key, "Content-Type": "application/json"},
-            method="POST",
-        )
-        try:
-            with urlopen(request, timeout=30) as response:
-                response_payload = json.loads(response.read().decode("utf-8"))
-            content = response_payload["choices"][0]["message"]["content"]
-            if not isinstance(content, str):
-                raise DotsStructuredResponseError("message.content is not text")
-            payload = _json_object_from_model_text(content)
-            sections = (
-                ("主体/纹样", _string_list(payload, "subject_pattern_observations")),
-                ("构图", _string_list(payload, "composition")),
-                ("色彩", _string_list(payload, "colors")),
-                ("重复/对称", _string_list(payload, "repetition_symmetry")),
-            )
-            observable = tuple(f"{label}：{item}" for label, items in sections for item in items)
-            keywords = _string_list(payload, "retrieval_keywords")
-            limitations = _string_list(payload, "limitations")
-            if not observable or not keywords or not limitations:
-                raise DotsStructuredResponseError("required visual fields are empty")
-            break
-        except HTTPError as exc:
-            if _is_retryable_http_status(exc.code) and attempt == 1:
-                last_error = exc
-                continue
-            raise DotsProviderError(_dots_http_error_message(exc, api_key)) from exc
-        except (URLError, TimeoutError, OSError) as exc:
-            if attempt == 1:
-                last_error = exc
-                continue
-            raise DotsProviderError(f"Dots API 网络调用失败：{exc.reason if isinstance(exc, URLError) else exc}") from exc
-        except (KeyError, IndexError, TypeError, DotsStructuredResponseError, json.JSONDecodeError) as exc:
-            if attempt == 1:
-                last_error = exc
-                continue
-            raise DotsProviderError("Dots API 返回内容无法按预期的结构化视觉结果解析。") from exc
-    else:
-        if isinstance(last_error, HTTPError):
-            raise DotsProviderError(_dots_http_error_message(last_error, api_key)) from last_error
-        if isinstance(last_error, (URLError, TimeoutError, OSError)):
-            raise DotsProviderError(
-                f"Dots API 网络调用失败：{last_error.reason if isinstance(last_error, URLError) else last_error}"
-            ) from last_error
-        raise DotsProviderError("Dots API 返回内容无法按预期的结构化视觉结果解析。") from last_error
+    try:
+        with dots_request_slot():
+            for attempt in range(1, dots_max_attempts() + 1):
+                attempts_used = attempt
+                request = Request(
+                    f"{_dots_base_url()}/v1/chat/completions",
+                    data=json.dumps(request_payload, ensure_ascii=False).encode("utf-8"),
+                    headers={"api-key": api_key, "Content-Type": "application/json"},
+                    method="POST",
+                )
+                try:
+                    with urlopen(request, timeout=dots_request_timeout()) as response:
+                        response_payload = json.loads(response.read().decode("utf-8"))
+                    content = response_payload["choices"][0]["message"]["content"]
+                    if not isinstance(content, str):
+                        raise DotsStructuredResponseError("message.content is not text")
+                    payload = _json_object_from_model_text(content)
+                    sections = (
+                        ("主体/纹样", _string_list(payload, "subject_pattern_observations")),
+                        ("构图", _string_list(payload, "composition")),
+                        ("色彩", _string_list(payload, "colors")),
+                        ("重复/对称", _string_list(payload, "repetition_symmetry")),
+                    )
+                    observable = tuple(f"{label}：{item}" for label, items in sections for item in items)
+                    keywords = _string_list(payload, "retrieval_keywords")
+                    limitations = _string_list(payload, "limitations")
+                    if not observable or not keywords or not limitations:
+                        raise DotsStructuredResponseError("required visual fields are empty")
+                    break
+                except HTTPError as exc:
+                    last_error = exc
+                    if _is_retryable_http_status(exc.code) and attempt < dots_max_attempts():
+                        wait_before_retry(attempt, exc.headers)
+                        continue
+                    raise DotsProviderError(_dots_http_error_message(exc, api_key)) from exc
+                except (URLError, TimeoutError, OSError) as exc:
+                    last_error = exc
+                    if attempt < dots_max_attempts():
+                        wait_before_retry(attempt)
+                        continue
+                    raise DotsProviderError(
+                        f"Dots API 网络调用失败：{exc.reason if isinstance(exc, URLError) else exc}"
+                    ) from exc
+                except (KeyError, IndexError, TypeError, DotsStructuredResponseError, json.JSONDecodeError) as exc:
+                    last_error = exc
+                    if attempt < dots_max_attempts():
+                        wait_before_retry(attempt)
+                        continue
+                    raise DotsProviderError("Dots API 返回内容无法按预期的结构化视觉结果解析。") from exc
+    except DotsQueueTimeout as exc:
+        raise DotsProviderError(str(exc)) from exc
 
     return VisionObservation(
         provider=f"dots:{model}",

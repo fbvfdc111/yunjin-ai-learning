@@ -15,6 +15,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from yunjin_ai.guide import (
     AI_REFERENCE_STATUS,
+    AI_SERVICE_UNAVAILABLE_STATUS,
     ASSISTANT_INFO_STATUS,
     OUT_OF_SCOPE_STATUS,
     answer_from_knowledge,
@@ -535,7 +536,7 @@ if active_tab == "AI探锦":
             )
             st.caption(
                 "本地 JPG/JPEG/PNG 通过内存 Base64 data URL 发送，不发送本地文件路径，也不上传第三方图床。"
-                "原始上传最大 10 MB；发送前必要时压缩至不超过 4 MB、最长边不超过 2048 px。"
+                "原始上传最大 10 MB；发送前必要时压缩至不超过 2 MB、最长边不超过 1600 px。"
             )
             st.code("https://note3-prev-api.askdiandian.com/v1/chat/completions", language=None)
         st.write("Dots 配置状态：" + ("已配置" if dots_is_configured() else "未配置"))
@@ -729,6 +730,8 @@ if active_tab == "AI文化助手":
                         html.escape(answer.answer).replace("\n", "<br>"),
                         unsafe_allow_html=True,
                     )
+                elif answer.status == AI_SERVICE_UNAVAILABLE_STATUS:
+                    st.info(answer.answer, icon=":material/hourglass_top:")
                 elif answer.status == ASSISTANT_INFO_STATUS:
                     st.info(answer.answer)
                 elif answer.status == OUT_OF_SCOPE_STATUS:
@@ -754,6 +757,7 @@ if active_tab == "AI文化助手":
                             )
                 elif answer.status not in {
                     AI_REFERENCE_STATUS,
+                    AI_SERVICE_UNAVAILABLE_STATUS,
                     ASSISTANT_INFO_STATUS,
                     OUT_OF_SCOPE_STATUS,
                 }:

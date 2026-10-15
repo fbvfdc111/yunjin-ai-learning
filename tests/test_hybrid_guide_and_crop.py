@@ -6,6 +6,7 @@ import sys
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from urllib.error import URLError
 
 from PIL import Image, ImageDraw
 
@@ -15,6 +16,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from yunjin_ai.guide import (
     AI_REFERENCE_STATUS,
+    AI_SERVICE_UNAVAILABLE_STATUS,
     ASSISTANT_INFO_STATUS,
     OUT_OF_SCOPE_STATUS,
     answer_hybrid,
@@ -92,6 +94,26 @@ class HybridGuideAndCropTests(unittest.TestCase):
         self.assertEqual(answer.status, OUT_OF_SCOPE_STATUS)
         self.assertIn("服务范围", answer.answer)
         mocked_urlopen.assert_not_called()
+
+    def test_hybrid_reports_provider_failure_separately_from_missing_evidence(self):
+        env = {
+            "DOTS_API_KEY": "test-key",
+            "DOTS_BASE_URL": "https://example.test",
+            "DOTS_TEXT_MODEL": "test-model",
+            "DOTS_MAX_ATTEMPTS": "2",
+            "DOTS_RETRY_BASE_SECONDS": "0",
+        }
+        with patch.dict(os.environ, env, clear=False), patch(
+            "yunjin_ai.guide.urlopen", side_effect=URLError("mock offline")
+        ) as mocked_urlopen:
+            answer = answer_hybrid(
+                "南京云锦在国外有哪些当代展览案例？",
+                self.items,
+                self.sources,
+            )
+        self.assertEqual(mocked_urlopen.call_count, 2)
+        self.assertEqual(answer.status, AI_SERVICE_UNAVAILABLE_STATUS)
+        self.assertIn("扩展服务", answer.answer)
 
     def test_identity_question_is_answered_without_spending_api_call(self):
         with patch.dict(os.environ, {"DOTS_API_KEY": "test-key"}, clear=False), patch(

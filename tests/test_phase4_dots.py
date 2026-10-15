@@ -193,7 +193,7 @@ class Phase4DotsTests(unittest.TestCase):
         data_url = payload["messages"][1]["content"][1]["image_url"]["url"]
         sent_bytes = base64.b64decode(data_url.split(",", 1)[1], validate=True)
         with Image.open(io.BytesIO(sent_bytes)) as sent_image:
-            self.assertLessEqual(max(sent_image.size), 2048)
+            self.assertLessEqual(max(sent_image.size), 1600)
         self.assertEqual(large_image.size, original_size)
         self.assertEqual(buffer.getvalue(), original_bytes)
         self.assertTrue(result.raw_metrics["compressed_for_dots"])
@@ -208,10 +208,32 @@ class Phase4DotsTests(unittest.TestCase):
                 image_url="https://images.example.org/yunjin-demo.jpg",
             )
 
-        self.assertEqual(mocked_urlopen.call_count, 2)
+        self.assertEqual(mocked_urlopen.call_count, 3)
         self.assertEqual(result.provider, "local_cv")
         self.assertIn("mock offline", result.provider_status)
         self.assertTrue(result.observable_facts)
+
+    def test_rate_limit_waits_then_recovers(self):
+        rate_limit = HTTPError(
+            "https://note3-prev-api.askdiandian.com/v1/chat/completions",
+            429,
+            "Too Many Requests",
+            hdrs={"Retry-After": "0"},
+            fp=io.BytesIO(b'{"error":"rate limited"}'),
+        )
+        responses = [rate_limit, self.successful_response()]
+        with patch.dict(os.environ, self.dots_env, clear=False), patch(
+            "yunjin_ai.vision.urlopen", side_effect=responses
+        ) as mocked_urlopen:
+            result = analyze_image(
+                self.image,
+                provider="dots",
+                image_url="https://images.example.org/yunjin-demo.jpg",
+            )
+
+        self.assertEqual(mocked_urlopen.call_count, 2)
+        self.assertEqual(result.provider, "dots:dots3-note-prev")
+        self.assertEqual(result.raw_metrics["dots_attempts"], 2)
 
     def test_http_error_body_is_preserved_in_fallback_reason(self):
         error_body = b'{"error":{"message":"invalid image URL: data URL is not supported"}}'
@@ -293,7 +315,7 @@ class Phase4DotsTests(unittest.TestCase):
                 image_url="https://images.example.org/yunjin-demo.jpg",
             )
 
-        self.assertEqual(mocked_urlopen.call_count, 2)
+        self.assertEqual(mocked_urlopen.call_count, 3)
         self.assertEqual(result.provider, "local_cv")
         self.assertIn("Dots API 返回内容无法按预期的结构化视觉结果解析", result.raw_metrics["fallback_reason"])
 
@@ -333,7 +355,7 @@ class Phase4DotsTests(unittest.TestCase):
                 image_url="https://images.example.org/yunjin-demo.jpg",
             )
 
-        self.assertEqual(mocked_urlopen.call_count, 2)
+        self.assertEqual(mocked_urlopen.call_count, 3)
         self.assertEqual(result.provider, "local_cv")
         self.assertEqual(result.raw_metrics["image_transport"], "local_cv")
         self.assertIn("Dots API 返回内容无法按预期的结构化视觉结果解析", result.provider_status)
