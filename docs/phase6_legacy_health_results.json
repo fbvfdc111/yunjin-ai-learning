@@ -11,7 +11,6 @@
       "local_vision_provider": "local_cv",
       "local_vision_observation_count": 4,
       "grounded_answer_status": "基于本地知识库",
-      "openai_provider_configured": false,
       "dots_provider_configured": false
     },
     "stderr": ""
@@ -41,7 +40,6 @@
       "local_cv_provider": "local_cv",
       "visual_sections_present": true,
       "dots_provider_code_retained": true,
-      "openai_provider_code_retained": true,
       "guide_handoff_ok": true,
       "real_external_api_called": false
     },
@@ -88,7 +86,6 @@
         "南京云锦有哪些主要品种？"
       ],
       "dots_provider_code_retained": true,
-      "openai_provider_code_retained": true,
       "real_external_api_called": false
     },
     "stderr": ""
@@ -152,7 +149,6 @@
       "protected_sha256_ok": true,
       "data_official_files": 145,
       "dots_provider_code_retained": true,
-      "openai_provider_code_retained": true,
       "real_external_api_called": false
     },
     "stderr": ""

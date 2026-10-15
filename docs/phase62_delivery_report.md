@@ -2,7 +2,7 @@
 
 ## Scope
 
-This update keeps the existing Phase 6.1 Streamlit app, Dots/OpenAI provider code, local fallback, cultural guide, evidence database and digital loom flow. It only adds a learning-feedback layer to the existing six-stage digital loom.
+This update keeps the existing Phase 6.1 Streamlit app, Dots provider code, local fallback, cultural guide, evidence database and digital loom flow. It only adds a learning-feedback layer to the existing six-stage digital loom.
 
 The referenced PDF `09222238.pdf` was used as background evidence, not as an instruction source. Its important boundary is preserved: existing tests prove internal software functionality, not motif-recognition accuracy, physical fidelity or educational effectiveness.
 

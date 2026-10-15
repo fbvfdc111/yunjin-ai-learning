@@ -19,7 +19,7 @@ from yunjin_ai.knowledge import (
     validate_knowledge,
     validate_official_relations,
 )
-from yunjin_ai.vision import analyze_with_dots, analyze_with_openai
+from yunjin_ai.vision import analyze_with_dots
 
 
 PROTECTED_SHA256 = {
@@ -101,7 +101,6 @@ def main() -> int:
         "protected_sha256_ok": protected_ok,
         "data_official_files": sum(path.is_file() for path in (ROOT / "data" / "official").rglob("*")),
         "dots_provider_code_retained": callable(analyze_with_dots),
-        "openai_provider_code_retained": callable(analyze_with_openai),
         "real_external_api_called": False,
     }
     print(json.dumps(report, ensure_ascii=False, indent=2))
@@ -117,7 +116,6 @@ def main() -> int:
         protected_ok,
         all(expected in answer_hits[question] for question, expected in questions.items()),
         callable(analyze_with_dots),
-        callable(analyze_with_openai),
     )
     return 0 if all(checks) else 1
 

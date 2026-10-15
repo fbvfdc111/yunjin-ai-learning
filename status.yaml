@@ -32,7 +32,6 @@ phase4_supervised_training: not_performed
 phase4_knowledge_items: 15
 phase4_knowledge_sources: 7
 phase4_local_vision_fallback: implemented_and_tested
-phase4_openai_vision_provider: implemented_waiting_for_api_configuration
 phase4_dots_provider: implemented
 phase4_dots_automated_tests: mock_http_only_no_real_api_consumption
 phase4_dots_base64_user_runtime_validation: completed

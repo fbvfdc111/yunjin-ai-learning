@@ -49,7 +49,7 @@ Round 2 原15条知识按研究结论处理：7条保留并继续收紧边界、
 
 ### AI探锦
 
-原“AI识锦”改名为“AI探锦”。Dots、OpenAI、local_cv、多模态请求、Base64 data URL、
+原“AI识锦”改名为“AI探锦”。Dots、local_cv、多模态请求、Base64 data URL、
 压缩与回退逻辑均未修改。视觉自动召回只允许符合门槛的直接文化知识；官方对象名称证据只在用户主动选择
 文化主题后参与探索；一般文化背景完全禁止视觉自动召回。
 
@@ -73,7 +73,7 @@ Round 2 原15条知识按研究结论处理：7条保留并继续收紧边界、
 - `usable_for_training=true`：0；
 - `data/official`：145个文件，与重新解压的 Round 2 基线逐文件 SHA-256 对比，差异0；
 - 未生成监督训练、Accuracy、Precision、Recall、F1、Loss、混淆矩阵或模型权重；
-- 本轮未调用真实 Dots 或 OpenAI API。
+- 本轮未调用真实 Dots API。
 
 受保护文件与 Round 2 一致：
 
@@ -113,7 +113,6 @@ Round 3 新测试覆盖：逐事实来源和证据范围、一般背景禁止视
    数据与可信AI四页，以及不同问题连续切换后的排版、来源折叠区和对象关系表。
 2. **真实Dots Base64冒烟测试：未完成的人工验收项。** 本轮未使用真实 Key、未发送图片、未调用外部 API。
    需手动确认 requested provider、actual provider、`base64_data_url` 和 fallback reason 显示正确。
-3. **OpenAI provider真实调用：未验证项。** 它不是默认 provider，本轮只确认受保护代码和 mock 测试保持通过。
 
 ## 8. 仍存在的知识缺口
 

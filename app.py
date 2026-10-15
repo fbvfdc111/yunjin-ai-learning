@@ -32,7 +32,7 @@ from yunjin_ai.knowledge import (
     search_visual_knowledge,
 )
 from yunjin_ai.product import apply_guide_handoff, cultural_followup_questions, visual_observation_sections
-from yunjin_ai.vision import analyze_image, dots_is_configured, openai_is_configured
+from yunjin_ai.vision import analyze_image, dots_is_configured
 
 
 DISCLAIMER = "本系统用于文化学习与数字化传承，不构成文物、工艺、年代或真伪专业鉴定。"
@@ -412,7 +412,6 @@ with st.sidebar:
     st.success("图片分析：可用")
     with st.expander("技术状态", expanded=False):
         st.write("Dots Studio：" + ("已配置" if dots_is_configured() else "未配置，将使用本地基础分析"))
-        st.write("OpenAI：" + ("已配置" if openai_is_configured() else "当前未配置"))
         st.caption("未训练监督分类模型，不生成 Accuracy、F1、Loss、混淆矩阵或模型权重。")
 
 active_tab = st.segmented_control(
@@ -521,7 +520,7 @@ if active_tab == "AI探锦":
         st.caption("默认使用 Dots；未配置 API Key 或调用失败时会明确回退到 local_cv。")
         provider_label = st.segmented_control(
             "视觉 provider",
-            ["dots", "local_cv", "openai"],
+            ["dots", "local_cv"],
             default="dots",
             required=True,
             key="vision_provider",
@@ -540,7 +539,6 @@ if active_tab == "AI探锦":
             )
             st.code("https://note3-prev-api.askdiandian.com/v1/chat/completions", language=None)
         st.write("Dots 配置状态：" + ("已配置" if dots_is_configured() else "未配置"))
-        st.write("OpenAI 配置状态：" + ("已配置" if openai_is_configured() else "未配置"))
 
     uploaded = st.file_uploader(
         "选择图片", type=["jpg", "jpeg", "png"], help="支持 JPG、JPEG、PNG，最大 10 MB。", key="vision_upload"
@@ -890,7 +888,7 @@ if active_tab == "数据与可信AI":
             "Dots 是当前默认视觉 provider。本地上传图片可在内存中编码为 Base64 data URL 后直接发送。"
             "缺少 Key、调用失败或响应无法解析时明确回退 local_cv，并在技术详情中披露实际 provider、传输方式和原因。"
         )
-        st.write("local_cv 不上传图片；OpenAI provider 仍保留但不是当前默认 provider。")
+        st.write("local_cv 只在本机完成基础图像统计，不上传图片。")
         st.write(
             "Dots Base64 已由用户在实际运行环境完成一次真实成功调用验证；自动化测试仍使用 mock，"
             "这项验证仅证明调用链可运行，不代表识别准确率或系统性能。"

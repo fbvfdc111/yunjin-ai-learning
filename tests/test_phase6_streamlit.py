@@ -15,7 +15,7 @@ from yunjin_ai.digital_twin_svg import render_twin_svg
 
 
 def app():
-    with patch.dict(os.environ, {'DOTS_API_KEY':'','OPENAI_API_KEY':'','OPENAI_VISION_MODEL':''}):
+    with patch.dict(os.environ, {'DOTS_API_KEY':''}):
         at = AppTest.from_file(ROOT / 'app.py', default_timeout=20).run()
         at.segmented_control(key='main_tab').set_value('数字织机').run()
         at.segmented_control(key='twin_experience_mode').set_value('Teaching Mode / 教学模式').run()

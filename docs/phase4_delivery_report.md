@@ -12,7 +12,7 @@
 - Streamlit 四页式 MVP 与完整主流程。
 - 15 条带来源 ID/证据等级的结构化知识条目；7 条来源记录及 CSV 审阅表。
 - 95 个 Official Evidence Database 对象的只读 metadata 关联。
-- 本地 `local_cv` 视觉 fallback；可选 OpenAI Responses API 图像 provider。
+- 本地 `local_cv` 视觉 fallback 与 Dots 图像 provider。
 - 本地证据检索、文化解释、继续提问与证据不足拒答。
 - 系统架构、AIC 创新点草稿、Phase 5 待办与运行说明。
 
@@ -21,7 +21,6 @@
 - Python 编译检查：通过。
 - 单元测试：10 项通过（包含原 Phase 2/3 6 项与 Phase 4 4 项）。
 - 健康检查：15 条知识、7 个来源、95 个官网对象；95 个授权均为 unknown、0 个可训练；知识引用校验无错误；本地视觉 fallback 与“妆花是什么”证据回答成功。
-- OpenAI provider：当前环境未配置 `OPENAI_API_KEY` / `OPENAI_VISION_MODEL`，未调用、未声称成功。
 - Streamlit 进程启动：通过（显式关闭工作区默认 development mode 后监听 `127.0.0.1:8765`）。
 - HTTP 验证：根页面 `200`、`/_stcore/health` 为 `200 / ok`。
 - 客户端渲染：标题、四个页签、免责声明、95/47/48/0 指标全部可见，浏览器控制台无错误。

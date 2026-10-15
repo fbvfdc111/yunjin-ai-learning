@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from yunjin_ai.knowledge import load_knowledge, load_sources, search_visual_knowledge, validate_knowledge
 from yunjin_ai.product import apply_guide_handoff, visual_observation_sections
-from yunjin_ai.vision import analyze_image, analyze_with_dots, analyze_with_openai
+from yunjin_ai.vision import analyze_image, analyze_with_dots
 
 
 def main() -> int:
@@ -57,7 +57,6 @@ def main() -> int:
         "local_cv_provider": local_result.provider,
         "visual_sections_present": all(name in sections for name in ("纹样与主体", "构图特征", "色彩特征")),
         "dots_provider_code_retained": callable(analyze_with_dots),
-        "openai_provider_code_retained": callable(analyze_with_openai),
         "guide_handoff_ok": handoff_state
         == {"guide_question": "八宝纹有什么文化寓意？", "main_tab": "AI文化助手"},
         "real_external_api_called": False,
@@ -70,7 +69,6 @@ def main() -> int:
         local_result.provider == "local_cv",
         report["visual_sections_present"],
         report["dots_provider_code_retained"],
-        report["openai_provider_code_retained"],
         report["guide_handoff_ok"],
     )
     return 0 if all(checks) else 1

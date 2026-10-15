@@ -4,7 +4,7 @@
 
 ## 修改重点
 
-- 保留原有六阶段状态机、simulation signals、Human Coordination、Dots、CLIP/OpenAI provider、AI探锦、AI文化助手、教学模式和知识测验逻辑。
+- 保留原有六阶段状态机、simulation signals、Human Coordination、Dots、AI探锦、AI文化助手、教学模式和知识测验逻辑。
 - 重构 `src/yunjin_ai/digital_twin_3d.py` 的 3D 主场景。
 - 织机视觉升级为更高大的多层木构教学重建，包含顶部花楼木架、上层工作平台、拽花/提花控制区、密集经线与梭口区、下层织造与卷布区、经轴/卷布轴、横梁、立柱、斜撑、综线/控制线等构件。
 - 两位工匠升级为低多边形 3D 人形，包含头、躯干、上臂、前臂、大腿、小腿；拽花工位于明显更高的上层工作区，织手位于下层织造区。

@@ -156,7 +156,7 @@ class Round3ProtectedFilesTests(unittest.TestCase):
 
 class Round3StreamlitTests(unittest.TestCase):
     def run_app(self) -> AppTest:
-        with patch.dict(os.environ, {"DOTS_API_KEY": "", "OPENAI_API_KEY": "", "OPENAI_VISION_MODEL": ""}):
+        with patch.dict(os.environ, {"DOTS_API_KEY": ""}):
             app = AppTest.from_file(ROOT / "app.py", default_timeout=15).run()
         self.assertFalse(app.exception)
         return app

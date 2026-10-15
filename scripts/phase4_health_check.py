@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from yunjin_ai.guide import answer_from_knowledge
 from yunjin_ai.knowledge import load_knowledge, load_sources, validate_knowledge
-from yunjin_ai.vision import analyze_image, dots_is_configured, openai_is_configured
+from yunjin_ai.vision import analyze_image, dots_is_configured
 
 
 def main() -> int:
@@ -37,7 +37,6 @@ def main() -> int:
         "local_vision_provider": vision.provider,
         "local_vision_observation_count": len(vision.observable_facts),
         "grounded_answer_status": answer.status,
-        "openai_provider_configured": openai_is_configured(),
         "dots_provider_configured": dots_is_configured(),
     }
     print(json.dumps(report, ensure_ascii=False, indent=2))

@@ -17,7 +17,7 @@ from yunjin_ai.knowledge import (
     validate_knowledge,
 )
 from yunjin_ai.product import cultural_followup_questions
-from yunjin_ai.vision import analyze_with_dots, analyze_with_openai
+from yunjin_ai.vision import analyze_with_dots
 
 
 def main() -> int:
@@ -75,7 +75,6 @@ def main() -> int:
         "boundary_question_hits": [hit.item.id for hit in boundary.hits],
         "fallback_questions": cultural_followup_questions(()),
         "dots_provider_code_retained": callable(analyze_with_dots),
-        "openai_provider_code_retained": callable(analyze_with_openai),
         "real_external_api_called": False,
     }
     print(json.dumps(report, ensure_ascii=False, indent=2, default=dict))
@@ -89,7 +88,6 @@ def main() -> int:
         boundary.status == "证据不足" and not boundary.hits,
         all("视觉线索" not in question for question in cultural_followup_questions(())),
         callable(analyze_with_dots),
-        callable(analyze_with_openai),
     )
     return 0 if all(checks) else 1
 

@@ -21,7 +21,6 @@
   "local_cv_provider": "local_cv",
   "visual_sections_present": true,
   "dots_provider_code_retained": true,
-  "openai_provider_code_retained": true,
   "guide_handoff_ok": true,
   "real_external_api_called": false
 }

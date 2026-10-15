@@ -26,7 +26,7 @@ SHA-256：3212C718EF953B5AA4BD7E18C76DF9473BD661BDBC94EE0065DFAD5C75FA9F7B。
 
 Twin State底层代码、事件回调AST、原视觉与助手函数及业务分支AST均未改变。
 文化事实、claim_refs、source_ids、evidence_scope、全部data目录、vision.py、
-Dots/Base64/OpenAI/local_cv、训练门禁、原配置和历史报告均保持不变。
+Dots/Base64/local_cv、训练门禁、原配置和历史报告均保持不变。
 
 ## 展示变化
 
@@ -60,7 +60,7 @@ Dots/Base64/OpenAI/local_cv、训练门禁、原配置和历史报告均保持�
 各项健康检查、保护核验的stdout/stderr独立保存于本轮phase61文件中，未覆盖历史交付记录。
 
 环境：Windows 10，Python 3.13.9（Anaconda），Streamlit 1.63.0、pytest 9.1.1、
-OpenAI SDK 2.54.0、Pillow 12.3.0、PyYAML 6.0.3、Starlette 1.6.0。
+Pillow 12.3.0、PyYAML 6.0.3、Starlette 1.6.0。
 本机Python版本不同于Phase 6归档的3.12。任务内依赖目录结合既有系统依赖执行，
 不宣称完全隔离虚拟环境；原requirements.txt与项目配置未改，依赖目录不打包。
 

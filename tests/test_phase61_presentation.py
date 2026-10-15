@@ -24,7 +24,7 @@ def test_partial_progress_and_free_exploration_are_not_reported_as_complete():
 
 
 def test_home_entry_and_raw_state_is_only_inside_collapsed_expander():
-    with patch.dict(os.environ, {'DOTS_API_KEY': '', 'OPENAI_API_KEY': ''}):
+    with patch.dict(os.environ, {'DOTS_API_KEY': ''}):
         at = AppTest.from_file(ROOT / 'app.py', default_timeout=20).run()
         at.button(key='home_open_twin').click().run()
         assert not at.exception
@@ -45,7 +45,7 @@ def test_home_entry_and_raw_state_is_only_inside_collapsed_expander():
 
 
 def test_home_visual_entry_opens_ai_vision():
-    with patch.dict(os.environ, {'DOTS_API_KEY': '', 'OPENAI_API_KEY': ''}):
+    with patch.dict(os.environ, {'DOTS_API_KEY': ''}):
         at = AppTest.from_file(ROOT / 'app.py', default_timeout=20).run()
         at.button(key='home_open_vision').click().run()
         assert not at.exception

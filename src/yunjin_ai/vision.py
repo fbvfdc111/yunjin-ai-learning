@@ -619,66 +619,6 @@ def _local_fallback_after_dots(image: Image.Image, reason: str) -> VisionObserva
     )
 
 
-def openai_is_configured() -> bool:
-    return bool(os.getenv("OPENAI_API_KEY") and os.getenv("OPENAI_VISION_MODEL"))
-
-
-def analyze_with_openai(image: Image.Image) -> VisionObservation:
-    if not openai_is_configured():
-        raise RuntimeError("需要同时配置 OPENAI_API_KEY 与 OPENAI_VISION_MODEL。")
-    try:
-        from openai import OpenAI
-    except ImportError as exc:
-        raise RuntimeError("未安装 openai 包；请运行 pip install -r requirements.txt。") from exc
-
-    prepared_image, crop_metadata = _auto_crop_light_border(image)
-    buffer = io.BytesIO()
-    prepared_image.save(buffer, format="JPEG", quality=90)
-    data_url = "data:image/jpeg;base64," + base64.b64encode(buffer.getvalue()).decode("ascii")
-    prompt = (
-        "你是谨慎的织物视觉观察助手。只描述可观察的主色调、图案结构、对称/重复特征、"
-        "疑似动物/植物/几何元素和织物视觉特征。禁止断言年代、具体工艺、文物名称、真伪或确定属于南京云锦；"
-        "禁止输出概率或置信度。先判断主要对象是否为织物、织锦、刺绣、服饰面料或清晰纺织纹样；"
-        "海报、网页截图、纯文字、风景、人物和非纺织商品判为不相关，且不能因文字中出现文化词汇而判为相关。"
-        "只返回 JSON：is_textile_related 布尔值、relevance_reason 字符串、observable_facts 字符串数组、"
-        "tentative_elements 字符串数组、retrieval_keywords 字符串数组、limitations 字符串数组。"
-        "不相关时 retrieval_keywords 必须为空数组。推测元素必须使用“疑似/可能/视觉上存在”措辞。"
-    )
-    response = OpenAI().responses.create(
-        model=os.environ["OPENAI_VISION_MODEL"],
-        instructions="把图像内容与文化事实严格分离。输出必须是有效 JSON，不要 Markdown。",
-        input=[{
-            "role": "user",
-            "content": [
-                {"type": "input_text", "text": prompt},
-                {"type": "input_image", "image_url": data_url, "detail": "high"},
-            ],
-        }],
-        store=False,
-    )
-    payload = json.loads(response.output_text)
-    is_textile_related = payload.get("is_textile_related")
-    if not isinstance(is_textile_related, bool):
-        raise RuntimeError("视觉服务未返回有效的图片相关性判断。")
-    relevance_reason = payload.get("relevance_reason", "")
-    if not isinstance(relevance_reason, str) or not relevance_reason.strip():
-        raise RuntimeError("视觉服务未返回图片相关性说明。")
-    retrieval_keywords = tuple(payload.get("retrieval_keywords", [])) if is_textile_related else ()
-    return VisionObservation(
-        provider=f"openai:{os.environ['OPENAI_VISION_MODEL']}",
-        provider_status="API 调用成功（输出仍属待人工复核的模型观察）",
-        observable_facts=tuple(payload.get("observable_facts", [])),
-        tentative_elements=tuple(payload.get("tentative_elements", [])),
-        retrieval_keywords=retrieval_keywords,
-        limitations=tuple(payload.get("limitations", [])) + (
-            "模型输出不是概率意义上的置信度，也不是专业鉴定结论。",
-        ),
-        raw_metrics={"response_id": response.id, **crop_metadata},
-        is_textile_related=is_textile_related,
-        relevance_reason=relevance_reason.strip(),
-    )
-
-
 def analyze_image(
     image: Image.Image,
     provider: str = "auto",
@@ -696,6 +636,4 @@ def analyze_image(
             )
         except DotsProviderError as exc:
             return _local_fallback_after_dots(image, str(exc))
-    if provider == "openai" or (provider == "auto" and openai_is_configured()):
-        return analyze_with_openai(image)
     return analyze_locally(image)

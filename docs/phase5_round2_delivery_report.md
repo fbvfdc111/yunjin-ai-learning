@@ -8,7 +8,7 @@
 `8AB32E360CAEDBB06251E0DD9D4028A4665C7E4337E2E77BB83997E423889AFF`。
 
 本轮没有重新开发架构、训练分类器或扩充文化事实。Dots prompt、Base64 data URL、
-Dots provider、OpenAI provider 与 local_cv fallback 没有修改。
+Dots provider 与 local_cv fallback 没有修改。
 
 ## 三个验收问题与修复
 
@@ -69,7 +69,7 @@ JavaScript、错误隐藏或 DOM hack。
 
 覆盖 Round 1 的 27 项测试及 Round 2 新增回归：飞鸟/柳枝/标签无 KB015、治理知识隔离、三类用途、
 无匹配推荐、四个可回答问题、鉴定边界拒答、页面联动、多次页面切换与回答、无自定义 DOM、Dots
-Base64、压缩、HTTP fallback、local_cv、OpenAI 保留和 95 对象治理不变量。自动化测试没有调用真实 API。
+Base64、压缩、HTTP fallback、local_cv 和 95 对象治理不变量。自动化测试没有调用真实 API。
 
 `scripts/phase5_health_check.py` 与 `scripts/phase5_round2_health_check.py` 均通过。
 

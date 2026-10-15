@@ -26,7 +26,7 @@
 ## 未改变内容
 
 - 未删除或重写 AI探锦。
-- 未破坏 Dots / local_cv / OpenAI provider 路径。
+- 未破坏 Dots / local_cv provider 路径。
 - 未删除 AI文化助手。
 - 未删除 Teaching Mode / 教学模式。
 - 未删除原 2D SVG 教学数字织机。

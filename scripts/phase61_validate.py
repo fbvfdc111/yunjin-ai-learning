@@ -12,8 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
-    env = dict(os.environ, PYTHONUTF8='1', PYTHONDONTWRITEBYTECODE='1',
-               DOTS_API_KEY='', OPENAI_API_KEY='', OPENAI_VISION_MODEL='')
+    env = dict(os.environ, PYTHONUTF8='1', PYTHONDONTWRITEBYTECODE='1', DOTS_API_KEY='')
     commands = [
         ('pytest', ['-m', 'pytest', 'tests', '-q', '-p', 'no:cacheprovider', '--junitxml=docs/phase61_test_results.xml']),
         ('phase6_health', ['scripts/phase6_health_check.py']),
@@ -41,7 +40,7 @@ def main():
     evidence = {'checked_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 'python': sys.version, 'platform': platform.platform(),
                 'packages': {name: importlib.metadata.version(name) for name in
-                             ['streamlit', 'pytest', 'Pillow', 'PyYAML', 'openai', 'starlette']},
+                             ['streamlit', 'pytest', 'Pillow', 'PyYAML', 'starlette']},
                 'external_model_api_called': False,
                 'full_suite_includes_phase6_and_round3': True,
                 'historical_zip_used': False,

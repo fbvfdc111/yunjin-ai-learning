@@ -5,7 +5,6 @@
   "packages": {
     "streamlit": "1.63.0",
     "pytest": "9.1.1",
-    "openai": "2.54.0",
     "Pillow": "12.3.0",
     "PyYAML": "6.0.3"
   },

@@ -105,7 +105,7 @@ S10继续保留B级及其原有核验状态，不被升级为技术标准。
 其中原Round 3测试49项保持不变；新增Phase 6测试44项（含参数化场景）。
 测试数字是软件验收结果，不是识别准确率或模型性能指标。
 
-最终环境：Windows 11、Python 3.12.14、Streamlit 1.63.0、pytest 9.1.1、OpenAI SDK 2.54.0、
+最终环境：Windows 11、Python 3.12.14、Streamlit 1.63.0、pytest 9.1.1、
 Pillow 12.3.0、PyYAML 6.0.3。使用任务内独立运行依赖；没有修改系统Python或原基线依赖声明。
 
 最终命令：
@@ -128,8 +128,8 @@ python -m pytest tests -q -p no:cacheprovider --junitxml=docs/phase6_test_result
 | `phase6_health_check.py --baseline-zip … --protection-only` | 退出码0，ok=true |
 
 旧四项结果单独保存于`phase6_legacy_health_results.json`，没有覆盖旧阶段的报告。
-Dots保护测试继续覆盖请求形状、JPG/PNG Base64字节、内存压缩及失败回退；OpenAI/local_cv代码和既有测试保留。
-本轮没有调用真实Dots/OpenAI API；用户此前已完成的真实Dots Base64成功验证只作为历史已验收事实记录。
+Dots保护测试继续覆盖请求形状、JPG/PNG Base64字节、内存压缩及失败回退；local_cv代码和既有测试保留。
+本轮没有调用真实Dots API；用户此前已完成的真实Dots Base64成功验证只作为历史已验收事实记录。
 
 ## 7. Round 3保护与数据治理
 
@@ -179,7 +179,7 @@ SVG不读取官网图片；页面交互测试将图片读取和视觉分析设�
 - 几何图案是原创教学符号，不是馆藏图像、真实云锦作品复原或织物生成算法。
 - 浏览器已验收桌面及窄屏布局；尚无跨浏览器全面兼容性、真实手机和屏幕阅读器专项验收。
 - 快速连续操作需等待上一轮界面重绘完成；不提供实时性或工业控制保证。
-- 本轮未重新进行真实Dots/OpenAI调用；自动化外部调用测试使用mock。
+- 本轮未重新进行真实Dots调用；自动化外部调用测试使用mock。
 
 ## 10. 最终归档
 

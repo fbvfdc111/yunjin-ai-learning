@@ -1,6 +1,6 @@
 # Phase 6.6 3D Scene V2 三维人—织机协同数字孪生原型
 
-本版本在 Phase 6.5 基础上继续强化 **3D Scene V2**，重点解决“人物不够立体、织机过于扁平简单”的问题。原六阶段状态机、simulation signals、Human Coordination、AI探锦、Dots、CLIP/OpenAI provider、AI文化助手、教学模式和知识测验逻辑均保留。
+本版本在 Phase 6.5 基础上继续强化 **3D Scene V2**，重点解决“人物不够立体、织机过于扁平简单”的问题。原六阶段状态机、simulation signals、Human Coordination、AI探锦、Dots、AI文化助手、教学模式和知识测验逻辑均保留。
 
 数字织机的 `Live Simulation Mode / 实时仿真模式` 现在以更高大的多层南京云锦大花楼木织机教学重建为主场景：顶部花楼木架、上层工作平台、拽花/提花控制区、密集经线与梭口区、下层织造与卷布区、经轴/卷布轴、横梁、立柱、斜撑、综线/控制线都有明确视觉层次。
 
@@ -32,7 +32,7 @@
 本轮修改说明见 `docs/phase65_human_loom_collaboration_delivery.md`。
 
 本版本仍是教学与比赛展示原型：不声称连接真实织机、真实传感器、真实机械精度或专家级机械结构复原。
-AI探锦、Dots、CLIP/OpenAI provider 保留路径、AI文化助手、教学模式、知识测验和原有 2D 教学 SVG 均未删除。
+AI探锦、Dots、本地图像 fallback、AI文化助手、教学模式、知识测验和原有 2D 教学 SVG 均未删除。
 
 ## 零基础 Windows CMD 启动
 
@@ -66,7 +66,7 @@ python -m streamlit run app.py
 
 # Phase 6.2 比赛试用记录版
 
-本轮在 Phase 6.1 基础上做最小增量：保留 AI探锦、Dots/OpenAI 接口、本地 fallback、
+本轮在 Phase 6.1 基础上做最小增量：保留 AI探锦、Dots 接口、本地 fallback、
 AI文化助手和六阶段数字织机原有能力；新增数字织机阶段知识测验、正确答案解释和匿名本地学习结果记录。
 
 新增记录文件位置：
@@ -181,7 +181,7 @@ Dots Base64、多模态视觉 provider、回退链、请求格式与保护测试
 
 本版本以 Phase 5 Round 1 ZIP `yunjin_ai_mvp_phase5_round1_productized_20260906.zip`（SHA-256 `8AB32E360CAEDBB06251E0DD9D4028A4665C7E4337E2E77BB83997E423889AFF`）为唯一基线增量开发，不覆盖 Round 1 或 Phase 4 交付。
 
-Round 2 根据真实浏览器验收修复了三类问题：视觉场景词不再误触发 KB015 数据治理条目；AI文化助手先执行 answerability/relevance gate；页面改用稳定的原生分段导航、表单提交和固定回答容器。Dots prompt、Base64 transport、provider 架构、OpenAI 和 local_cv 均保持不变。
+Round 2 根据真实浏览器验收修复了三类问题：视觉场景词不再误触发 KB015 数据治理条目；AI文化助手先执行 answerability/relevance gate；页面改用稳定的原生分段导航、表单提交和固定回答容器。Dots prompt、Base64 transport、provider 架构和 local_cv 均保持不变。
 
 技术路线正式冻结为：
 
@@ -220,18 +220,6 @@ AI探锦 → 上传图片 → 开始 AI 分析 → 浏览相关文化知识/证�
 → AI文化助手继续提问
 ```
 
-### 可选 OpenAI 多模态 provider
-
-复制 `.env.example` 中的变量到你的安全环境配置（不要提交 Key）：
-
-```powershell
-$env:OPENAI_API_KEY="你的 Key"
-$env:OPENAI_VISION_MODEL="你账户中可用且支持图像输入的模型 ID"
-python -m streamlit run app.py
-```
-
-工程使用 Responses API 的图像输入，并将 `store=False`。只有用户在界面主动选择 OpenAI provider 后，图片才会发送给 API。API Key、模型访问、费用和网络均需使用方自行配置；本次交付环境未配置 Key，因此该调用状态是“待配置/未实测”，不会伪造成功。接口实现依据 [OpenAI Responses API 官方文档](https://developers.openai.com/api/reference/cli/resources/responses/methods/create)。
-
 ### 默认 Dots Studio 多模态视觉 provider
 
 在 PowerShell 中配置：
@@ -243,7 +231,7 @@ $env:DOTS_VISION_MODEL="dots3-note-prev"
 python -m streamlit run app.py
 ```
 
-Dots 使用 `POST /v1/chat/completions`、`api-key` 请求头和 OpenAI Chat Completions 风格的多模态 `messages[].content`。请求固定设置 `stream=false`、`max_tokens=700`、`chat_template_kwargs.enable_thinking=false`，图片细节为 `medium`。系统提示词只允许输出主体/纹样、构图、色彩、重复/对称、检索关键词和限制，禁止仅凭图片确定是否为南京云锦、具体工艺、年代、文物名称、真伪或作者/制造者。
+Dots 使用 `POST /v1/chat/completions`、`api-key` 请求头和多模态 `messages[].content`。请求固定设置 `stream=false`、`max_tokens=700`、`chat_template_kwargs.enable_thinking=false`，图片细节为 `medium`。系统提示词只允许输出主体/纹样、构图、色彩、重复/对称、检索关键词和限制，禁止仅凭图片确定是否为南京云锦、具体工艺、年代、文物名称、真伪或作者/制造者。
 
 **本地上传 Base64 路径**：选择 `dots` 时，公网 `http/https` 图片 URL 优先；URL 留空后上传 JPG/JPEG/PNG，工程会在内存中构造 `data:<mime-type>;base64,<base64-data>` 并直接放入 `image_url.url`。JPG/JPEG 使用 `image/jpeg`，PNG 使用 `image/png`。不会发送本地路径，也不会上传到任何第三方图床。
 
@@ -261,7 +249,7 @@ data/knowledge/
 └─ sources.csv                # 便于人工审阅的等价表
 src/yunjin_ai/
 ├─ knowledge.py               # 加载、校验、通用检索、视觉线索门槛检索
-├─ vision.py                  # 本地 fallback + 可选 OpenAI / Dots provider
+├─ vision.py                  # 本地 fallback + Dots provider
 ├─ guide.py                   # 证据约束回答与无证据拒答
 └─ product.py                 # 视觉结果分组、建议问题与页面联动
 tests/
@@ -285,7 +273,6 @@ docs/
 ### 真实性与边界
 
 - 本地 fallback 是真实运行的传统图像统计/规则观察，不是南京云锦分类 AI，也不输出概率式置信度。
-- OpenAI provider 是可运行接口，但本次未配置 API Key，因而未声称调用成功。
 - Dots provider 已完成公网 URL、JPEG/PNG Base64 data URL、响应解析、错误正文保留与 `local_cv` 回退的 mock 自动化测试；用户另在实际运行环境完成一次真实 Base64 成功调用验证。
 - 真实调用验证只证明 `dots:dots3-note-prev` + `base64_data_url` 链路成功且该次无 fallback，不是模型准确率或系统性能验证。
 - 文化助手是本地 evidence-grounded retrieval，不允许脱离知识库自由补写文化事实。

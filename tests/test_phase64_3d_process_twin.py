@@ -66,7 +66,7 @@ def test_bilingual_whats_happening_copy_tracks_stage():
 
 
 def test_exhibition_page_makes_3d_process_view_primary():
-    with patch.dict(os.environ, {"DOTS_API_KEY": "", "OPENAI_API_KEY": "", "OPENAI_VISION_MODEL": ""}):
+    with patch.dict(os.environ, {"DOTS_API_KEY": ""}):
         at = AppTest.from_file(ROOT / "app.py", default_timeout=20).run()
         at.segmented_control(key="main_tab").set_value("数字织机").run()
         at.segmented_control(key="twin_experience_mode").set_value("Exhibition Mode / 展示模式").run()
@@ -78,7 +78,7 @@ def test_exhibition_page_makes_3d_process_view_primary():
 
 
 def test_exhibition_mode_is_default_and_showcase_first():
-    with patch.dict(os.environ, {"DOTS_API_KEY": "", "OPENAI_API_KEY": "", "OPENAI_VISION_MODEL": ""}):
+    with patch.dict(os.environ, {"DOTS_API_KEY": ""}):
         at = AppTest.from_file(ROOT / "app.py", default_timeout=20).run()
         at.segmented_control(key="main_tab").set_value("数字织机").run()
     assert not at.exception

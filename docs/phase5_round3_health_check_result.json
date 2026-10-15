@@ -55,6 +55,5 @@
   "protected_sha256_ok": true,
   "data_official_files": 145,
   "dots_provider_code_retained": true,
-  "openai_provider_code_retained": true,
   "real_external_api_called": false
 }
