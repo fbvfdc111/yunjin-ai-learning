@@ -18,6 +18,7 @@ from yunjin_ai.guide import (
     ASSISTANT_INFO_STATUS,
     OUT_OF_SCOPE_STATUS,
     answer_hybrid,
+    neutralize_generated_links,
 )
 from yunjin_ai.knowledge import load_knowledge, load_sources
 from yunjin_ai.vision import analyze_locally
@@ -100,6 +101,13 @@ class HybridGuideAndCropTests(unittest.TestCase):
         self.assertEqual(answer.status, ASSISTANT_INFO_STATUS)
         self.assertIn("南京云锦文化 AI 助手", answer.answer)
         mocked_urlopen.assert_not_called()
+
+    def test_generated_domains_cannot_capture_following_chinese_text_as_link(self):
+        text = "请查阅 www.ihchina.cn）或联系相关机构，也可看 https://example.org/path。"
+        cleaned = neutralize_generated_links(text)
+        self.assertNotIn("www.ihchina.cn", cleaned)
+        self.assertNotIn("https://example.org", cleaned)
+        self.assertIn("www\u200b.ihchina\u200b.cn）或联系相关机构", cleaned)
 
     def test_large_light_screenshot_border_is_cropped_before_local_analysis(self):
         image = Image.new("RGB", (900, 1200), "white")

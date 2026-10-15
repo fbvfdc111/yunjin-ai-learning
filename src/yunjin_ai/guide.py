@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from dataclasses import dataclass
 from typing import Iterable
 from urllib.error import HTTPError, URLError
@@ -36,6 +37,17 @@ YUNJIN_ASSISTANT_TERMS = (
     "南京云锦", "云锦", "妆花", "织金", "库锦", "库缎", "金宝地", "挑花结本",
     "大花楼", "拽花工", "织手", "织机", "纹样", "经线", "纬线", "梭子", "筘框", "非遗",
 )
+URL_LIKE_PATTERN = re.compile(
+    r"(?i)\b(?:https?://)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+(?:/[^\s，。；！？]*)?"
+)
+
+
+def neutralize_generated_links(text: str) -> str:
+    """Keep model-supplied domains readable without turning surrounding prose into links."""
+    return URL_LIKE_PATTERN.sub(
+        lambda match: match.group(0).replace("://", "\u200b://").replace(".", "\u200b."),
+        text,
+    )
 
 
 def _assistant_info_answer(question: str) -> str | None:
@@ -87,7 +99,7 @@ def _answer_with_dots_reference(question: str) -> str:
                     "你是南京云锦文化学习助手。当前问题未被本地核验知识库覆盖。"
                     "请提供简短、审慎的中文背景参考，不得虚构出处、文物名称、年代、传承人或具体数据；"
                     "不确定时明确说不确定，并建议查阅中国非物质文化遗产网、博物馆或专业研究资料。"
-                    "不要声称回答已经过本项目知识库核验。"
+                    "不要声称回答已经过本项目知识库核验，不要输出网址或 Markdown 链接。"
                 ),
             },
             {"role": "user", "content": question},
@@ -110,7 +122,7 @@ def _answer_with_dots_reference(question: str) -> str:
         raise RuntimeError("AI 扩展回答暂时不可用。") from exc
     if not isinstance(content, str) or not content.strip():
         raise RuntimeError("AI 扩展回答为空。")
-    return content.strip()
+    return neutralize_generated_links(content.strip())
 
 
 def answer_from_knowledge(
