@@ -31,6 +31,7 @@ DOTS_DEFAULT_BASE_URL = "https://note3-prev-api.askdiandian.com"
 DOTS_DEFAULT_TEXT_MODEL = "dots3-note-prev"
 AI_REFERENCE_STATUS = "AI 辅助参考（待核验）"
 ASSISTANT_INFO_STATUS = "助手说明"
+OUT_OF_SCOPE_STATUS = "超出助手范围"
 YUNJIN_ASSISTANT_TERMS = (
     "南京云锦", "云锦", "妆花", "织金", "库锦", "库缎", "金宝地", "挑花结本",
     "大花楼", "拽花工", "织手", "织机", "纹样", "经线", "纬线", "梭子", "筘框", "非遗",
@@ -198,7 +199,20 @@ def answer_hybrid(
         context_keywords=context_keywords,
         limit=limit,
     )
-    if local.status != "证据不足" or not _is_yunjin_question(question) or not dots_text_is_configured():
+    if local.status != "证据不足":
+        return local
+    if not _is_yunjin_question(question):
+        return GroundedAnswer(
+            answer=(
+                "这个问题超出了南京云锦文化助手的服务范围。"
+                "你可以询问云锦的品种、纹样、织造工艺、历史传承或数字织机。"
+            ),
+            claims=(),
+            hits=(),
+            source_ids=(),
+            status=OUT_OF_SCOPE_STATUS,
+        )
+    if not dots_text_is_configured():
         return local
     try:
         reference = _answer_with_dots_reference(question)

@@ -13,7 +13,12 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from yunjin_ai.guide import AI_REFERENCE_STATUS, ASSISTANT_INFO_STATUS, answer_hybrid
+from yunjin_ai.guide import (
+    AI_REFERENCE_STATUS,
+    ASSISTANT_INFO_STATUS,
+    OUT_OF_SCOPE_STATUS,
+    answer_hybrid,
+)
 from yunjin_ai.knowledge import load_knowledge, load_sources
 from yunjin_ai.vision import analyze_locally
 
@@ -83,7 +88,8 @@ class HybridGuideAndCropTests(unittest.TestCase):
             "yunjin_ai.guide.urlopen"
         ) as mocked_urlopen:
             answer = answer_hybrid("今天南京天气怎么样？", self.items, self.sources)
-        self.assertEqual(answer.status, "证据不足")
+        self.assertEqual(answer.status, OUT_OF_SCOPE_STATUS)
+        self.assertIn("服务范围", answer.answer)
         mocked_urlopen.assert_not_called()
 
     def test_identity_question_is_answered_without_spending_api_call(self):

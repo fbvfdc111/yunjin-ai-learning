@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import html
 import json
 import sys
 from pathlib import Path
@@ -15,6 +16,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from yunjin_ai.guide import (
     AI_REFERENCE_STATUS,
     ASSISTANT_INFO_STATUS,
+    OUT_OF_SCOPE_STATUS,
     answer_from_knowledge,
     answer_hybrid,
     dots_text_is_configured,
@@ -709,8 +711,13 @@ if active_tab == "AI文化助手":
                         "以下内容由 AI 在本地知识库覆盖不足时生成，尚未经过本项目资料核验，"
                         "仅作学习线索，不作为文化事实、专业鉴定或参赛数据结论。"
                     )
-                    st.write(answer.answer)
+                    st.markdown(
+                        html.escape(answer.answer).replace("\n", "<br>"),
+                        unsafe_allow_html=True,
+                    )
                 elif answer.status == ASSISTANT_INFO_STATUS:
+                    st.info(answer.answer)
+                elif answer.status == OUT_OF_SCOPE_STATUS:
                     st.info(answer.answer)
                 for claim in answer.claims:
                     st.caption(EVIDENCE_SCOPE_LABELS[claim.evidence_scope])
@@ -731,7 +738,11 @@ if active_tab == "AI文化助手":
                             show_official_objects(
                                 related_official_objects(answer.hits, official_rows, official_relations)
                             )
-                elif answer.status not in {AI_REFERENCE_STATUS, ASSISTANT_INFO_STATUS}:
+                elif answer.status not in {
+                    AI_REFERENCE_STATUS,
+                    ASSISTANT_INFO_STATUS,
+                    OUT_OF_SCOPE_STATUS,
+                }:
                     st.warning(answer.answer)
 
         guide_history = st.session_state["guide_history"]
