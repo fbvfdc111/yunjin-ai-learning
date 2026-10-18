@@ -41,6 +41,7 @@ VISION_BOUNDARY = (
     "真伪或文物身份的专业鉴定。"
 )
 KNOWLEDGE_DIR = ROOT / "data" / "knowledge"
+VISION_SAMPLE_PATH = ROOT / "assets" / "ai-tanjin-demo.jpg"
 TAB_LABELS = ["首页", "AI探锦", "数字织机", "AI文化助手", "数据与可信AI"]
 EVIDENCE_SCOPE_LABELS = {
     "direct_yunjin": "南京云锦直接资料",
@@ -540,21 +541,49 @@ if active_tab == "AI探锦":
             st.code("https://note3-prev-api.askdiandian.com/v1/chat/completions", language=None)
         st.write("Dots 配置状态：" + ("已配置" if dots_is_configured() else "未配置"))
 
-    uploaded = st.file_uploader(
-        "选择图片", type=["jpg", "jpeg", "png"], help="支持 JPG、JPEG、PNG，最大 10 MB。", key="vision_upload"
-    )
-    if uploaded:
-        image_bytes = uploaded.getvalue()
+    sample_column, upload_column = st.columns([0.9, 1.1], gap="large")
+    with sample_column.container(border=True):
+        st.markdown("**没有照片？先用示例体验**")
+        st.image(VISION_SAMPLE_PATH, use_container_width=True)
+        st.caption("织锦纹样演示图片 · 仅用于体验视觉观察流程，不构成品种、年代或真伪鉴定。")
+        st.button(
+            "使用示例图片",
+            icon=":material/photo_library:",
+            type="secondary",
+            use_container_width=True,
+            key="select_vision_sample",
+            on_click=lambda: st.session_state.update(vision_use_sample=True),
+        )
+
+    with upload_column.container(border=True):
+        st.markdown("**上传自己的织锦照片**")
+        uploaded = st.file_uploader(
+            "选择图片",
+            type=["jpg", "jpeg", "png"],
+            help="支持 JPG、JPEG、PNG，最大 10 MB。上传图片会优先于示例图片。",
+            key="vision_upload",
+        )
+        st.caption("建议使用纹样清晰、织物占画面主体、光线均匀的照片。")
+
+    use_sample = uploaded is None and st.session_state.get("vision_use_sample", False)
+    selected_image = uploaded if uploaded is not None else (VISION_SAMPLE_PATH if use_sample else None)
+
+    if selected_image is not None:
+        image_bytes = uploaded.getvalue() if uploaded is not None else VISION_SAMPLE_PATH.read_bytes()
         digest = hashlib.sha256(image_bytes).hexdigest()
         if len(image_bytes) > 10 * 1024 * 1024:
             st.error("文件超过 10 MB，未处理。")
         else:
             try:
-                image = Image.open(uploaded)
+                image = Image.open(selected_image)
                 image_mime_type = {"JPEG": "image/jpeg", "PNG": "image/png"}.get((image.format or "").upper())
                 image.load()
                 image = image.convert("RGB")
-                st.image(image, caption=f"用户上传图片 · SHA-256 {digest[:12]}…", width=520)
+                image_label = "用户上传图片" if uploaded is not None else "内置演示图片"
+                if uploaded is not None:
+                    st.image(image, caption=f"{image_label} · SHA-256 {digest[:12]}…", width=520)
+                else:
+                    st.success("已选择内置演示图片，可以开始分析。", icon=":material/check_circle:")
             except (UnidentifiedImageError, OSError) as exc:
                 st.error(f"无法解码该图片：{exc}")
                 image = None
