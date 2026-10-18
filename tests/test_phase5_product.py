@@ -15,6 +15,7 @@ from yunjin_ai.knowledge import load_knowledge, search_visual_knowledge
 from yunjin_ai.product import (
     apply_guide_handoff,
     cultural_followup_questions,
+    visual_cultural_cues,
     visual_observation_sections,
 )
 from yunjin_ai.vision import VisionObservation
@@ -41,10 +42,10 @@ class Phase5RetrievalTests(unittest.TestCase):
         hits = search_visual_knowledge(["视觉上疑似牡丹"], [], self.items)
         self.assertEqual([hit.item.id for hit in hits], ["KB012"])
 
-    def test_bixie_sample_metadata_retrieves_its_cultural_card(self):
-        hits = search_visual_knowledge([], ["辟邪"], self.items)
+    def test_ai_beast_shape_cue_retrieves_visual_cultural_card(self):
+        hits = search_visual_knowledge(["兽形"], [], self.items)
         self.assertEqual([hit.item.id for hit in hits], ["KB029"])
-        self.assertGreaterEqual(hits[0].score, 12.0)
+        self.assertGreaterEqual(hits[0].score, 6.0)
 
     def test_protected_craft_claim_requires_user_confirmed_topic(self):
         automatic = search_visual_knowledge(["疑似妆花工艺"], [], self.items)
@@ -78,6 +79,19 @@ class Phase5ProductHelpersTests(unittest.TestCase):
         self.assertEqual(sections["纹样与主体"], ("视觉上存在花叶状轮廓",))
         self.assertEqual(len(sections["构图特征"]), 2)
         self.assertEqual(sections["色彩特征"], ("以红色和金色为主",))
+
+    def test_animal_observation_produces_neutral_beast_shape_cue(self):
+        observation = VisionObservation(
+            provider="dots:dots3-note-prev",
+            provider_status="ok",
+            observable_facts=("主体/纹样：画面中央存在疑似动物轮廓",),
+            tentative_elements=(),
+            retrieval_keywords=("动物纹样",),
+            limitations=("不能鉴定具体对象",),
+            raw_metrics={},
+            is_textile_related=True,
+        )
+        self.assertIn("兽形", visual_cultural_cues(observation))
 
     def test_handoff_prefills_question_and_switches_tab(self):
         state = {"main_tab": "AI识锦", "guide_question": ""}

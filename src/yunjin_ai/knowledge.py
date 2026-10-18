@@ -25,7 +25,13 @@ VISUAL_RETRIEVAL_STOP_TERMS = frozenset(
 KNOWLEDGE_USES = frozenset({"cultural_content", "process/history", "governance/methodology"})
 VISUAL_CULTURAL_KNOWLEDGE_USES = frozenset({"cultural_content", "process/history"})
 EVIDENCE_SCOPES = frozenset(
-    {"direct_yunjin", "official_object_name", "general_cultural_background", "governance_methodology"}
+    {
+        "direct_yunjin",
+        "official_object_name",
+        "general_cultural_background",
+        "governance_methodology",
+        "sample_image_metadata",
+    }
 )
 VISUAL_RETRIEVAL_MODES = frozenset({"direct", "object_name_only", "disabled"})
 AUTOMATIC_VISUAL_BLOCKED_TERMS = frozenset(

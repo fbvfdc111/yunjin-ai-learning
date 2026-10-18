@@ -11,6 +11,15 @@ from .vision import VisionObservation
 GUIDE_TAB_LABEL = "AI文化助手"
 
 
+def visual_cultural_cues(observation: VisionObservation) -> tuple[str, ...]:
+    """Convert model observations into neutral visual cues for cultural retrieval."""
+    cues = [*observation.retrieval_keywords, *observation.tentative_elements]
+    observed_text = " ".join((*observation.observable_facts, *cues))
+    if any(term in observed_text for term in ("兽", "动物", "貔貅", "辟邪")):
+        cues.append("兽形")
+    return tuple(dict.fromkeys(cue.strip() for cue in cues if cue.strip()))
+
+
 def visual_observation_sections(observation: VisionObservation) -> dict[str, tuple[str, ...]]:
     """Group provider output into stable, audience-facing visual sections."""
     sections: dict[str, list[str]] = {
@@ -60,6 +69,8 @@ FOLLOWUP_QUESTIONS = {
     "KB026": ("仅凭图片能判断是南京云锦吗？",),
     "KB027": ("为什么文化助手有时会拒绝回答？",),
     "KB028": ("公开图片可以直接拿来训练模型吗？",),
+    "KB029": ("云锦中的兽形纹样可以怎样理解？",),
+    "KB030": ("辟邪瑞兽有哪些一般文化背景？",),
 }
 
 GENERAL_CULTURE_QUESTIONS = (

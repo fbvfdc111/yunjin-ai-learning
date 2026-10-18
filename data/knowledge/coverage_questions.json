@@ -49,7 +49,8 @@
   {"question":"为什么文化助手有时会拒绝回答？","expected_ids":["KB027"]},
   {"question":"官方对象名称证据能证明图像内容吗？","expected_ids":["KB027"]},
   {"question":"公开图片可以直接拿来训练模型吗？","expected_ids":["KB028"]},
-  {"question":"辟邪是什么神兽？","expected_ids":["KB029"]},
-  {"question":"内置辟邪云锦示例图片来自哪里？","expected_ids":["KB029"]},
-  {"question":"辟邪图案有什么一般文化背景？","expected_ids":["KB029"]}
+  {"question":"AI观察到兽形后为什么关联云锦动物题材？","expected_ids":["KB029"]},
+  {"question":"辟邪是什么神兽？","expected_ids":["KB030"]},
+  {"question":"内置辟邪云锦示例图片来自哪里？","expected_ids":["KB030"]},
+  {"question":"辟邪图案有什么一般文化背景？","expected_ids":["KB030"]}
 ]

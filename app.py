@@ -31,7 +31,12 @@ from yunjin_ai.knowledge import (
     related_official_objects,
     search_visual_knowledge,
 )
-from yunjin_ai.product import apply_guide_handoff, cultural_followup_questions, visual_observation_sections
+from yunjin_ai.product import (
+    apply_guide_handoff,
+    cultural_followup_questions,
+    visual_cultural_cues,
+    visual_observation_sections,
+)
 from yunjin_ai.vision import analyze_image, dots_is_configured
 
 
@@ -48,6 +53,7 @@ EVIDENCE_SCOPE_LABELS = {
     "official_object_name": "官方对象名称/目录资料",
     "general_cultural_background": "一般传统文化背景",
     "governance_methodology": "数据治理说明",
+    "sample_image_metadata": "内置示例图片来源信息",
 }
 QUICK_QUESTIONS = [
     "妆花是什么？",
@@ -101,7 +107,11 @@ def show_hits(hits, sources):
             st.caption(f"{hit.item.category} · {hit.item.id} · 证据等级 {hit.item.evidence_level}")
             st.subheader(hit.item.title)
             for claim in hit.item.claims:
-                st.caption(EVIDENCE_SCOPE_LABELS[claim.evidence_scope])
+                scope_label = EVIDENCE_SCOPE_LABELS.get(
+                    claim.evidence_scope,
+                    f"补充资料（{claim.evidence_scope}）",
+                )
+                st.caption(scope_label)
                 st.write(claim.text)
                 st.caption("该事实来源：" + "、".join(f"[{source_id}]" for source_id in claim.source_ids))
     source_ids = tuple(dict.fromkeys(sid for hit in hits for sid in hit.item.source_ids))
@@ -560,8 +570,7 @@ if active_tab == "AI探锦":
             key="select_vision_sample",
             on_click=lambda: st.session_state.update(
                 vision_use_sample=True,
-                confirmed_visual_topics=["辟邪"],
-                vision_sample_topic_seeded=True,
+                confirmed_visual_topics=[],
             ),
         )
 
@@ -576,9 +585,6 @@ if active_tab == "AI探锦":
         st.caption("建议使用纹样清晰、织物占画面主体、光线均匀的照片。")
 
     use_sample = uploaded is None and st.session_state.get("vision_use_sample", False)
-    if uploaded is not None and st.session_state.get("vision_sample_topic_seeded", False):
-        st.session_state["confirmed_visual_topics"] = []
-        st.session_state["vision_sample_topic_seeded"] = False
     selected_image = uploaded if uploaded is not None else (VISION_SAMPLE_PATH if use_sample else None)
 
     if selected_image is not None:
@@ -669,7 +675,7 @@ if active_tab == "AI探锦":
                     "仅展示达到最低相关门槛的本地知识条目。以下是文化探索线索，"
                     "不能反向证明上传图片包含某种纹样或属于某种工艺。"
                 )
-                candidate_labels = ["龙", "凤", "辟邪", "鹤", "莲", "寿", "八宝", "宝灯", "灵芝", "牡丹", "织金", "妆花", "库锦", "库缎"]
+                candidate_labels = ["兽形", "龙", "凤", "鹤", "莲", "寿", "八宝", "宝灯", "灵芝", "牡丹", "织金", "妆花", "库锦", "库缎"]
                 hits = []
                 if result.is_textile_related is False and not use_sample:
                     st.info(
@@ -684,23 +690,15 @@ if active_tab == "AI探锦":
                             "当前使用本地图像统计，无法可靠判断图片是否为织物；为避免错误关联，本次不使用自动关键词推荐文化知识。",
                             icon=":material/shield:",
                         )
-                    if use_sample:
-                        st.info(
-                            "内置示例的‘辟邪’学习主题来自图片发布页的来源说明；"
-                            "它用于稳定演示文化检索，不表示模型完成了纹样鉴定。",
-                            icon=":material/verified:",
-                        )
                     verified = st.multiselect(
                         "希望继续探索的文化主题（可选）",
                         candidate_labels,
                         help="这里选择的是学习主题，不表示你或系统确认了图片中的纹样、工艺或对象身份。",
                         key="confirmed_visual_topics",
                     )
-                    automatic_terms = (
-                        [*result.retrieval_keywords, *result.tentative_elements]
-                        if result.is_textile_related is True
-                        else []
-                    )
+                    automatic_terms = visual_cultural_cues(result) if result.is_textile_related is True else []
+                    if automatic_terms:
+                        st.caption("文化关联依据本次 AI 视觉线索生成：" + " · ".join(automatic_terms))
                     hits = search_visual_knowledge(automatic_terms, verified, knowledge, limit=4)
 
                 if hits:

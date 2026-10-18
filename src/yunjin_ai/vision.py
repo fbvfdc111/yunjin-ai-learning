@@ -67,6 +67,8 @@ DOTS_SYSTEM_PROMPT = """你是谨慎的视觉观察助手，只进行可观察�
 subject_pattern_observations、composition、colors、repetition_symmetry、retrieval_keywords、limitations。
 当 is_textile_related 为 false 时，retrieval_keywords 必须为空数组，并在 relevance_reason 中简要说明主要对象为何不属于纺织视觉观察范围。
 描述必须保持中性、可观察；不确定的视觉元素使用“疑似”“可能”或“视觉上存在”等措辞。
+retrieval_keywords 应优先给出与画面直接对应的中性视觉类别，例如“兽形”“鸟形”“花朵”“云纹”；
+不得因为外观相似就把兽形直接确定为辟邪、貔貅或其他具体文化对象。
 limitations 必须说明该结果不是南京云锦归属、具体工艺、年代、名称、真伪或作者/制造者鉴定。"""
 
 
