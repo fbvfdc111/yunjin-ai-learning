@@ -41,7 +41,7 @@ VISION_BOUNDARY = (
     "真伪或文物身份的专业鉴定。"
 )
 KNOWLEDGE_DIR = ROOT / "data" / "knowledge"
-VISION_SAMPLE_PATH = ROOT / "assets" / "ai-tanjin-demo.jpg"
+VISION_SAMPLE_PATH = ROOT / "assets" / "ai-tanjin-demo-bixie.jpg"
 TAB_LABELS = ["首页", "AI探锦", "数字织机", "AI文化助手", "数据与可信AI"]
 EVIDENCE_SCOPE_LABELS = {
     "direct_yunjin": "南京云锦直接资料",
@@ -545,14 +545,24 @@ if active_tab == "AI探锦":
     with sample_column.container(border=True):
         st.markdown("**没有照片？先用示例体验**")
         st.image(VISION_SAMPLE_PATH, use_container_width=True)
-        st.caption("织锦纹样演示图片 · 仅用于体验视觉观察流程，不构成品种、年代或真伪鉴定。")
+        st.caption(
+            "真实南京云锦示例：G735‘紫金号’列车云锦辟邪（貔貅）摆台。"
+            "图片：[N509FZ / Wikimedia Commons](https://commons.wikimedia.org/wiki/"
+            "File:Yunjin_brocade_of_Bixie_on_CR400BF-AS-3269_%2820260623105816%29.jpg)，"
+            "采用 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 许可；已缩小尺寸。"
+            "示例主题来自图片来源元数据，不是 AI 鉴定结论。"
+        )
         st.button(
             "使用示例图片",
             icon=":material/photo_library:",
             type="secondary",
             use_container_width=True,
             key="select_vision_sample",
-            on_click=lambda: st.session_state.update(vision_use_sample=True),
+            on_click=lambda: st.session_state.update(
+                vision_use_sample=True,
+                confirmed_visual_topics=["辟邪"],
+                vision_sample_topic_seeded=True,
+            ),
         )
 
     with upload_column.container(border=True):
@@ -566,6 +576,9 @@ if active_tab == "AI探锦":
         st.caption("建议使用纹样清晰、织物占画面主体、光线均匀的照片。")
 
     use_sample = uploaded is None and st.session_state.get("vision_use_sample", False)
+    if uploaded is not None and st.session_state.get("vision_sample_topic_seeded", False):
+        st.session_state["confirmed_visual_topics"] = []
+        st.session_state["vision_sample_topic_seeded"] = False
     selected_image = uploaded if uploaded is not None else (VISION_SAMPLE_PATH if use_sample else None)
 
     if selected_image is not None:
@@ -656,9 +669,9 @@ if active_tab == "AI探锦":
                     "仅展示达到最低相关门槛的本地知识条目。以下是文化探索线索，"
                     "不能反向证明上传图片包含某种纹样或属于某种工艺。"
                 )
-                candidate_labels = ["龙", "凤", "鹤", "莲", "寿", "八宝", "宝灯", "灵芝", "牡丹", "织金", "妆花", "库锦", "库缎"]
+                candidate_labels = ["龙", "凤", "辟邪", "鹤", "莲", "寿", "八宝", "宝灯", "灵芝", "牡丹", "织金", "妆花", "库锦", "库缎"]
                 hits = []
-                if result.is_textile_related is False:
+                if result.is_textile_related is False and not use_sample:
                     st.info(
                         "未观察到明确的织物、织锦或纺织纹样主体，因此不自动关联云锦文化知识。"
                         + (f"\n\n判断依据：{result.relevance_reason}" if result.relevance_reason else ""),
@@ -670,6 +683,12 @@ if active_tab == "AI探锦":
                         st.info(
                             "当前使用本地图像统计，无法可靠判断图片是否为织物；为避免错误关联，本次不使用自动关键词推荐文化知识。",
                             icon=":material/shield:",
+                        )
+                    if use_sample:
+                        st.info(
+                            "内置示例的‘辟邪’学习主题来自图片发布页的来源说明；"
+                            "它用于稳定演示文化检索，不表示模型完成了纹样鉴定。",
+                            icon=":material/verified:",
                         )
                     verified = st.multiselect(
                         "希望继续探索的文化主题（可选）",

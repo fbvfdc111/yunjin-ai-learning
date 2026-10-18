@@ -1298,5 +1298,32 @@
       ["识别准确率", "测试结果"]
     ],
     "visual_retrieval": "disabled"
+  },
+  {
+    "id": "KB029",
+    "category": "纹样与文化",
+    "title": "辟邪：示例来源与一般文化语境",
+    "claims": [
+      {
+        "text": "开放授权图片的发布页将本项目内置示例说明为G735次‘紫金号’列车的云锦摆台，并标注为辟邪（貔貅）图案。该信息只确认示例图片的来源元数据，不能用于判断其他上传图片。",
+        "source_ids": ["S14"],
+        "evidence_scope": "sample_image_metadata"
+      },
+      {
+        "text": "故宫博物院资料将辟邪解释为古代传说中的有角、有翼神兽，并记载其与除邪恶的传统观念有关。这是跨媒介的一般文化背景，不等于对任意织物图案的身份或创作意图作出鉴定。",
+        "source_ids": ["S15"],
+        "evidence_scope": "general_cultural_background"
+      }
+    ],
+    "keywords": ["辟邪", "貔貅", "神兽", "除邪", "云锦摆台", "示例图片"],
+    "evidence_level": "A/B",
+    "knowledge_use": "cultural_content",
+    "answer_terms": [
+      ["辟邪", "是什么"],
+      ["辟邪", "文化", "含义"],
+      ["貔貅", "云锦", "示例"],
+      ["示例图片", "辟邪", "来源"]
+    ],
+    "visual_retrieval": "direct"
   }
 ]

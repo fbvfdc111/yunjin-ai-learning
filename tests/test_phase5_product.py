@@ -41,6 +41,11 @@ class Phase5RetrievalTests(unittest.TestCase):
         hits = search_visual_knowledge(["视觉上疑似牡丹"], [], self.items)
         self.assertEqual([hit.item.id for hit in hits], ["KB012"])
 
+    def test_bixie_sample_metadata_retrieves_its_cultural_card(self):
+        hits = search_visual_knowledge([], ["辟邪"], self.items)
+        self.assertEqual([hit.item.id for hit in hits], ["KB029"])
+        self.assertGreaterEqual(hits[0].score, 12.0)
+
     def test_protected_craft_claim_requires_user_confirmed_topic(self):
         automatic = search_visual_knowledge(["疑似妆花工艺"], [], self.items)
         confirmed = search_visual_knowledge([], ["妆花"], self.items)

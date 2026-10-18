@@ -154,5 +154,29 @@
     "notes": "记录视觉观察、文化问答、对象名称证据、素材授权和监督训练的产品边界；只支持项目方法说明，不替代外部文化事实来源。",
     "locator": "全文",
     "verification_status": "已纳入自动化覆盖测试"
+  },
+  {
+    "source_id": "S14",
+    "title": "Yunjin brocade of Bixie on CR400BF-AS-3269",
+    "publisher": "Wikimedia Commons；摄影者 N509FZ",
+    "url": "https://commons.wikimedia.org/wiki/File:Yunjin_brocade_of_Bixie_on_CR400BF-AS-3269_(20260623105816).jpg",
+    "accessed_at": "2026-10-18",
+    "source_type": "open_licensed_image_metadata",
+    "evidence_level": "B",
+    "notes": "用于内置示例图片的对象说明与授权核验。发布页将画面说明为G735次‘紫金号’列车的云锦摆台、辟邪（貔貅）图案；仅支持该示例的来源元数据，不用于推断其他上传图片。",
+    "locator": "文件说明、作者、许可协议",
+    "verification_status": "已核对文件页；CC BY-SA 4.0"
+  },
+  {
+    "source_id": "S15",
+    "title": "青白玉辟邪",
+    "publisher": "故宫博物院",
+    "url": "https://www.dpm.org.cn/collection/jade/229412.html",
+    "accessed_at": "2026-10-18",
+    "source_type": "national_museum_collection_page",
+    "evidence_level": "A",
+    "notes": "用于辟邪作为古代传说神兽及其一般文化语境；这是跨媒介文化背景，不直接证明任意织物图案的身份或寓意。",
+    "locator": "藏品简介与‘辟邪’词条",
+    "verification_status": "已取得网页正文"
   }
 ]

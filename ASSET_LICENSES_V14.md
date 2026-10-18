@@ -27,3 +27,16 @@ The user-provided Xiaohongshu and Bilibili links were used only as visual direct
 - `GLTFLoader` is imported from the Three.js examples module CDN to load the bundled GLB data URI inside the Streamlit iframe.
 
 This prototype remains `Simulation-driven / Simulated Data` and is not a dimensionally accurate mechanical reconstruction.
+
+## AI 探锦内置示例图片
+
+- File: `assets/ai-tanjin-demo-bixie.jpg`
+- Title: `Yunjin brocade of Bixie on CR400BF-AS-3269 (20260623105816)`
+- Source: Wikimedia Commons
+- Author / photographer: N509FZ
+- Source page: `https://commons.wikimedia.org/wiki/File:Yunjin_brocade_of_Bixie_on_CR400BF-AS-3269_(20260623105816).jpg`
+- License: CC BY-SA 4.0 (`https://creativecommons.org/licenses/by-sa/4.0/`)
+- Local modification: resized by Wikimedia's thumbnail service to 1280 px width; no compositional alteration.
+- SHA256: `0A9B1F68BA67E6044FE4FCB0AD1E5C8DD6291014A0F8179FA737B7248167A95C`
+
+The image is used as a clearly attributed learning example. Its source metadata identifies the depicted display as Yunjin brocade with a Bixie (Pixiu) motif. This metadata applies only to this example and must not be generalized to user-uploaded images.
